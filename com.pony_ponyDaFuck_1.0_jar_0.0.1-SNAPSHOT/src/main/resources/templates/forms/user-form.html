@@ -1,0 +1,74 @@
+<h1 class="content-title">Formulaire des utilisateurs</h1>
+<div class="row">
+     <div class="col-xs-12">
+          <form id="user-form" action="#" method="POST" th:action="@{users/form/} + (${userForm.id} != NULL ? ${userForm.id} : '')" th:object="${userForm}" th:method="${userForm.id} != NULL ? PUT : POST">
+               <input type="hidden" placeholder="Id de l'utilisateur" name="id" th:field="*{id}" />
+               <div class="row">
+                    <div class="form-role col-md-4 col-md-offset-4" th:classappend="${#fields.hasErrors('login')} OR *{duplicate} ? 'has-error'">
+                         <label for="user-login">Login* :</label>
+                         <input id="user-login" class="form-control" type="text" placeholder="Login utilisateur" name="login" th:field="*{login}" th:readonly="${userForm.id} != NULL" data-pattern="" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${userForm.id} != NULL">Le login ne peut être modifié</div>
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Erreur de login</div>
+                         <div class="help-block text-sm uppercase-first-letter" th:if="*{duplicate}">Ce login n'est pas unique</div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="form-role col-sm-12" th:classappend="${#fields.hasErrors('roleId')} ? 'has-error'">
+                         <label for="user-role">Role* :</label>
+                         <select class="form-control" th:field="*{roleId}">
+                              <option value="0">Sélectionner un role</option>
+                              <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}" th:selected="(${userForm.roleId} == ${role.id})">Un role</option>
+                         </select>
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('roleId')}">Le choix du role est obligatoire</div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="form-role col-sm-6" th:classappend="${#fields.hasErrors('lastname')} ? 'has-error'">
+                         <label for="user-lastname">Nom de famille :</label>
+                         <input id="user-lastname" class="form-control" type="text" placeholder="Nom de famille" name="lastname" th:field="*{lastname}" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Erreur sur le nom de famille</div>
+                    </div>
+                    <div class="form-role col-sm-6" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
+                         <label for="user-firstname">Prénom :</label>
+                         <input id="user-firstname" class="form-control" type="text" placeholder="Prénom" name="firstname" th:field="*{firstname}" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('login')}" th:errors="*{firstname}">Erreur sur le prénom</div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="form-role col-sm-6" th:classappend="${#fields.hasErrors('phone')} ? 'has-error'">
+                         <label for="user-phone">Téléphone :</label>
+                         <input id="user-phone" class="form-control" type="text" placeholder="Numero de téléphone" name="phone" th:field="*{phone}" data-pattern="^[+0-9]+$" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Erreur numero téléphone</div>
+                    </div>
+                    <div class="form-role col-sm-6" th:classappend="${#fields.hasErrors('mail')} ? 'has-error'">
+                         <label for="user-mail">Email :</label>
+                         <input id="user-mail" class="form-control" type="text" placeholder="Email de l'utilisateur" name="email" th:field="*{mail}" data-pattern="^[\w-@.]+$" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Erreur sur l'email</div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="form-role col-sm-6" th:classappend="${#fields.hasErrors('password')} OR *{!confirmationOk} ? 'has-error'">
+                         <label for="user-password">Mot de passe* :</label>
+                         <input id="user-password" class="form-control" type="password" placeholder="Mot de passe" name="password" th:value="*{password}" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Erreur sur le mot de passe</div>
+                         <div class="help-block text-sm uppercase-first-letter" th:if="!${#fields.hasErrors('password')} and *{!confirmationOk}">Non identique à la confirmation</div>
+                    </div>
+                    <div class="form-role col-sm-6" th:classappend="${#fields.hasErrors('passwordConfirm')} OR *{!confirmationOk} ? 'has-error'">
+                         <label for="user-password-confirm">Confirmation mot de passe* :</label>
+                         <input id="user-password-confirm" class="form-control" type="password" placeholder="Confirmation mot de passe" name="passwordConfirm" th:value="*{passwordConfirm}" />
+                         <div class="help-block text-sm uppercase-first-letter" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">Erreur sur la confirmation de mot de passe</div>
+                         <div class="help-block text-sm uppercase-first-letter" th:if="!${#fields.hasErrors('passwordConfirm')} and *{!confirmationOk}">Non identique au mot de passe</div>
+                    </div>
+               </div>
+               <p class="text-sm">* Champs obligatoires</p>
+               <a class="custom-link" href="users">
+                    <button class="btn btn-primary"> 
+                         <span>Annuler</span>
+                    </button>
+               </a>
+               <button class="btn btn-success form-submit pull-right" type="submit"> 
+                    <span>Enregistrer</span>
+               </button>
+          </form>
+     </div>
+</div>

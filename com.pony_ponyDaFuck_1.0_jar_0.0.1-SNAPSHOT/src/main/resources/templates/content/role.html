@@ -1,0 +1,98 @@
+<h1 class="content-title">Liste des role</h1>
+<div class="row">
+     <div class="col-xs-12">
+          <div class="box box-primary">
+               <div class="box-body table-responsive padding">
+                    <table id='roles-table' class='table table-striped table-bordered'>
+                         <thead>
+                              <tr>
+                                   <th>Nom</th>
+                                   <th>Actions</th>
+                              </tr>
+                         </thead>
+                         <tfoot class="hidden-xs">
+                              <tr>
+                                   <th>Nom</th>
+                                   <th>Actions</th>
+                              </tr>
+                         </tfoot>
+                         <tbody>
+                              <tr th:each="role : ${roles}">
+                                   <td class="text-capitalize" th:text="${role.name}">Nom</td>
+                                   <td>
+                                        <!--<nobr>-->
+                                        <a class="custom-link" th:href="'roles/form/' + ${role.id}">
+                                             <button type="button" class="btn btn-primary btn-xs dt-edit" title="Modifier le role">
+                                                  <span class="fa fa-pencil" aria-hidden="true"></span>
+                                             </button>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-xs dt-delete"  title="Supprimer le role" data-th-attr="data-role-id=${role.id}">
+                                             <span class="fa fa-trash" aria-hidden="true"></span>
+                                        </button>
+
+                                        <!--</nobr>-->
+                                   </td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript" charset="UTF-8">
+     /*<![CDATA[*/
+
+     $(function () {
+
+
+          var roleDataTable = null;
+
+          // DataTable initialisation
+          roleDataTable = $('#roles-table').DataTable({
+               responsive: true,
+               dom: '<"toolbar">Bfrtip',
+               initComplete: function () {
+                    $("div.dt-buttons").addClass("col-xs-12 no-padding").append('<div class="pull-right">' +
+                            '<a class="custom-link" th:href="roles/form" href="roles/form"> '+
+                            ' <button type="button" style="float: right; margin-bottom: 5px;" class="btn btn-success dt-new new-role">Nouveau role</button></a></div>');
+               }
+          });
+          
+
+          //Delete buttons
+
+          roleDataTable.on('click', '.dt-delete', function (event) {
+
+               var row = $(this).closest("tr");
+               var roleId = $(this).data('role-id');
+               $.confirm({
+                    title: "Supppression d'un role",
+                    content: "Voulez-vous vraiment supprimer ce role ?",
+                    type: "red",
+                    buttons: {
+                         modify: {
+                              text: "Supprimer",
+                              btnClass: "btn-red",
+                              action: function () {
+                                   $.ajax({
+                                        url: "roles/" + roleId,
+                                        type: 'DELETE',
+                                        success: function () {
+                                             roleDataTable.row(row).remove().draw();
+                                        }
+                                   });
+                              },
+                              cancel: {
+                                   text: "Annuler"
+                              }
+                         }
+                    }
+               });
+               event.preventDefault();
+          });
+
+     });
+
+     /*]]>*/
+</script>
