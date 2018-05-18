@@ -24,9 +24,9 @@
 
      <body th:with="httpStatus=${T(org.springframework.http.HttpStatus)}">
           <div class="jumbotron error-box">
-               <div class="container-fluid login-logo">
+               <div class="container-fluid error-content login logo">
 
-                    <div><b>P</b>ony<b>D</b>a<b>F</b>uck</div>
+                    <div class="error-tiltle"><b>P</b>ony<b>D</b>a<b>F</b>uck</div>
                     <img src="../../images/dead_rainbow.png" class="error-img" alt="" th:src="@{/images/dead_rainbow.png}" />
 
                     <div class="box box-danger error-result">
@@ -57,12 +57,12 @@
 
                          <p th:unless="${ex} or ${exception} or (${message} and ${message.length() != 0})">
                               Cause unknown (no exception details available)</p>
-                         <br></br>
-                         <button class="btn btn-success error-return">
-                              <a href="home.html" th:href="@{/home}">Back to Home Page</a>
-                         </button>
 
                     </div>
+                    <br></br>
+                    <button class="btn btn-success error-return login-logo" id="error-return">
+                         <a href="home.html" th:href="@{/home}">Back to Home Page</a>
+                    </button>
                </div>
           </div>
 
