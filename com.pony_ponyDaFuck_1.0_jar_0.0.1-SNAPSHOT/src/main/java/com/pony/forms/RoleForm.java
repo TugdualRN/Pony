@@ -5,57 +5,54 @@
  */
 package com.pony.forms;
 
-import javax.validation.constraints.Pattern;
-
 /**
  *
  * @author Gotug
  */
 public class RoleForm {
-     // Usefull to define if POST or PUT method
+    // Usefull to define if POST or PUT method
 
-     private Long id;
+    private Long id;
 
-     private String name;
+    private String name;
 
-     private boolean duplicate = false;
+    private boolean duplicate = false;
 
-     public Long getId() {
-          return id;
-     }
+    public Long getId() {
+        return id;
+    }
 
-     public void setId(Long id) {
-          this.id = id;
-     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-     public String getName() {
-          return name;
-     }
+    public String getName() {
+        return name;
+    }
 
-     public void setName(String name) {
-          this.name = name;
-     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-     public boolean isDuplicate() {
-          return duplicate;
-     }
+    public boolean isDuplicate() {
+        return duplicate;
+    }
 
-     public void setDuplicate(boolean duplicate) {
-          this.duplicate = duplicate;
-     }
+    public void setDuplicate(boolean duplicate) {
+        this.duplicate = duplicate;
+    }
 
-     public RoleForm() {
-          super();
-     }
+    public RoleForm() {
+        super();
+    }
 
-     public RoleForm(Long id, String name) {
-          this.id = id;
-          this.name = name;
-     }
+    public RoleForm(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-     @Override
-     public String toString() {
-          return "RoleForm{" + "id=" + id + ", name=" + name + ", duplicate=" + duplicate + "}";
-     }
-
+    @Override
+    public String toString() {
+        return "RoleForm{" + "id=" + id + ", name=" + name + ", duplicate=" + duplicate + "}";
+    }
 }

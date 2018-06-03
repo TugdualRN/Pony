@@ -17,16 +17,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataSourceConnect {
 
-     @Bean
-     public DataSource dataSource() {
-          DataSource dataSource = DataSourceBuilder
-                  .create()
-                  .url("jdbc:postgresql://localhost:5432/pony")
-                  .username("postgres")
-                  .password("ebola")
-                  .driverClassName("org.postgresql.Driver")
-                  .build();
+    @Bean
+    public DataSource dataSource() {
+        DataSource dataSource = DataSourceBuilder
+            .create()
+            .url("jdbc:postgresql://localhost:5432/Pony")
+            .username("pony")
+            .password("azerty1234")
+            .driverClassName("org.postgresql.Driver")
+            .build();
 
-          return dataSource;
-     }
+        return dataSource;
+    }
 }

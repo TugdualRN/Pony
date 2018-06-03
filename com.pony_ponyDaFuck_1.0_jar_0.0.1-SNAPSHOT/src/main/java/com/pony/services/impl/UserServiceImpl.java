@@ -7,12 +7,15 @@ package com.pony.services.impl;
 
 import com.pony.exceptions.NoSuchEntityException;
 import com.pony.exceptions.UniqueEntityViolationException;
-import com.pony.models.Users;
-import com.pony.repositories.UsersRepository;
+import com.pony.models.Role;
+import com.pony.models.User;
+import com.pony.repositories.RoleRepository;
+import com.pony.repositories.UserRepository;
 import com.pony.services.UserService;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.stereotype.Service;
@@ -25,79 +28,105 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final UsersRepository usersRepository;
+    private final BCryptPasswordEncoder _passwordEncoder;
+    private final UserRepository _userRepository;
+    private final RoleRepository _roleRepository;
+    
 
     @Autowired
-    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UsersRepository usersRepository) {
-	this.passwordEncoder = passwordEncoder;
-	this.usersRepository = usersRepository;
+    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
+        this._passwordEncoder = passwordEncoder;
+        this._userRepository = userRepository;
+        this._roleRepository = roleRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Users> findAll() {
-	return usersRepository.findAll();
+    public List<User> findAll() {
+	    return _userRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Users findById(Long userId) throws NoSuchEntityException {
+    public User findById(Long userId) throws NoSuchEntityException {
 
-	Users user = usersRepository.findOne(userId);
+        User user = _userRepository.findOne(userId);
 
-	if (user != null) {
-	    return user;
-	} else {
-	    throw new NoSuchEntityException(userId, Users.class);
-	}
+        if (user != null) {
+            return user;
+        } else {
+            throw new NoSuchEntityException(userId, User.class);
+        }
     }
 
     @Override
-    public Users insert(Users user) throws UniqueEntityViolationException {
+    @Transactional(readOnly = true)
+    public User findByMail(String mail)
+    {
+        User user = _userRepository.findByMail(mail);
 
-	Users userByLogin = usersRepository.findByLogin(user.getLogin());
-	if (userByLogin != null) {
-	    throw new UniqueEntityViolationException("login", user.getLogin(), Users.class);
-	}
-
-	user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-	return usersRepository.save(user);
+        return user;
     }
 
     @Override
-    public Users update(Long userId, Users user) throws UniqueEntityViolationException, NoSuchEntityException {
+    public User insert(User user) throws UniqueEntityViolationException {
 
-	Users userById = usersRepository.findOne(userId);
+	    User userByLogin = _userRepository.findByUserName(user.getUserName());
+	    if (userByLogin != null) {
+	        throw new UniqueEntityViolationException("login", user.getUserName(), User.class);
+        }
 
-	if (userById == null) {
-	    throw new NoSuchEntityException(userId, Users.class);
-	}
+        String hashedPassword = _passwordEncoder.encode(user.getPasswordHash());
+        user.setPasswordHash(hashedPassword);
 
-	Users userByLogin = usersRepository.findByLogin(user.getLogin());
-	if (userByLogin != null && !userId.equals(userByLogin.getId())) {
-	    throw new UniqueEntityViolationException("login", user.getLogin(), Users.class);
-	}
+        String userName = user.getUserName();
+        user.setNormalizedUserName(userName.toUpperCase());
 
-	// We don't allow to modify the user's login
-	
-	String password = user.getPassword();
-	if (password != null && !"".equals(password)) { // If the password wasn't changed; password will be null
-	    userById.setPassword(passwordEncoder.encode(user.getPassword()));
-	}
-	userById.setLastname(user.getLastname());
-	userById.setFirstname(user.getFirstname());
-	userById.setPhone(user.getPhone());
-	userById.setMail(user.getMail());
-	userById.setRoles(user.getRoles());
+        String mail = user.getMail();
+        user.setNormalizedMail(mail.toUpperCase());
 
-	return usersRepository.save(userById);
+        Role baseRole = _roleRepository.findByName("USER");
+        
+        List<Role> roles = new ArrayList<Role>();
+        roles.add(baseRole);
+
+        user.setRoles(roles);
+
+	    return _userRepository.save(user);
+    }
+
+    @Override
+    public User update(Long userId, User user) throws UniqueEntityViolationException, NoSuchEntityException {
+
+        User userById = _userRepository.findOne(userId);
+
+        if (userById == null) {
+            throw new NoSuchEntityException(userId, User.class);
+        }
+
+        User userByLogin = _userRepository.findByUserName(user.getUserName());
+        if (userByLogin != null && !userId.equals(userByLogin.getId())) {
+            throw new UniqueEntityViolationException("login", user.getUserName(), User.class);
+        }
+
+        // We don't allow to modify the user's login
+        
+        String password = user.getPasswordHash();
+        if (password != null && !password.isEmpty()) { // If the password wasn't changed; password will be null
+            userById.setPasswordHash(_passwordEncoder.encode(user.getPasswordHash()));
+        }
+        userById.setLastName(user.getLastName());
+        userById.setFirstName(user.getFirstName());
+        userById.setPhone(user.getPhone());
+        userById.setMail(user.getMail());
+        userById.setRoles(user.getRoles());
+
+        return _userRepository.save(userById);
     }
 
     @Override
     @Transactional
     public void delete(Long userId) {
-	usersRepository.delete(userId);
+        _userRepository.delete(userId);
     }
 }

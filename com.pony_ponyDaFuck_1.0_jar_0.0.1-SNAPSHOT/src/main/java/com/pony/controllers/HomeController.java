@@ -5,8 +5,6 @@
  */
 package com.pony.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class HomeController {
-@Autowired
-private MessageSource messageSource;
-     @RequestMapping("/home")
-     public String home(Model model) {
-          
-//          model.addAttribute("attribute", "value");
-//          System.out.println("====================== HomeController ======================");
 
-          return "home";
-     }
+    @RequestMapping(value = {"", "/", "/home"})
+    public String home(Model model) {
 
+        return "home";
+    }
 }

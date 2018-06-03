@@ -5,15 +5,14 @@
  */
 package com.pony.repositories;
 
-import com.pony.models.Roles;
+import com.pony.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Gotug
  */
-public interface RoleRepository extends JpaRepository<Roles, Long>{
+public interface RoleRepository extends JpaRepository<Role, Long>{
      
-     public Roles findByName(String roleName);
-     
+    public Role findByName(String roleName);
 }

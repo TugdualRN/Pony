@@ -5,10 +5,11 @@
  */
 package com.pony.services;
 
+import java.util.List;
+
 import com.pony.exceptions.NoSuchEntityException;
 import com.pony.exceptions.UniqueEntityViolationException;
-import com.pony.models.Roles;
-import java.util.List;
+import com.pony.models.Role;
 
 /**
  *
@@ -16,13 +17,13 @@ import java.util.List;
  */
 public interface RoleService {
 
-     List<Roles> findAll();
+    List<Role> findAll();
 
-     Roles findById(Long roleId) throws NoSuchEntityException;
+    Role findById(Long roleId) throws NoSuchEntityException;
 
-     Roles insert(Roles role) throws UniqueEntityViolationException;
+    Role insert(Role role) throws UniqueEntityViolationException;
 
-     Roles update(Long roleId, Roles role) throws UniqueEntityViolationException, NoSuchEntityException;
+    Role update(Long roleId, Role role) throws UniqueEntityViolationException, NoSuchEntityException;
 
-     void delete(Long roleId);
+    void delete(Long roleId);
 }

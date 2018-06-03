@@ -1,8 +1,13 @@
 <h1 class="content-title">Formulaire des roles</h1>
 <div class="row">
     <div class="col-xs-12">
-		<form id="role-form" action="#" method="POST" th:action="@{roles/form/} + (${roleForm.id} != NULL ? ${roleForm.id} : '')"
-                          th:object="${roleForm}" th:method="${roleForm.id} != NULL ? PUT : POST">
+        <form 
+            id="role-form" 
+            action="#" 
+            method="POST" 
+            th:action="@{roles/form/} + (${roleForm.id} != NULL ? ${roleForm.id} : '')"
+            th:object="${roleForm}" 
+            th:method="${roleForm.id} != NULL ? PUT : POST">
 		    <input type="hidden" placeholder="Id role" name="id" th:field="*{id}" />
 		    <div class="row">
 			<div class="form-role col-xs-12" th:classappend="${#fields.hasErrors('name')} OR *{duplicate} ? 'has-error'">

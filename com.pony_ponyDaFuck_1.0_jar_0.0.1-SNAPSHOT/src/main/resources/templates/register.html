@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>PonyDaFcuk</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" type="image/png" href="../../images/favicon.ico" th:href="@{/images/favicon.ico}" />
+
+        <!--<link rel="stylesheet" href="../static/css/indexcss.css" th:href="@{/css/indexcss.css}" type="text/css" />-->
+        
+        <!-- <link type="text/css" rel="stylesheet" href="../static/plugins/bootstrap/css/bootstrap.min.css" 
+            th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"/> -->
+
+        <!-- <link type="text/css" rel="stylesheet" href="../static/css/login.css" 
+            th:href="@{/css/login.css}"/> -->
+        <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css" 
+            th:href="@{/css/font-awesome.min.css}"/>
+        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=arial-black"/>
+        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=ubuntu" />
+        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=open-sans"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+            crossorigin="anonymous"/>
+    </head>
+
+    <body>
+        <header>
+            <nav th:replace="fragments/navbar :: navbar"></nav>
+        </header>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <br/>
+                <form th:action="@{/register}" th:object="${registerViewModel}" th:method="POST" autocomplete="on">
+                    <!-- method="POST" action="#"  -->
+                    <div class="form-group">
+                        <label for="UserName">User Name</label>
+                        <input th:field="*{userName}" class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"/>
+                        <small id="UserNameHelp" class="form-text text-muted">May this name make the social networks tremble</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email address</label>
+                        <input th:field="*{mail}" type="email" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Enter email"/>
+                        <small id="EmailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <input th:field="*{password}" type="text" class="form-control" id="Password" placeholder="Password"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="ConfirmPassword">Confirm Password</label>
+                        <input th:field="*{confirmPassword}" type="text" class="form-control" id="ConfirmPassword" placeholder="Confirm Password"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <!-- SCRIPTS -->
+        <!-- 
+        <script type="text/javascript "src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+            
+        <script type="text/javascript" src="../static/plugins/jquery/jquery-3.3.1.min.js"
+            th:src="@{/plugins/jquery/jquery-3.3.1.min.js}"></script>
+        <script type="text/javascript" src="../static/plugins/bootstrap/js/bootstrap.min.js"
+            th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src="../static/plugins/icheck/icheck.min.js"
+            th:src="@{/plugins/icheck/icheck.min.js}"></script>
+        <script type="text/javascript" src="../static/plugins/TweenMax/TweenMax.js"
+            th:src="@{/plugins/TweenMax/TweenMax.js}"></script>
+        -->
+    </body>
+</html>

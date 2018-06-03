@@ -13,7 +13,6 @@ package com.pony.exceptions;
 public class UniqueEntityViolationException extends Exception {
 
     public UniqueEntityViolationException(String field, String value, Class entityClass) {
-	super("Unique entity violation for class [" + entityClass + "] with [" + field + "] [" + value + "]");
+	    super("Unique entity violation for class [" + entityClass + "] with [" + field + "] [" + value + "]");
     }
 }
-

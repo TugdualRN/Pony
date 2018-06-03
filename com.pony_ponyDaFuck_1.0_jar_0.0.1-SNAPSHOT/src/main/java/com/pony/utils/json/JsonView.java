@@ -22,18 +22,19 @@ public class JsonView {
 
      public static ModelAndView Render(Object model, HttpServletResponse response, HttpStatus statusCode) {
 
-          MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
 
-          MediaType jsonMimeType = MediaType.APPLICATION_JSON;
+        MediaType jsonMimeType = MediaType.APPLICATION_JSON;
 
-          try {
-               ServletServerHttpResponse serverHttpResponse = new ServletServerHttpResponse(response);
-               serverHttpResponse.setStatusCode(statusCode);
+        try {
+            ServletServerHttpResponse serverHttpResponse = new ServletServerHttpResponse(response);
+            serverHttpResponse.setStatusCode(statusCode);
 
-               jsonConverter.write(model, jsonMimeType, serverHttpResponse);
-          } catch (HttpMessageNotWritableException | IOException e) {
-          }
+            jsonConverter.write(model, jsonMimeType, serverHttpResponse);
+        } catch (HttpMessageNotWritableException | IOException e) {
+            //
+        }
 
-          return null;
-     }
+        return null;
+    }
 }

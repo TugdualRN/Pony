@@ -1,0 +1,144 @@
+PonyDafuk coding guideline
+
+Classes :
+	- Notés en UpperCamelCase
+		=> public class MySuperDankClass {}
+	- Sont toujours nommées au singulier
+	- Ordre de composition : 
+		- champs internes (sans getter/setters)
+		- champs externes
+		- constructeurs
+		- getter/setters
+		- public methods
+		- private methods
+	- Si elles sont les premiere a implementer une seule interface, elle prennent le même nom que celle-ci sans le "I"
+		=> 
+			public class UserService impelments IUserService {
+
+				//blabla
+			}
+
+Interfaces :
+
+	- Toujours préfixées d'un I 
+		=> 
+			IUserService, IUserRepository
+
+Spaces/Line breaks :
+	- Un saut de ligne après la déclaration d'une classe, pas d'espace en fin de définition
+		=> 
+			public class Myclasse {
+
+				private field _myfields;
+			}
+	- Un espace entre chaque field/method
+
+Getters/Setters :
+	- Respecte la norme java (generés par les IDE)
+	- Sont entourés des commentaire de collapsing avec defaultstate="collapsed" (interprétés par NetBeans et VSCode) :
+		=>
+		    // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
+		    ... MyGettersAndSetters
+	        // </editor-fold>
+
+
+Fields :
+	- Les fields purement internes sont précédés d'un _
+		=>
+	 		private object _myInnerInjectedObject; 
+	- Les autres fields externes en lowerCamelCase
+		=>
+			private int mySuperSwagInt
+
+Imports
+	- Ordre des Imports : packages standard => packages JAR (par ordre d'importance) => package applicatifs
+	- Chaque catégorie d'Import est séparé par un espace
+		=>
+			import java.util.List;
+
+			import org.springframework.beans.factory.annotation.Autowired;
+			import org.springframework.http.HttpStatus;
+
+			import com.pony.models.User;
+			import com.pony.services.RoleService;
+
+Methods :
+	- lowerCamelCase
+	- Limitées à 50 lignes
+	- Les return statments sont toujours précédés d'un Line Break, sauf s'ils sont dans une clause conditionnelle à une seule ligne
+	- Les structures de contrôles ont toujours des brackets
+	- Aérez les methodes logiquement (déclaration, structure de controlle, instanciation, ...)
+		=>
+			public String myMethod(int i) {
+				int j = i;
+
+				if (i == j) {
+					return j;
+				}
+				else if (i > j) {
+					i++;
+
+					return i;
+				}
+
+				return i * 2;
+			}
+	- Seulement des getters dans des setters dans ceux-ci, composez vos variables au dessus si besoin :
+	 =>
+	 	// GOOD
+	 	public void MyDankMethod(User user, User secondUser) {
+	 		int id = secondUser.getId() * 2;
+
+	 		user.setId(user.getId());
+	 		user.setId(id);
+	 	}
+
+	 	// BAD
+	 	public void MyDankMethod(User user, User secondUser) {
+	 		int id = secondUser.getId() * 2;
+
+	 		user.setId(secondUser.getId() * 2 / 4 + secondUser.getMonCul().toString());
+	 	}
+
+Indents :
+	- 4 spaces
+	- Indentations après chaque bracket
+
+Comments :
+	- Pas de commentaires de licence/author
+	- MultiLines comments must always be made using /* */
+		=>
+			/*
+			This part help other understand the code
+			Be kind to those who read you
+			*/
+	- Le Code commenté peut être soit en // soit en /* */
+		=>
+			// String i = "caca";
+			// String j = "caca";
+
+			/*
+			String i = "caca";
+			String j = "caca";
+			*/
+	- Commentez un maximum le code des methodes, les classes et les methods
+		=>
+			/**
+			 * Class used to access Data about Users
+			 * Blablabla
+			 */
+			public class UserRepository
+
+			/**
+			 * Return the associated User
+			 * 
+			 * @param id the user id
+			 *
+			 * @return the associated User in database
+			 */
+			public User findById(long id)
+
+
+
+
+

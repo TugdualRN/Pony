@@ -7,7 +7,7 @@ package com.pony.services.impl;
 
 import com.pony.exceptions.NoSuchEntityException;
 import com.pony.exceptions.UniqueEntityViolationException;
-import com.pony.models.Roles;
+import com.pony.models.Role;
 import com.pony.repositories.RoleRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,65 +22,65 @@ import com.pony.services.RoleService;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-     private final RoleRepository roleRepository;
+    private final RoleRepository _roleRepository;
 
-     @Autowired
-     public RoleServiceImpl(RoleRepository roleRepository) {
-          this.roleRepository = roleRepository;
-     }
+    @Autowired
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this._roleRepository = roleRepository;
+    }
 
-     @Override
-     @Transactional(readOnly = true)
-     public List<Roles> findAll() {
-          return roleRepository.findAll();
-     }
+    @Override
+    @Transactional(readOnly = true)
+    public List<Role> findAll() {
+        return _roleRepository.findAll();
+    }
 
-     @Override
-     @Transactional(readOnly = true)
-     public Roles findById(Long roleId) throws NoSuchEntityException {
+    @Override
+    @Transactional(readOnly = true)
+    public Role findById(Long roleId) throws NoSuchEntityException {
 
-          Roles role = roleRepository.findOne(roleId);
+        Role role = _roleRepository.findOne(roleId);
 
-          if (role != null) {
-               return role;
-          } else {
-               throw new NoSuchEntityException(roleId, Roles.class);
-          }
-     }
+        if (role != null) {
+            return role;
+        } else {
+            throw new NoSuchEntityException(roleId, Role.class);
+        }
+    }
 
-     @Override
-     public Roles insert(Roles role) throws UniqueEntityViolationException {
-          Roles roleByName = roleRepository.findByName(role.getName());
+    @Override
+    public Role insert(Role role) throws UniqueEntityViolationException {
+        Role roleByName = _roleRepository.findByName(role.getName());
 
-          if (roleByName != null) {
-               throw new UniqueEntityViolationException("name", role.getName(), Roles.class);
-          }
+        if (roleByName != null) {
+            throw new UniqueEntityViolationException("name", role.getName(), Role.class);
+        }
 
-          return roleRepository.save(role);
-     }
+        return _roleRepository.save(role);
+    }
 
-     @Override
-     public Roles update(Long roleId, Roles role) throws UniqueEntityViolationException, NoSuchEntityException {
+    @Override
+    public Role update(Long roleId, Role role) throws UniqueEntityViolationException, NoSuchEntityException {
 
-          Roles roleById = roleRepository.findOne(roleId);
+        Role roleById = _roleRepository.findOne(roleId);
 
-          if (roleById == null) {
-               throw new NoSuchEntityException(roleId, Roles.class);
-          }
+        if (roleById == null) {
+            throw new NoSuchEntityException(roleId, Role.class);
+        }
 
-          Roles roleByName = roleRepository.findByName(role.getName());
-          if (roleByName != null && !roleId.equals(roleByName.getId())) {
-               throw new UniqueEntityViolationException("name", role.getName(), Roles.class);
-          }
+        Role roleByName = _roleRepository.findByName(role.getName());
+        if (roleByName != null && !roleId.equals(roleByName.getId())) {
+            throw new UniqueEntityViolationException("name", role.getName(), Role.class);
+        }
 
-          roleById.setName(role.getName());
+        roleById.setName(role.getName());
 
-          return roleRepository.save(roleById);
-     }
+        return _roleRepository.save(roleById);
+    }
 
-     @Override
-     @Transactional
-     public void delete(Long roleId) {
-          roleRepository.delete(roleId);
-     }
+    @Override
+    @Transactional
+    public void delete(Long roleId) {
+    _roleRepository.delete(roleId);
+    }
 }

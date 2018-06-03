@@ -5,7 +5,6 @@
  */
 package com.pony.forms;
 
-import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
@@ -41,98 +40,96 @@ public class UserForm {
     private boolean duplicate = false;
     private boolean confirmationOk = true;
 
-     public Long getId() {
-          return id;
-     }
+    public Long getId() {
+        return id;
+    }
 
-     public void setId(Long id) {
-          this.id = id;
-     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-     public String getLogin() {
-          return login;
-     }
+    public String getLogin() {
+        return login;
+    }
 
-     public void setLogin(String login) {
-          this.login = login;
-     }
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-     public String getPassword() {
-          return password;
-     }
+    public String getPassword() {
+        return password;
+    }
 
-     public void setPassword(String password) {
-          this.password = password;
-     }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-     public String getPasswordConfirm() {
-          return passwordConfirm;
-     }
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
 
-     public void setPasswordConfirm(String passwordConfirm) {
-          this.passwordConfirm = passwordConfirm;
-     }
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
-     public String getFirstname() {
-          return firstname;
-     }
+    public String getFirstname() {
+        return firstname;
+    }
 
-     public void setFirstname(String firstname) {
-          this.firstname = firstname;
-     }
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-     public String getLastname() {
-          return lastname;
-     }
+    public String getLastname() {
+        return lastname;
+    }
 
-     public void setLastname(String lastname) {
-          this.lastname = lastname;
-     }
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-     public String getPhone() {
-          return phone;
-     }
+    public String getPhone() {
+        return phone;
+    }
 
-     public void setPhone(String phone) {
-          this.phone = phone;
-     }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-     public String getMail() {
-          return mail;
-     }
+    public String getMail() {
+        return mail;
+    }
 
-     public void setMail(String mail) {
-          this.mail = mail;
-     }
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
-     public Long getRoleId() {
-          return roleId;
-     }
+    public Long getRoleId() {
+        return roleId;
+    }
 
-     public void setRoleId(Long roleId) {
-          this.roleId = roleId;
-     }
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-     public boolean isDuplicate() {
-          return duplicate;
-     }
+    public boolean isDuplicate() {
+        return duplicate;
+    }
 
-     public void setDuplicate(boolean duplicate) {
-          this.duplicate = duplicate;
-     }
+    public void setDuplicate(boolean duplicate) {
+        this.duplicate = duplicate;
+    }
 
-     public boolean isConfirmationOk() {
-          return confirmationOk;
-     }
+    public boolean isConfirmationOk() {
+        return confirmationOk;
+    }
 
-     public void setConfirmationOk(boolean confirmationOk) {
-          this.confirmationOk = confirmationOk;
-     }
+    public void setConfirmationOk(boolean confirmationOk) {
+        this.confirmationOk = confirmationOk;
+    }
 
-     @Override
-     public String toString() {
-          return "UserForm{" + "id=" + id + ", login=" + login + ", password=" + password + ", passwordConfirm=" + passwordConfirm + ", firstname=" + firstname + ", lastname=" + lastname + ", phone=" + phone + ", mail=" + mail + ", roleId=" + roleId + ", duplicate=" + duplicate + ", confirmationOk=" + confirmationOk + "}";
-     }
-    
-    
+    @Override
+    public String toString() {
+        return "UserForm{" + "id=" + id + ", login=" + login + ", password=" + password + ", passwordConfirm=" + passwordConfirm + ", firstname=" + firstname + ", lastname=" + lastname + ", phone=" + phone + ", mail=" + mail + ", roleId=" + roleId + ", duplicate=" + duplicate + ", confirmationOk=" + confirmationOk + "}";
+    }
 }

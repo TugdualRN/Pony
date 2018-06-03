@@ -16,6 +16,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
@@ -26,64 +27,76 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
  *
  * @author Gotug
  */
-
-
 @Configuration
 @ComponentScan("com.pony")
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
+    private final ApplicationContext _applicationContext;
+    
+    @Autowired
+    public MvcConfig(ApplicationContext applicationContext) {
 
-     private final ApplicationContext applicationContext;
-     
-     @Autowired
-     public MvcConfig(ApplicationContext applicationContext) {
-          super();
-          this.applicationContext = applicationContext;
-     }
-
-
-
-     /*
-    * STEP 1 - Create SpringTemplateEngine
-    * */
-     @Bean
-     public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
-          SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-          templateEngine.setTemplateResolver(templateResolver);
-          templateEngine.addDialect(sec);
-          return templateEngine;
-     }
-
-     /*
-    * STEP 2 - Internationalization 
-    * */
-     @Bean
-     public MessageSource messageSource() {
-          ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-          messageSource.setBasename("classpath:messages");
-          messageSource.setDefaultEncoding("UTF-8");
-          return messageSource;
-     }
-
-     @Bean
-     public LocaleResolver localeResolver() {
-          CookieLocaleResolver resolver = new CookieLocaleResolver();
-          resolver.setDefaultLocale(Locale.ENGLISH);
-//          resolver.setCookieName("PonyCookie");
-//          resolver.setCookieMaxAge(4800);
-          return resolver;
-     }
- @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-	LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-	localeChangeInterceptor.setParamName("lang");
-	return localeChangeInterceptor;
+        super();
+        this._applicationContext = applicationContext;
     }
-     @Override
-     public void addInterceptors(InterceptorRegistry registry) {
-//          LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-//          interceptor.setParamName("language");
-          registry.addInterceptor(localeChangeInterceptor());
-     }
 
+    /**
+     * STEP 1 - Create SpringTemplateEngine
+     */
+    @Bean
+    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
+
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+        templateEngine.addDialect(sec);
+
+        return templateEngine;
+    }
+
+    /**
+     * STEP 2 - Internationalization 
+     */
+    @Bean
+    public MessageSource messageSource() {
+
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:messages");
+        messageSource.setDefaultEncoding("UTF-8");
+
+        return messageSource;
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(Locale.ENGLISH);
+        // resolver.setCookieName("PonyCookie");
+        // resolver.setCookieMaxAge(4800);
+
+        return resolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+
+        return localeChangeInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        
+        // LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        // interceptor.setParamName("language");
+        registry.addInterceptor(localeChangeInterceptor());
+    }
+
+    @Bean
+    public MappedInterceptor myInterceptor()
+    {
+        return new MappedInterceptor(null, new LoggerMiddleware());
+    }
 }

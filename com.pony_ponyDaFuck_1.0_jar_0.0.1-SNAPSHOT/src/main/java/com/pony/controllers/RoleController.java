@@ -5,109 +5,75 @@
  */
 package com.pony.controllers;
 
-import com.pony.exceptions.NoSuchEntityException;
-import com.pony.exceptions.UniqueEntityViolationException;
-import com.pony.factories.RoleFactory;
-import com.pony.forms.RoleForm;
-import com.pony.models.Roles;
-import com.pony.security.ConnectedUserDetails;
-import com.pony.services.RoleService;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.pony.models.Role;
+import com.pony.services.RoleService;
 
 /**
  *
  * @author Gotug
  */
 @Controller
-@RequestMapping("/roles")
+@RequestMapping("/managment")
+// @PreAuthorize("hasRole('ADMIN')")
 public class RoleController {
 
-     private final RoleService roleService;
+     private final RoleService _roleService;
 
      @Autowired
      public RoleController(RoleService roleService) {
-          this.roleService = roleService;
+          this._roleService = roleService;
      }
+    
+    @GetMapping(value = {"/roles"})
+    public String listRoles(Model model) {
 
-     @GetMapping(value = {"", "/"})
-     public String listRoles(Model model) {
+         List<Role> roles = _roleService.findAll();
 
-          ConnectedUserDetails connectedUserDetails = (ConnectedUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-          String connectedLogin = connectedUserDetails.getLogin();
-          List<Roles> allRoles = roleService.findAll();
-          model.addAttribute("roles", RoleFactory.toRoleDtoList(allRoles));
-          return "content/role";
-     }
+         model.addAttribute("roles", roles);
+         
+         return "managment/roles";
+    }
 
-     @GetMapping("/form")
-     public ModelAndView getRoleForm(Model model) {
-          return new ModelAndView("forms/role-form", "roleForm", new RoleForm());
-     }
+    @GetMapping(value = {"/role/add"})
+    public ModelAndView addRole(Model model, @RequestParam String roleName) {
 
-     @PostMapping("/form")
-     public ModelAndView createRole(@ModelAttribute RoleForm roleForm, BindingResult bindingResult, HttpServletResponse response) {
+        if (roleName != null && !roleName.isEmpty())
+        {
+            Role role = new Role(roleName.toUpperCase());
+            try {
+                _roleService.insert(role);
+            } catch (Exception e) {
+                System.out.println("Failed to insert Role " + roleName);
+            }
+        }
 
-          if (bindingResult.hasErrors()) {
-               return new ModelAndView("forms/role-form", "roleForm", roleForm);
-          }
+        return new ModelAndView("redirect:/managment/roles");
+    }
 
-          try {
-               Roles role = RoleFactory.fromForm(roleForm);
-               roleService.insert(role);
+    
+    @GetMapping(value = {"/role/delete/{id}"})
+    public ModelAndView deleteRole(Model model, @PathVariable long id) {
+        
+        try {
+            Role role = _roleService.findById(id);
+            _roleService.delete(role.getId());
 
-               return new ModelAndView("redirect:/roles");
-          } catch (UniqueEntityViolationException ex) {
-               roleForm.setDuplicate(true);
-          }
+            return new ModelAndView("redirect:/managment/roles");
+        } catch (Exception e) {
+            System.out.println("Failed to Delete Role with id " + id);
+        }
 
-          return new ModelAndView("forms/role-form", "roleForm", roleForm);
-     }
-
-     @GetMapping("/form/{roleId}")
-     public ModelAndView getFormWithRole(@PathVariable Long roleId) throws NoSuchEntityException {
-          Roles role = roleService.findById(roleId);
-          return new ModelAndView("forms/role-form", "roleForm", RoleFactory.toForm(role));
-     }
-
-     @PutMapping("/form/{roleId}")
-     public ModelAndView updateRole(@PathVariable Long roleId, @Valid @ModelAttribute RoleForm roleForm,
-             BindingResult bindingResult, HttpServletResponse response) throws NoSuchEntityException {
-
-          if (bindingResult.hasErrors()) {
-               return new ModelAndView("forms/role-form", "roleForm", roleForm);
-          }
-
-          try {
-               Roles role = RoleFactory.fromForm(roleForm);
-               roleService.update(roleId, role);
-               return new ModelAndView("redirect:/roles");
-          } catch (UniqueEntityViolationException ex) {
-               roleForm.setDuplicate(true);
-          }
-
-          return new ModelAndView("forms/role-form", "roleForm", roleForm);
-     }
-
-     @DeleteMapping("/{roleId}")
-     public ResponseEntity<Void> deleteRole(@PathVariable Long roleId) {
-          roleService.delete(roleId);
-          return new ResponseEntity<>(HttpStatus.OK);
-     }
+        return new ModelAndView("redirect:/managment/roles");
+    }
 }

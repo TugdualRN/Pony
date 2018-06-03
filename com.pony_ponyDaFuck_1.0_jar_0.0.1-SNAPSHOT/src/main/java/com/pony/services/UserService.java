@@ -5,25 +5,27 @@
  */
 package com.pony.services;
 
+import java.util.List;
+
 import com.pony.exceptions.NoSuchEntityException;
 import com.pony.exceptions.UniqueEntityViolationException;
-import com.pony.models.Users;
-import java.util.List;
+import com.pony.models.User;
 
 /**
  *
  * @author Gotug
  */
-
 public interface UserService {
 
-     List<Users> findAll();
+    List<User> findAll();
 
-     Users findById(Long userId) throws NoSuchEntityException;
+    User findById(Long userId) throws NoSuchEntityException;
 
-     Users insert(Users user) throws UniqueEntityViolationException;
+    User findByMail(String mail);
 
-     Users update(Long userId, Users user) throws UniqueEntityViolationException, NoSuchEntityException;
+    User insert(User user) throws UniqueEntityViolationException;
 
-     void delete(Long userId);
+    User update(Long userId, User user) throws UniqueEntityViolationException, NoSuchEntityException;
+
+    void delete(Long userId);
 }
