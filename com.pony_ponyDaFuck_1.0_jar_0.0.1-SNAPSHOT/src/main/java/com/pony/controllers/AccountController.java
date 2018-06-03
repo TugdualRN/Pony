@@ -26,7 +26,7 @@ public class AccountController {
 
         model.addAttribute("registerViewModel", new RegisterViewModel());
     
-        return "register";
+        return "authentication/register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
@@ -36,7 +36,7 @@ public class AccountController {
 
         if (bindingResult.hasErrors() || !passworsMatch)
         {   
-            return "register";
+            return "authentication/register";
         }
 
         User user = new User();
@@ -51,13 +51,13 @@ public class AccountController {
             System.out.println(e);
         }
 
-        return "register";
+        return "authentication/register";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
 
-        return "login";
+        return "authentication/login";
     }
 
     /**

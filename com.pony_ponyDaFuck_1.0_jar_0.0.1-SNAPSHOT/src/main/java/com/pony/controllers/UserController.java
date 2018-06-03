@@ -22,51 +22,50 @@ import com.pony.services.UserService;
 public class UserController {
 
      private final UserService _userService;
+     private final RoleService _roleService;
 
      @Autowired
-     public UserController(UserService userService) {
+     public UserController(UserService userService, RoleService roleService) {
           this._userService = userService;
+          this._roleService = roleService;
      }
     
     @GetMapping(value = {"/users"})
-    public String listRoles(Model model) {
+    public String listUsers(Model model) {
 
          List<User> users = _userService.findAll();
+         List<Role> roles = _roleService.findAll();
 
          model.addAttribute("users", users);
+         model.addAttribute("roles", roles);
          
          return "managment/users";
     }
 
-    // @GetMapping(value = {"/role/add"})
-    // public ModelAndView addRole(Model model, @RequestParam String roleName) {
+    @GetMapping(value = {"/user/addrole"})
+    public String addUserToRole(Model model, @RequestParam long userId, @RequestParam long roleId)
+    {
+        try {
+            User user = _userService.findById(userId);
+            List<Role> userRoles = user.getRoles();
+            Role role = _roleService.findById(roleId);
 
-    //     if (roleName != null && !roleName.isEmpty())
-    //     {
-    //         Role role = new Role(roleName.toUpperCase());
-    //         try {
-    //             _roleService.insert(role);
-    //         } catch (Exception e) {
-    //             System.out.println("Failed to insert Role " + roleName);
-    //         }
-    //     }
+            // Not working, need fix
+            if (userRoles.stream().filter((Role) -> role.getId() == roleId).count() == 0) {
+                if (userRoles.add(role)) {
+                    _userService.update(user.getId(), user);
+                }
+            }
+        }
+        catch (Exception e) {
 
-    //     return new ModelAndView("redirect:/managment/roles");
-    // }
+        }
 
-    
-    // @GetMapping(value = {"/role/delete/{id}"})
-    // public ModelAndView deleteRole(Model model, @PathVariable long id) {
-        
-    //     try {
-    //         Role role = _roleService.findById(id);
-    //         _roleService.delete(role.getId());
+        return "managment/users";
+    }
 
-    //         return new ModelAndView("redirect:/managment/roles");
-    //     } catch (Exception e) {
-    //         System.out.println("Failed to Delete Role with id " + id);
-    //     }
-
-    //     return new ModelAndView("redirect:/managment/roles");
-    // }
+    public String removeUserFromRole(Model model, @RequestParam long userId, @RequestParam long roleId)
+    {
+        return "managment/users";
+    }
 }

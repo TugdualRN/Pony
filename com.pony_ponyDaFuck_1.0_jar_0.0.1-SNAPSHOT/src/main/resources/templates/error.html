@@ -23,6 +23,9 @@
     </head>
 
     <body th:with="httpStatus=${T(org.springframework.http.HttpStatus)}">
+        <header>
+            <nav th:replace="fragments/navbar :: navbar"></nav>
+        </header>
         <div class="jumbotron error-box">
             <div class="container-fluid login-logo">
 
