@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.pony.models.User;
 import com.pony.services.UserService;
+import com.pony.utils.Mailer;
 import com.pony.viewmodels.RegisterViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AccountController {
 
-    @Autowired
     private UserService _userService;
+    private Mailer _mailer;
+
+    @Autowired
+    public AccountController(UserService userService, Mailer mailer) {
+        _userService = userService;
+        _mailer = mailer;
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(Model model) {
@@ -41,11 +48,15 @@ public class AccountController {
         }
 
         // Creation
-        User user = new User(viewModel.getUserName(), viewModel.getMail());
-        User savedUser = _userService.createUser(user, viewModel.getPassword());
+        User user = _userService.createUser(new User(viewModel.getUserName(), viewModel.getMail()), viewModel.getPassword());
 
         // Verification
-        if (savedUser != null) {
+        if (user != null) {
+
+            if (_mailer != null) {
+                _mailer.sendMail(user.getMail(), "TEST", "TEST");
+            }
+
             return new ModelAndView("authentication/register-success");
         }
 
@@ -71,6 +82,6 @@ public class AccountController {
      */
 
     // @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
-    // public String login(@Valid @RequestBody @ModelAttribute LoginViewModel viewModel, BindingResult bindingResult) {
+    // public ModelAndView login(@Valid @RequestBody @ModelAttribute LoginViewModel viewModel, BindingResult bindingResult) {
     // }
 }

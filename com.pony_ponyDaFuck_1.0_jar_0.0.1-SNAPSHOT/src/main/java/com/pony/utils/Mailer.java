@@ -1,43 +1,44 @@
 package com.pony.utils;
 
-import java.util.Properties;
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.mail.Message;
+
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 public class Mailer {
 
-    private String _host = "smtp.gmail.com";
+    private MailSender _mailSender;
+
     private String _sender = "unicorn.factory.sender@gmail.com";
-    private String _pass = "azerty1234!";
 
-    public Mailer()
+    public Mailer(MailSender mailSender, String sender)
     {
-
-    }
-
-    public Mailer(String host, String sender, String pass)
-    {
-        _host = host;
+        _mailSender = mailSender;
         _sender = sender;
-        _pass = pass;
     }
 
-    private void sendFromGMail(String pass, String[] to, String subject, String body) {
-        // Get system properties
-        Properties properties = System.getProperties();
-        // Setup mail server
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", _host);
-        properties.put("mail.smtp.user", _sender);
-        properties.put("mail.smtp.password", _pass);
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.smtp.auth", "true");
+    public void sendMail(String to, String subject, String body) {
+        List<String> lst = new ArrayList<String>();
+        lst.add(to);
 
-        // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
+        sendMail(lst, subject, body);
+    }
 
-        //MimeMessage mime = new MimeMessage();
+    public void sendMail(List<String> to, String subject, String body) {
+        
+        SimpleMailMessage message = new SimpleMailMessage();
+		
+		message.setFrom(_sender);
+		message.setTo(to.toArray(new String[to.size()]));
+		message.setSubject(subject);
+		message.setText(body);
+		_mailSender.send(message);
+    }
 
+    private Message formatMessage() {
+        return null;
     }
 }

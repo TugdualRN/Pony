@@ -22,10 +22,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-/**
- *
- * @author Gotug
- */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
