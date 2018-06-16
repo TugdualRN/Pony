@@ -7,8 +7,6 @@ package com.pony.services;
 
 import java.util.List;
 
-import com.pony.exceptions.NoSuchEntityException;
-import com.pony.exceptions.UniqueEntityViolationException;
 import com.pony.models.User;
 
 /**
@@ -19,13 +17,13 @@ public interface UserService {
 
     List<User> findAll();
 
-    User findById(Long userId) throws NoSuchEntityException;
+    User findById(Long userId);
 
     User findByMail(String mail);
 
-    User insert(User user) throws UniqueEntityViolationException;
-
-    User update(Long userId, User user) throws UniqueEntityViolationException, NoSuchEntityException;
+    User update(User user);
 
     void delete(Long userId);
+
+    User createUser(User user, String password);
 }

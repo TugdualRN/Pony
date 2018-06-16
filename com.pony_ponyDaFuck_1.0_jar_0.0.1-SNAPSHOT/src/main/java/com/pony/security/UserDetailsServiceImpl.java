@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.pony.PonyDaFuckApplication;
 import com.pony.models.User;
 import com.pony.repositories.UserRepository;
 
@@ -40,20 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = _userRepository.findByNormalizedMail(normalizedMail);
 
         if (user == null) {
+            String print = String.format("Couldn't find the logged user based on the given identitifer {0}", login);
+            System.out.println(print);
 
-            if (PonyDaFuckApplication.isDevelopment)
-            {
-                user = new User();
-                user.setUserName("tug");
-                user.setPasswordHash(new BCryptPasswordEncoder().encode("123"));
-                return new ConnectedUserDetails(user);
-            }
-            else {
-                String print = String.format("Couldn't find the logged user based on the given identitifer {0}", login);
-                System.out.println(print);
-    
-                throw new UsernameNotFoundException("User not found.");
-            }
+            throw new UsernameNotFoundException("User not found.");
         }
 
         return new ConnectedUserDetails(user);

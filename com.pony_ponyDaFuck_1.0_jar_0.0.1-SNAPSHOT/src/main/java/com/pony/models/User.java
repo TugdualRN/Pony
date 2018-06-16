@@ -7,11 +7,12 @@ package com.pony.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -31,8 +32,8 @@ public class User {
 
     // <editor-fold desc="Fields">
     @Id
-    @GeneratedValue
-    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "serial", name = "Id")
     private long id;
 
     @NotBlank
@@ -67,30 +68,27 @@ public class User {
 
     private String phone;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+    cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
     @JoinTable( 
-        name = "T_UserRoles", 
-        joinColumns =           { @JoinColumn(name = "UserId", referencedColumnName = "id") }, 
-        inverseJoinColumns =    { @JoinColumn(name = "RoleId", referencedColumnName = "id") }
+        name = "T_user_roles", 
+        joinColumns =           { @JoinColumn(name = "user_id")}, 
+        inverseJoinColumns =    { @JoinColumn(name = "role_id")}
     )
-    @ElementCollection(targetClass=Role.class)
+    //@ElementCollection(targetClass=Role.class)
     private List<Role> roles;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
     public User() {
-        super();
     }
 
-    public User(long id, String userName, String password, String firstname, String lastname, String phone, String mail, List<Role> roles) {
-        this.id = id;
+    public User(String userName, String mail) {
         this.userName = userName;
-        this.passwordHash = password;
-        this.firstName = firstname;
-        this.lastName = lastname;
-        this.phone = phone;
         this.mail = mail;
-        this.roles = roles;
     }
     // </editor-fold>
 

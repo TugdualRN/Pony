@@ -5,8 +5,6 @@
  */
 package com.pony.services.impl;
 
-import com.pony.exceptions.NoSuchEntityException;
-import com.pony.exceptions.UniqueEntityViolationException;
 import com.pony.models.Role;
 import com.pony.repositories.RoleRepository;
 import java.util.List;
@@ -37,41 +35,21 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Role findById(Long roleId) throws NoSuchEntityException {
+    public Role findById(Long roleId) {
 
-        Role role = _roleRepository.findOne(roleId);
-
-        if (role != null) {
-            return role;
-        } else {
-            throw new NoSuchEntityException(roleId, Role.class);
-        }
+        return _roleRepository.findOne(roleId);
     }
 
     @Override
-    public Role insert(Role role) throws UniqueEntityViolationException {
-        Role roleByName = _roleRepository.findByName(role.getName());
-
-        if (roleByName != null) {
-            throw new UniqueEntityViolationException("name", role.getName(), Role.class);
-        }
+    public Role insert(Role role) {
 
         return _roleRepository.save(role);
     }
 
     @Override
-    public Role update(Long roleId, Role role) throws UniqueEntityViolationException, NoSuchEntityException {
+    public Role update(Long roleId, Role role) {
 
         Role roleById = _roleRepository.findOne(roleId);
-
-        if (roleById == null) {
-            throw new NoSuchEntityException(roleId, Role.class);
-        }
-
-        Role roleByName = _roleRepository.findByName(role.getName());
-        if (roleByName != null && !roleId.equals(roleByName.getId())) {
-            throw new UniqueEntityViolationException("name", role.getName(), Role.class);
-        }
 
         roleById.setName(role.getName());
 
@@ -81,6 +59,6 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public void delete(Long roleId) {
-    _roleRepository.delete(roleId);
+        _roleRepository.delete(roleId);
     }
 }

@@ -7,8 +7,6 @@ package com.pony.services;
 
 import java.util.List;
 
-import com.pony.exceptions.NoSuchEntityException;
-import com.pony.exceptions.UniqueEntityViolationException;
 import com.pony.models.Role;
 
 /**
@@ -19,11 +17,11 @@ public interface RoleService {
 
     List<Role> findAll();
 
-    Role findById(Long roleId) throws NoSuchEntityException;
+    Role findById(Long roleId);
 
-    Role insert(Role role) throws UniqueEntityViolationException;
+    Role insert(Role role);
 
-    Role update(Long roleId, Role role) throws UniqueEntityViolationException, NoSuchEntityException;
+    Role update(Long roleId, Role role);
 
     void delete(Long roleId);
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AccountController {
@@ -22,42 +23,45 @@ public class AccountController {
     private UserService _userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(Model model) {
+    public ModelAndView register(Model model) {
 
         model.addAttribute("registerViewModel", new RegisterViewModel());
     
-        return "authentication/register";
+        return new ModelAndView("authentication/register");
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
-    public String register(@Valid @RequestBody @ModelAttribute RegisterViewModel viewModel, BindingResult bindingResult) {
+    public ModelAndView register(@Valid @RequestBody @ModelAttribute RegisterViewModel viewModel, BindingResult bindingResult) {
         
+        // Validation
         boolean passworsMatch = viewModel.getPassword().equals(viewModel.getConfirmPassword());
-
         if (bindingResult.hasErrors() || !passworsMatch)
         {   
-            return "authentication/register";
+            return new ModelAndView("authentication/register");
         }
 
-        User user = new User();
-        user.setUserName(viewModel.getUserName());
-        user.setMail(viewModel.getMail());
-        user.setPasswordHash(viewModel.getPassword());
+        // Creation
+        User user = new User(viewModel.getUserName(), viewModel.getMail());
+        User savedUser = _userService.createUser(user, viewModel.getPassword());
 
-        try {
-            _userService.insert(user);
-        } catch (Exception e) {
-            System.out.println("\n FOUND AN APPLICATION EXCEPTION \n");
-            System.out.println(e);
+        // Verification
+        if (savedUser != null) {
+            return new ModelAndView("authentication/register-success");
         }
 
-        return "authentication/register";
+        return new ModelAndView("authentication/register");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public ModelAndView login() {
 
-        return "authentication/login";
+        return new ModelAndView("authentication/login");
+    }
+
+    @RequestMapping(value = "/login/fail", method = RequestMethod.GET)
+    public ModelAndView loginFailure() {
+
+        return new ModelAndView("authentication/login-failure");
     }
 
     /**

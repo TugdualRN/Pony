@@ -8,6 +8,7 @@ package com.pony.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -21,8 +22,8 @@ public class Role {
     
     // <editor-fold desc="Fields">
     @Id
-    @GeneratedValue
-    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "serial", name = "Id")
     private long id;
 
     @Column(unique = true, nullable = false)

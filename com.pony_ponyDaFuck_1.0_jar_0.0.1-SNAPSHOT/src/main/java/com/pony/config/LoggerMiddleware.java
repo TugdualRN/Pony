@@ -34,7 +34,7 @@ public class LoggerMiddleware extends HandlerInterceptorAdapter {
 
             String message = String.format("HTTP %s %s from %s responded %s in %d%n ms", 
                 request.getMethod(), request.getServletPath(), request.getRemoteAddr(), response.getStatus(), getElapsedTime(_startTimer, endTimer));
-            _logger.info(message);
+            //_logger.info(message);
         }
     }
     

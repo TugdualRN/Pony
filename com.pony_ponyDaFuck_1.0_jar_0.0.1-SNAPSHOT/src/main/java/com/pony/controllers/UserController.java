@@ -1,6 +1,8 @@
 package com.pony.controllers;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,41 +33,45 @@ public class UserController {
      }
     
     @GetMapping(value = {"/users"})
-    public String listUsers(Model model) {
+    public ModelAndView listUsers() {
 
-         List<User> users = _userService.findAll();
-         List<Role> roles = _roleService.findAll();
+        List<User> users = _userService.findAll();
+        List<Role> roles = _roleService.findAll();
 
-         model.addAttribute("users", users);
-         model.addAttribute("roles", roles);
-         
-         return "managment/users";
+        ModelAndView mav = new ModelAndView("/managment/users");
+        mav.addObject("users", users);
+        mav.addObject("roles", roles);
+
+        return mav;
     }
 
     @GetMapping(value = {"/user/addrole"})
-    public String addUserToRole(Model model, @RequestParam long userId, @RequestParam long roleId)
+    public ModelAndView addUserToRole(@RequestParam long userId, @RequestParam long roleId)
     {
-        try {
-            User user = _userService.findById(userId);
-            List<Role> userRoles = user.getRoles();
-            Role role = _roleService.findById(roleId);
+        User user = _userService.findById(userId);
+        List<Role> userRoles = user.getRoles();
+        Role role = _roleService.findById(roleId);
 
-            // Not working, need fix
-            if (userRoles.stream().filter((Role) -> role.getId() == roleId).count() == 0) {
-                if (userRoles.add(role)) {
-                    _userService.update(user.getId(), user);
-                }
+        if (userRoles.stream().filter(x -> x.getId() == roleId).count() == 0) {
+            if (userRoles.add(role)) {
+                _userService.update(user);
             }
         }
-        catch (Exception e) {
 
-        }
-
-        return "managment/users";
+        return new ModelAndView("redirect:/managment/users");
     }
 
-    public String removeUserFromRole(Model model, @RequestParam long userId, @RequestParam long roleId)
+    @GetMapping(value = {"/user/removerole/{userId}/{roleId}"})
+    public ModelAndView removeUserFromRole(@PathVariable long userId, @PathVariable long roleId)
     {
-        return "managment/users";
+        User user = _userService.findById(userId);
+        List<Role> userRoles = user.getRoles();
+        Role role = _roleService.findById(roleId);
+
+        if (userRoles.removeIf(x -> x.getId() == role.getId())) {
+            _userService.update(user);
+        }
+
+        return new ModelAndView("redirect:/managment/users");
     }
 }

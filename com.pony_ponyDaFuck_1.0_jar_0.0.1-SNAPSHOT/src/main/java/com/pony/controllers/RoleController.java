@@ -36,43 +36,33 @@ public class RoleController {
      }
     
     @GetMapping(value = {"/roles"})
-    public String listRoles(Model model) {
+    public ModelAndView listRoles() {
 
-         List<Role> roles = _roleService.findAll();
+        List<Role> roles = _roleService.findAll();
 
-         model.addAttribute("roles", roles);
-         
-         return "managment/roles";
+        ModelAndView moa = new ModelAndView("managment/roles");
+        moa.addObject("roles", roles);
+
+        return moa;
     }
 
     @GetMapping(value = {"/role/add"})
-    public ModelAndView addRole(Model model, @RequestParam String roleName) {
+    public ModelAndView addRole(@RequestParam String roleName) {
 
         if (roleName != null && !roleName.isEmpty())
         {
             Role role = new Role(roleName.toUpperCase());
-            try {
-                _roleService.insert(role);
-            } catch (Exception e) {
-                System.out.println("Failed to insert Role " + roleName);
-            }
+            _roleService.insert(role);
         }
 
         return new ModelAndView("redirect:/managment/roles");
     }
-
     
     @GetMapping(value = {"/role/delete/{id}"})
-    public ModelAndView deleteRole(Model model, @PathVariable long id) {
+    public ModelAndView deleteRole(@PathVariable long id) {
         
-        try {
-            Role role = _roleService.findById(id);
-            _roleService.delete(role.getId());
-
-            return new ModelAndView("redirect:/managment/roles");
-        } catch (Exception e) {
-            System.out.println("Failed to Delete Role with id " + id);
-        }
+        Role role = _roleService.findById(id);
+        _roleService.delete(role.getId());
 
         return new ModelAndView("redirect:/managment/roles");
     }
