@@ -78,7 +78,6 @@ public class User {
         joinColumns =           { @JoinColumn(name = "user_id")}, 
         inverseJoinColumns =    { @JoinColumn(name = "role_id")}
     )
-    //@ElementCollection(targetClass=Role.class)
     private List<Role> roles;
     // </editor-fold>
 

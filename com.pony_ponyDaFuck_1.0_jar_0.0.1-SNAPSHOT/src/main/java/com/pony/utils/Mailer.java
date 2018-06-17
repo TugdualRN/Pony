@@ -12,7 +12,7 @@ public class Mailer {
 
     private MailSender _mailSender;
 
-    private String _sender = "unicorn.factory.sender@gmail.com";
+    private String _sender;
 
     public Mailer(MailSender mailSender, String sender)
     {
@@ -36,9 +36,5 @@ public class Mailer {
 		message.setSubject(subject);
 		message.setText(body);
 		_mailSender.send(message);
-    }
-
-    private Message formatMessage() {
-        return null;
     }
 }
