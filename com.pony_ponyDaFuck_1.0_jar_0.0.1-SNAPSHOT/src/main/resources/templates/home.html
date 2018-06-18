@@ -20,14 +20,15 @@
           <link rel="stylesheet" href="../static/css/pony.css" th:href="@{/css/pony.css}" type="text/css" />
           <link rel="stylesheet" href="../static/plugins/jquery-confirm/jquery-confirm.min.css" th:href="@{/plugins/jquery-confirm/jquery-confirm.min.css}" type="text/css" />
           <link rel="stylesheet" href="../static/plugins/datatables/datatables.min.css" th:href="@{/plugins/datatables/datatables.min.css}" type="text/css" />
+          <link rel="stylesheet" href="../static/plugins/AnimateTransition/transitions.css" th:href="@{/plugins/AnimateTransition/transitions.css}" type="text/css" />
           <link rel="stylesheet" type="text/css" 
                 href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.5.1/b-colvis-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/r-2.2.1/datatables.min.css"/>
      </head>
-     <body class="hold-transition skin-blue sidebar-mini">
+     <body class="main">
 
           <div th:replace="fragments/loader"></div>
 
-          <div class="master-page">
+          <div id="master-page" class="unLoad master-page hold-transition skin-blue sidebar-mini" >
 
                <header th:replace="fragments/header"></header>
 
@@ -57,15 +58,19 @@
           <script type="text/javascript" 
           src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.5.1/b-colvis-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/r-2.2.1/datatables.min.js"></script>
           <script type="text/javascript" src="../static/plugins/moment/moment.min.js" th:src="@{/plugins/moment/moment.min.js}"></script>
+          <script type="text/javascript" src="../static/plugins/AnimateTransition/animateTransition.js" th:src="@{/plugins/AnimateTransition/animateTransition.js}"></script>
           <script type="text/javascript" src="../static/js/adminlte.min.js" th:src="@{/js/adminlte.min.js}"></script>
 
           <script type="text/javascript" th:inline="javascript" charset="UTF-8">
                /*<![CDATA[*/
 
 
+
                var loadContent;
+               var loadPage;
 
                $(function () {
+
 
                     const ORIGIN = window.location.origin + "/";
 
@@ -76,11 +81,44 @@
                               type: "GET",
                               async: true
                          }).done(function (data) {
-                              $('#loader').remove();
+
                               $("#main-content").html(data);
 
                               var contentTitle = $(".content-title").detach();
                               $("#main-title").text(contentTitle.text());
+
+//                              AnimateTransition({
+//                                   container: '.master-page',
+//                                   blockIn: '.content-wrapper',
+//                                   blockOut: 'footer',
+//                                   animation: 'slide-out'
+//                              });
+                         });
+                    };
+
+                    loadPage = function (url) {
+
+                         $.ajax({
+                              url: url,
+                              type: "GET",
+                              async: true
+                         }).done(function (data) {
+
+                              $("#main-content").html(data);
+
+
+                              var contentTitle = $(".content-title").detach();
+                              $("#main-title").text(contentTitle.text());
+
+                              $('#master-page').removeClass("unLoad");
+                              AnimateTransition({
+                                   container: '.main-content',
+                                   blockIn: '#master-page',
+                                   blockOut: '#loader',
+                                   animation: 'cover-double-in'
+                              });
+
+                              $('#loader').remove();
                          });
                     };
 
@@ -115,17 +153,29 @@
                          submitForm($(this), event);
                          return false;
                     });
-
-                    setTimeout(function () {
-                         $('body').addClass('loaded');
-                    }, 2500);
+//
+//                    setTimeout(function () {
+//                         $('body').addClass('loaded');
+//                    }, 2500);
 
 //                    $(window).load(function () {
 //                         $("#loader-wrapper").fadeOut();
 //                    });
+//                    $("#Loader").fakeLoader({
+//
+//                         timeToHide: 1200, //Time in milliseconds for fakeLoader disappear
+//
+//                         zIndex: "999", //Default zIndex
+//
+//                         spinner: "spinner1", //Options: 'spinner1', 'spinner2', 'spinner3', 'spinner4', 'spinner5', 'spinner6', 'spinner7'
+//
+//                         bgColor: "#2ecc71", //Hex, RGB or RGBA colors
+//
+//                         imagePath: "yourPath/customizedImage.gif" //If you want can you insert your custom image
+//
+//                    });
 
-
-                    loadContent(ORIGIN + "roles/");
+                    loadPage(ORIGIN + "roles/");
                });
                /*]]>*/
           </script>

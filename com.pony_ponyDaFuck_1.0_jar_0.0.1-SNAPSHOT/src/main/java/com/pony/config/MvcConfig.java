@@ -26,22 +26,17 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
  *
  * @author Gotug
  */
-
-
 @Configuration
 @ComponentScan("com.pony")
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
-
      private final ApplicationContext applicationContext;
-     
+
      @Autowired
      public MvcConfig(ApplicationContext applicationContext) {
           super();
           this.applicationContext = applicationContext;
      }
-
-
 
      /*
     * STEP 1 - Create SpringTemplateEngine
@@ -68,21 +63,21 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      @Bean
      public LocaleResolver localeResolver() {
           CookieLocaleResolver resolver = new CookieLocaleResolver();
-          resolver.setDefaultLocale(Locale.ENGLISH);
+          resolver.setDefaultLocale(Locale.FRENCH);
 //          resolver.setCookieName("PonyCookie");
 //          resolver.setCookieMaxAge(4800);
           return resolver;
      }
- @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-	LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-	localeChangeInterceptor.setParamName("lang");
-	return localeChangeInterceptor;
-    }
+
+     @Bean
+     public LocaleChangeInterceptor localeChangeInterceptor() {
+          LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+          localeChangeInterceptor.setParamName("lang");
+          return localeChangeInterceptor;
+     }
+
      @Override
      public void addInterceptors(InterceptorRegistry registry) {
-//          LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-//          interceptor.setParamName("language");
           registry.addInterceptor(localeChangeInterceptor());
      }
 
