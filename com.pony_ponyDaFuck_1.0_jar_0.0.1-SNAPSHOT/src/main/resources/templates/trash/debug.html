@@ -1,11 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>PonyDaFuck</title>
+        <title>PonyDaFcuk</title>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <link rel="icon" type="image/png" href="../../images/favicon.ico" th:href="@{/images/favicon.ico}" />
 
+        <!--<link rel="stylesheet" href="../static/css/indexcss.css" th:href="@{/css/indexcss.css}" type="text/css" />-->
+        
+        <!-- <link type="text/css" rel="stylesheet" href="../static/plugins/bootstrap/css/bootstrap.min.css" 
+            th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"/> -->
+
+        <!-- <link type="text/css" rel="stylesheet" href="../static/css/login.css" 
+            th:href="@{/css/login.css}"/> -->
         <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css" 
             th:href="@{/css/font-awesome.min.css}"/>
         <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=arial-black"/>
@@ -17,20 +24,6 @@
             crossorigin="anonymous"/>
     </head>
     <body>
-        <header>
-            <nav th:replace="fragments/navbar :: navbar"></nav>
-        </header>
-        <div class="row">
-                <div class="col">
-                </div>
-                <div class="col">
-                    <br/>
-                    <p th-value="${exception.class}"></p>
-                    <p th-value="${exception.message}"></p>
-                    <p th-value="${exception.stackTrace}"></p>
-                </div>
-                <div class="col">
-                </div>
-            </div>
+        <p>You did it at last</p>
     </body>
 </html>
