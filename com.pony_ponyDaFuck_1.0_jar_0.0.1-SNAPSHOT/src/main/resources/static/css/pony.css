@@ -33,22 +33,46 @@ footer {
 
 .error-img {
      margin: auto;
-     width: 25%;
+     width: 30%;
+}
+.error-content{
+     text-align: center;
 }
 
+.error-tiltle{
+     font-size: 5vw;
+}
 .error-box {
-     min-height: 1106px !important;
+     font-size: 2vw;
+     max-height: 65em !important;
+     margin:  auto !important;
+     height: auto;
 }
 .error-result {
-     width: 25%;
+     font-size: 2vw;
+     width: 50%;
+     width: content-box;
      margin: auto; 
      margin-top: 2em;
-     height: 9em;
+     height: auto;
+     padding-bottom: 20px;
 }
 .error-return {
+     font-size: 2vw;
      margin: auto;
+     color: white !important;
+}
+
+button > #error-return > a {
+     color: white !important;
 }
 
 .user-dropdown {
      box-shadow: -1px 1px 20px #999;
+}
+.unLoad {
+     display: none;
+}
+.load {
+     display: block;
 }
