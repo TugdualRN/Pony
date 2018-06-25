@@ -5,8 +5,8 @@
  */
 package com.pony.security;
 
-import com.pony.models.Roles;
-import com.pony.models.Users;
+import com.pony.models.Role;
+import com.pony.models.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,85 +15,65 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- *
- * @author Gotug
+ * This Object is Returned By UserDetailsServiceImpl to Spring Security
+ * Our User Object interact with Spring Security by the UserDetails Interface Implementation
  */
 public class ConnectedUserDetails implements UserDetails {
 
-     private final String login;
-     private final String password;
-     private final String lastname;
-     private final String firstname;
-     private final String roleName;
+    private static final long serialVersionUID = 1L;
 
-     public ConnectedUserDetails(Users user) {
-          this.login = user.getLogin();
-          this.password = user.getPassword();
-          this.lastname = user.getLastname();
-          this.firstname = user.getFirstname();
+    private User user;
 
-          Roles userRole = user.getRoles();
-          roleName = userRole != null ? userRole.getName() : null;
-     }
+    public ConnectedUserDetails(User user) {
+        this.user = user;
+    }
 
-     public String getLogin() {
-          return login;
-     }
-
-     public String getLastname() {
-          return lastname;
-     }
-
-     public String getFirstname() {
-          return firstname;
-     }
-
-     public String getRoleName() {
-          return roleName;
-     }
-
+    /**
+     * This Method is Called by Spring Security to have information about user rights (Controller Access)
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-	final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-	// TODO
-	/*for (final Privilege privilege : user.getPrivileges()) {
-	    authorities.add(new SimpleGrantedAuthority(privilege.getName()));
-	}*/
-	grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER")); // To garantee the authentification
+        // We translate every role the user have into a SimpleGrantedAuthority (for Spring Security)
+        for (Role role : this.user.getRoles())
+        {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
 
-	return grantedAuthorities;
+        return grantedAuthorities;
     }
 
-     @Override
-     public String getPassword() {
-          return password;
-     }
+    // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
+    @Override
+    public String getPassword() {
+        return user.getPasswordHash();
+    }
 
-     @Override
-     public String getUsername() {
-          return login;
-     }
+    @Override
+    public String getUsername() {
+        return user.getMail();
+    }
 
-     @Override
-     public boolean isAccountNonExpired() {
-          return true;
-     }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-     @Override
-     public boolean isAccountNonLocked() {
-          return true;
-     }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-     @Override
-     public boolean isCredentialsNonExpired() {
-          return true;
-     }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-     @Override
-     public boolean isEnabled() {
-          return true;
-     }
-
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    // </editor-fold>
 }

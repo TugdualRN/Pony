@@ -1,3 +1,40 @@
+<<<<<<< HEAD
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>PonyDaFuck</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" type="image/png" href="../../images/favicon.ico" th:href="@{/images/favicon.ico}" />
+
+        <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css" 
+            th:href="@{/css/font-awesome.min.css}"/>
+        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=arial-black"/>
+        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=ubuntu" />
+        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=open-sans"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+            crossorigin="anonymous"/>
+    </head>
+    <body>
+        <header>
+            <nav th:replace="fragments/navbar :: navbar"></nav>
+        </header>
+        <div class="row">
+                <div class="col">
+                </div>
+                <div class="col">
+                    <br/>
+                    <p th-value="${exception.class}"></p>
+                    <p th-value="${exception.message}"></p>
+                    <p th-value="${exception.stackTrace}"></p>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+    </body>
+=======
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
      <head>
           <meta charset="utf-8" />
@@ -71,4 +108,5 @@
           <script type="text/javascript" src="../static/plugins/jquery/jquery-3.3.1.min.js" th:src="@{/plugins/jquery/jquery-3.3.1.min.js}"></script>
           <script src="../resources/plugins/bootstrap/js/bootstrap.min.js" th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
      </body>
+>>>>>>> origin/master
 </html>
