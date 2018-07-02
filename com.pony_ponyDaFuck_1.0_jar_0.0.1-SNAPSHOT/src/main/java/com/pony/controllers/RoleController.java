@@ -30,10 +30,8 @@ public class RoleController {
 
         List<Role> roles = _roleService.findAll();
 
-        ModelAndView moa = new ModelAndView("managment/roles");
-        moa.addObject("roles", roles);
-
-        return moa;
+        return new ModelAndView("managment/role")
+            .addObject("roles", roles);
     }
 
     @GetMapping(value = {"/role/add"})
@@ -56,5 +54,4 @@ public class RoleController {
 
         return new ModelAndView("redirect:/managment/roles");
     }
->>>>>>> Stashed changes
 }

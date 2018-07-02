@@ -16,6 +16,7 @@ import com.pony.utils.Mailer;
 import com.pony.viewmodels.RegisterViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,18 +42,11 @@ public class AccountController {
         _mailer = mailer;
     }
 
-    @Autowired
-    public AccountController(UserService userService)
-    {
-        _userService = userService;
-    }
-
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(Model model) {
-
-        model.addAttribute("registerViewModel", new RegisterViewModel());
     
-        return new ModelAndView("authentication/register");
+        return new ModelAndView("authentication/register")
+            .addObject("registerViewModel", new RegisterViewModel());
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
@@ -68,11 +62,12 @@ public class AccountController {
         // Creation
         User user = _userService.createUser(new User(viewModel.getUserName(), viewModel.getMail()), viewModel.getPassword());
 
-        // Verification
+        // Mailing
         if (user != null) {
-
-            if (_mailer != null) {
+            try {
                 _mailer.sendMail(user.getMail(), "TEST", "TEST");
+            } catch (MailSendException e) {
+                _logger.fatal("Mailing connection timeout");
             }
 
             return new ModelAndView("authentication/register-success");
@@ -101,13 +96,13 @@ public class AccountController {
         if (user != null) {
             try {
                 // retrieve token matching the given one
-                Token token = user.getTokens().stream().filter(x -> x.getUuid().toString() == tokenValue).findFirst().get();
+                Token token = user.getTokens().stream().filter(x -> x.getValue().toString() == tokenValue).findFirst().get();
                 
-                Hours hours = Hours.between(token.getGenerationDate(), new Date());
-                // calculate interval for token validity
-                if (interval.toPeriod().getHours() < 48) {
+                // Hours hours = Hours.between(token.getCreationdate(), new Date());
+                // // calculate interval for token validity
+                // if (interval.toPeriod().getHours() < 48) {
 
-                }
+                // }
             }
             catch (NoSuchElementException e) {
                 _logger.error("No token found", e);

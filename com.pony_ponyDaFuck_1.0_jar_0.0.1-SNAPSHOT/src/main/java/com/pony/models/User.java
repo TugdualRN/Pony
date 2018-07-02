@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -70,6 +71,11 @@ public class User {
     )
     private List<Role> roles;
 
+    @OneToMany(
+        cascade = CascadeType.ALL, 
+        orphanRemoval = true
+    )
+    //@JoinColumn(name = "user_id")
     private List<Token> tokens;
 
     @Column(nullable = false)

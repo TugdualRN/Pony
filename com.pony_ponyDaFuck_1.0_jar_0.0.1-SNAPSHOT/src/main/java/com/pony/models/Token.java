@@ -1,13 +1,18 @@
 package com.pony.models;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.pony.enumerations.TokenType;
 
 @Entity
 @Table(name = "T_Tokens")
@@ -17,17 +22,24 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "serial", name = "Id")
-    private long id;
+	private long id;
 
     @Column(nullable = false)
-    private int type;
+    private TokenType type;
 
     @Column(nullable = false)
-    private String value;
+    private UUID value;
 
     @Column(nullable = false)
-    private Date creationDate;
-    // </editor-fold>
+	private Date creationDate;
+	// </editor-fold>
+	
+	public Token(TokenType type, UUID value, Date creationDate)
+	{
+		this.type = type;
+		this.value = value;
+		this.creationDate = creationDate;
+	}
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
 	public long getId()
@@ -40,22 +52,22 @@ public class Token {
 		this.id = id;
 	}
 
-	public int getType()
+	public TokenType getType()
 	{
 		return this.type;
 	}
 
-	public void setType(int type)
+	public void setType(TokenType type)
 	{
 		this.type = type;
 	}
 
-	public String getValue()
+	public UUID getValue()
 	{
 		return this.value;
 	}
 
-	public void setValue(String value)
+	public void setValue(UUID value)
 	{
 		this.value = value;
 	}
@@ -69,5 +81,15 @@ public class Token {
 	{
 		this.creationDate = creationDate;
 	}
+
+	// public User getUser()
+	// {
+	// 	return this.user;
+	// }
+
+	// public void setUser(User user)
+	// {
+	// 	this.user = user;
+	// }
     // </editor-fold>
 }

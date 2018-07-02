@@ -3,8 +3,6 @@ package com.pony.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.Message;
-
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -34,7 +32,8 @@ public class Mailer {
 		message.setFrom(_sender);
 		message.setTo(to.toArray(new String[to.size()]));
 		message.setSubject(subject);
-		message.setText(body);
+        message.setText(body);
+        
 		_mailSender.send(message);
     }
 }
