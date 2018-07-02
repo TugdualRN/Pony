@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pony.models;
 
 import java.util.List;
@@ -20,11 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
-
-/**
- *
- * @author Gotug
- */
 
 @Entity
 @Table(name = "T_Users")
@@ -79,6 +69,17 @@ public class User {
         inverseJoinColumns =    { @JoinColumn(name = "role_id")}
     )
     private List<Role> roles;
+
+    private List<Token> tokens;
+
+    @Column(nullable = false)
+    private boolean isActive = false;
+
+    @Column(nullable = false)
+    private boolean isBanned = false;
+
+    @Column(nullable = false)
+    private boolean isSuspended = false;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
@@ -156,6 +157,14 @@ public class User {
         this.roles = roles;
     }
 
+    public List<Token> getTokens() {
+        return this.tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
+    }
+
     public String getNormalizedUserName()
 	{
 		return this.normalizedUserName;
@@ -174,6 +183,36 @@ public class User {
 	public void setNormalizedMail(String normalizedMail)
 	{
 		this.normalizedMail = normalizedMail;
+    }
+    
+    public boolean getIsActive()
+	{
+		return this.isActive;
+	}
+
+	public void setIsActive(boolean isActive)
+	{
+		this.isActive = isActive;
+    }
+    
+    public boolean getIsBanned()
+	{
+		return this.isBanned;
+	}
+
+	public void setIsBanned(boolean isBanned)
+	{
+		this.isBanned = isBanned;
+    }
+    
+	public boolean getIsSuspended()
+	{
+		return this.isSuspended;
+	}
+
+	public void setIsSuspended(boolean isSuspended)
+	{
+		this.isSuspended = isSuspended;
 	}
     // </editor-fold>
 

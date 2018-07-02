@@ -71,4 +71,5 @@ public class UserController {
 
         return new ModelAndView("redirect:/managment/users");
     }
+>>>>>>> Stashed changes
 }

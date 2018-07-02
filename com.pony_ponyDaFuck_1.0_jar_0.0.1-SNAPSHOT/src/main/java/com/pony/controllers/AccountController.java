@@ -1,7 +1,15 @@
 package com.pony.controllers;
 
+import java.security.Timestamp;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+import java.util.NoSuchElementException;
+
 import javax.validation.Valid;
 
+import com.pony.models.Token;
 import com.pony.models.User;
 import com.pony.services.UserService;
 import com.pony.utils.Mailer;
@@ -15,10 +23,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.apache.log4j.Logger;
 
 @Controller
 public class AccountController {
+
+    private static Logger _logger = Logger.getLogger(AccountController.class);
 
     private UserService _userService;
     private Mailer _mailer;
@@ -27,6 +39,12 @@ public class AccountController {
     public AccountController(UserService userService, Mailer mailer) {
         _userService = userService;
         _mailer = mailer;
+    }
+
+    @Autowired
+    public AccountController(UserService userService)
+    {
+        _userService = userService;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -73,6 +91,31 @@ public class AccountController {
     public ModelAndView loginFailure() {
 
         return new ModelAndView("authentication/login-failure");
+    }
+
+    @RequestMapping(value = "/confirm", method = RequestMethod.GET)
+    public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
+        
+        User user = _userService.findById(userId);
+
+        if (user != null) {
+            try {
+                // retrieve token matching the given one
+                Token token = user.getTokens().stream().filter(x -> x.getUuid().toString() == tokenValue).findFirst().get();
+                
+                Hours hours = Hours.between(token.getGenerationDate(), new Date());
+                // calculate interval for token validity
+                if (interval.toPeriod().getHours() < 48) {
+
+                }
+            }
+            catch (NoSuchElementException e) {
+                _logger.error("No token found", e);
+
+            }
+        }
+
+        return new ModelAndView("authentication/confirmSuccess");
     }
 
     /**
