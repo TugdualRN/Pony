@@ -121,7 +121,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/reset-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
-    public ModelAndView register(@Valid @RequestBody @ModelAttribute ForgotPasswordViewModel viewModel, BindingResult bindingResult) {
+    public ModelAndView resetPassword(@Valid @RequestBody @ModelAttribute ForgotPasswordViewModel viewModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
         {   
             return new ModelAndView("home");
@@ -133,6 +133,11 @@ public class AccountController {
         _mailer.SendResetPassword(user, token);
 
         return new ModelAndView("authentication/reset-password-success");
+    }
+
+    public ModelAndView test()
+    {
+        return null;
     }
 
     /**

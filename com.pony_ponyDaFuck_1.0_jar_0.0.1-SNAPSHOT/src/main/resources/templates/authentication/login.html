@@ -1,55 +1,51 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>PonyDaFuck</title>
-        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8"/>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta http-equiv="Content-Type" content="text/html"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <link rel="icon" type="image/png" href="../../images/favicon.ico" th:href="@{/images/favicon.ico}" />
-
-        <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css" 
-            th:href="@{/css/font-awesome.min.css}"/>
-        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=arial-black"/>
-        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=ubuntu" />
-        <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=open-sans"/>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
-            crossorigin="anonymous"/>
+        <th:block th:replace="fragments/style-common">...</th:block>
     </head>
     <body>
-        <header>
-            <nav th:replace="fragments/navbar :: navbar"></nav>
-        </header>
+        <th:block th:replace="fragments/header"></th:block>
+
         <div class="row">
-                <div class="col-3">
-                </div>
-                <div class="col">
-                    <br/>
-                    <form th:action="@{/login}" th:method="POST" autocomplete="on">
-                        <div class="form-group">
-                            <label for="login">Email address</label>
-                            <input type="email" class="form-control" id="login" aria-describedby="EmailHelp" placeholder="Enter email" name="login" />
-                            <small id="EmailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password" name="password"/>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me"/>Remember me
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <p><a th:href="@{/reset-password}">Forgot Password ?</a></p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-                <div class="col-3">
-                </div>
+            <div class="col-3">
             </div>
+            <div class="col">
+                <br/>
+                <form th:action="@{/login}" th:method="POST" autocomplete="on">
+                    <div class="form-group">
+                        <label for="login">Email address</label>
+                        <input type="email" class="form-control" id="login" aria-describedby="EmailHelp" placeholder="Enter email" name="login" />
+                        <small id="EmailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me"/>Remember me
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <p><a th:href="@{/reset-password}">Forgot Password ?</a></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-3">
+            </div>
+        </div>
+
+        <th:block th:replace="fragments/footer"></th:block>
+        <th:block th:replace="fragments/script-common">...</th:block>
     </body>
 </html>

@@ -17,11 +17,19 @@ import com.pony.models.User;
  */
 public interface UserService {
 
+    // <editor-fold defaultstate="collapsed" desc="CRUD">
     List<User> findAll();
 
     User findById(Long userId);
 
+    User findByUserName(String userName);
+    
+    User findByNormalizedUserName(String normalizedUserName);
+
     User findByMail(String mail);
+
+    User findByNormalizedMail(String normalizedMail);
+    // <editor fold/>
 
     User update(User user);
 
