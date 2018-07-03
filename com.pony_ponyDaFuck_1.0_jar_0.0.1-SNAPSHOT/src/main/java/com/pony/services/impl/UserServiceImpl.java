@@ -1,8 +1,8 @@
 
 package com.pony.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,6 +72,7 @@ public class UserServiceImpl implements UserService {
         _userRepository.delete(userId);
     }
 
+    @Override
     public synchronized User createUser(User user, String password) {
 
         user.setNormalizedUserName(user.getUserName().toUpperCase());
@@ -87,11 +88,6 @@ public class UserServiceImpl implements UserService {
             roles.add(baseRole);
             user.setRoles(roles);
 
-            // Create Token for Account Activation
-            List<Token> tokens = new ArrayList<Token>();
-            tokens.add(new Token(TokenType.ACTIVATE_ACCOUNT, UUID.randomUUID(), new Date()));
-            user.setTokens(tokens);
-
             User savedUser = _userRepository.save(user);
             if (savedUser != null) {
                 _logger.info("Created User " + user.getUserName() + " with Mail " + user.getMail());
@@ -105,6 +101,17 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public Token generateToken(TokenType type, User user) {
+
+        Token token = new Token(type, UUID.randomUUID(), LocalDateTime.now());
+        user.getTokens().add(token);
+
+        _userRepository.save(user);
+
+        return token;
     }
 
     /**

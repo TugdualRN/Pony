@@ -1,6 +1,6 @@
 package com.pony.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -31,10 +31,13 @@ public class Token {
     private UUID value;
 
     @Column(nullable = false)
-	private Date creationDate;
+	private LocalDateTime creationDate;
 	// </editor-fold>
 	
-	public Token(TokenType type, UUID value, Date creationDate)
+	public Token() {
+	}
+
+	public Token(TokenType type, UUID value, LocalDateTime creationDate)
 	{
 		this.type = type;
 		this.value = value;
@@ -72,12 +75,12 @@ public class Token {
 		this.value = value;
 	}
 
-	public Date getCreationdate()
+	public LocalDateTime getCreationdate()
 	{
 		return this.creationDate;
 	}
 
-	public void setCreationdate(Date creationDate)
+	public void setCreationdate(LocalDateTime creationDate)
 	{
 		this.creationDate = creationDate;
 	}

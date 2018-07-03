@@ -1,18 +1,16 @@
 package com.pony.controllers;
 
-import java.security.Timestamp;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
-
 import javax.validation.Valid;
 
+import com.pony.enumerations.TokenType;
 import com.pony.models.Token;
 import com.pony.models.User;
 import com.pony.services.UserService;
 import com.pony.utils.Mailer;
+import com.pony.viewmodels.ForgotPasswordViewModel;
 import com.pony.viewmodels.RegisterViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +63,8 @@ public class AccountController {
         // Mailing
         if (user != null) {
             try {
-                _mailer.sendMail(user.getMail(), "TEST", "TEST");
+                Token token = _userService.generateToken(TokenType.ACTIVATE_ACCOUNT, user);
+                _mailer.SendRegisterMail(user, token);
             } catch (MailSendException e) {
                 _logger.fatal("Mailing connection timeout");
             }
@@ -88,7 +87,7 @@ public class AccountController {
         return new ModelAndView("authentication/login-failure");
     }
 
-    @RequestMapping(value = "/confirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
     public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
         
         User user = _userService.findById(userId);
@@ -98,11 +97,12 @@ public class AccountController {
                 // retrieve token matching the given one
                 Token token = user.getTokens().stream().filter(x -> x.getValue().toString() == tokenValue).findFirst().get();
                 
-                // Hours hours = Hours.between(token.getCreationdate(), new Date());
-                // // calculate interval for token validity
-                // if (interval.toPeriod().getHours() < 48) {
+                LocalDateTime now = LocalDateTime.now();
 
-                // }
+                if (Duration.between(token.getCreationdate(), now).toHours() < 48) {
+                    user.setIsActive(true);
+                    _userService.update(user);
+                }
             }
             catch (NoSuchElementException e) {
                 _logger.error("No token found", e);
@@ -111,6 +111,28 @@ public class AccountController {
         }
 
         return new ModelAndView("authentication/confirmSuccess");
+    }
+
+    @RequestMapping(value = "/reset-password", method = RequestMethod.GET)
+    public ModelAndView resetPassword() {
+
+        return new ModelAndView("authentication/reset-password")
+            .addObject("forgotPasswordViewModel", new ForgotPasswordViewModel());
+    }
+
+    @RequestMapping(value = "/reset-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
+    public ModelAndView register(@Valid @RequestBody @ModelAttribute ForgotPasswordViewModel viewModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+        {   
+            return new ModelAndView("home");
+        }
+
+        User user = _userService.findByMail(viewModel.getMail().toUpperCase());
+        Token token = _userService.generateToken(TokenType.RESET_PASSWORD, user);
+
+        _mailer.SendResetPassword(user, token);
+
+        return new ModelAndView("authentication/reset-password-success");
     }
 
     /**

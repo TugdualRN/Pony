@@ -7,6 +7,8 @@ package com.pony.services;
 
 import java.util.List;
 
+import com.pony.enumerations.TokenType;
+import com.pony.models.Token;
 import com.pony.models.User;
 
 /**
@@ -26,4 +28,6 @@ public interface UserService {
     void delete(Long userId);
 
     User createUser(User user, String password);
+
+    Token generateToken(TokenType token, User user);
 }
