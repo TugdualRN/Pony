@@ -48,7 +48,7 @@
 
 			<ul class="list-group" >
 			<th:block  th:each="news : ${newsList}"> 
-				<li class="list-group-item"><tr><td th:text="${news.title}"></td><td th:text="${news.content}" ></td></tr></li>
+				<a th:href="@{'news/'+${news.slug}}" ><li class="list-group-item" th:text="${news.title}"></li></a>
 			</th:block>
 			</ul>
 		</div>

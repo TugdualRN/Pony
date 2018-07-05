@@ -18,4 +18,6 @@ public interface NewsService {
 	    News update(Long NewsId, News News);
 
 	    void delete(Long NewsId);
+	    
+	    News createNews(News news);
 }

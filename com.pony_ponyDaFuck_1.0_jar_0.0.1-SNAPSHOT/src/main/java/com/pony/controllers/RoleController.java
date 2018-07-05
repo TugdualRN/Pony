@@ -30,7 +30,7 @@ public class RoleController {
 
         List<Role> roles = _roleService.findAll();
 
-        return new ModelAndView("managment/role")
+        return new ModelAndView("managment/roles")
             .addObject("roles", roles);
     }
 
