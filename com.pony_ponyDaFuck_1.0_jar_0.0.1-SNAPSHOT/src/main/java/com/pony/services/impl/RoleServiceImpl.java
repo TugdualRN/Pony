@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pony.services.impl;
 
-import com.pony.models.Role;
-import com.pony.repositories.RoleRepository;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.pony.services.RoleService;
 
-/**
- *
- * @author Gotug
- */
+import com.pony.models.Role;
+import com.pony.services.RoleService;
+import com.pony.repositories.RoleRepository;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -61,4 +54,5 @@ public class RoleServiceImpl implements RoleService {
     public void delete(Long roleId) {
         _roleRepository.delete(roleId);
     }
+>>>>>>> master
 }

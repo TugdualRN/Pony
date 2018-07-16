@@ -28,7 +28,6 @@
             <div class="col">
                 <br/>
                 <form th:action="@{/register}" th:object="${registerViewModel}" th:method="POST" autocomplete="on">
-                    <!-- method="POST" action="#"  -->
                     <div class="form-group">
                         <label for="UserName">User Name</label>
                         <input th:field="*{userName}" class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"/>
@@ -50,6 +49,12 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
+            <div class="col-2">
+            </div>
+        </div>
+
+        <th:block th:replace="fragments/footer"></th:block>
+        <th:block th:replace="fragments/script-common">...</th:block>
             <div class="col">
             </div>
         </div>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pony.security;
 
 import com.pony.models.Role;
@@ -14,10 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- * This Object is Returned By UserDetailsServiceImpl to Spring Security
- * Our User Object interact with Spring Security by the UserDetails Interface Implementation
- */
 public class ConnectedUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;

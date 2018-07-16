@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.pony.enumerations.TokenType;
 import com.pony.models.Token;
 import com.pony.models.User;
+import com.pony.services.TokenService;
 import com.pony.services.UserService;
 import com.pony.utils.Mailer;
 import com.pony.viewmodels.ForgotPasswordViewModel;
@@ -32,10 +33,12 @@ public class AccountController {
     private static Logger _logger = Logger.getLogger(AccountController.class);
 
     private UserService _userService;
+    private TokenService _tokenService;
     private Mailer _mailer;
 
     @Autowired
-    public AccountController(UserService userService, Mailer mailer) {
+    public AccountController(UserService userService, TokenService tokenService, Mailer mailer) {
+        _tokenService = tokenService;
         _userService = userService;
         _mailer = mailer;
     }
@@ -121,18 +124,38 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/reset-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
-    public ModelAndView register(@Valid @RequestBody @ModelAttribute ForgotPasswordViewModel viewModel, BindingResult bindingResult) {
+    public ModelAndView resetPassword(@Valid @RequestBody @ModelAttribute ForgotPasswordViewModel viewModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
         {   
             return new ModelAndView("home");
         }
 
-        User user = _userService.findByMail(viewModel.getMail().toUpperCase());
-        Token token = _userService.generateToken(TokenType.RESET_PASSWORD, user);
+        User user = _userService.findByNormalizedMail(viewModel.getMail().toUpperCase());
+        
+        if (user != null) {
+            Token token = _tokenService.generateToken(TokenType.RESET_PASSWORD);
+            user.getTokens().add(token);
+            _userService.update(user);
 
-        _mailer.SendResetPassword(user, token);
+            _mailer.SendResetPassword(user, token);
 
-        return new ModelAndView("authentication/reset-password-success");
+            return new ModelAndView("authentication/reset-password-success");
+        }
+
+        return new ModelAndView("authentication/reset-password-failure");
+    }
+
+    @RequestMapping(value = "/change-password", method = RequestMethod.GET)
+    public ModelAndView changePassword(@RequestParam long userId, @RequestParam String tokenValue)
+    {
+        User user = _userService.findById(userId);
+
+        if (user != null) {
+            //Token token = user.getTokens().str
+            
+        }
+
+        return null;
     }
 
     /**

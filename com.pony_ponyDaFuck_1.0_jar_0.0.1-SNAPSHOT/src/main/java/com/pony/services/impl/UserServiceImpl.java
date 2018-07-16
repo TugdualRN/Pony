@@ -1,10 +1,9 @@
-
 package com.pony.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +27,6 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder _passwordEncoder;
     private final UserRepository _userRepository;
     private final RoleRepository _roleRepository;
-    
 
     @Autowired
     public UserServiceImpl(
@@ -56,12 +54,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+
+    public User findByUserName(String userName) {
+
+        return _userRepository.findByUserName(userName);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findByNormalizedUserName(String normalizedUserName) {
+
+        return _userRepository.findByNormalizedUserName(normalizedUserName);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+
     public User findByMail(String mail) {
         
         return _userRepository.findByMail(mail);
     }
 
     @Override
+
+    @Transactional(readOnly = true)
+    public User findByNormalizedMail(String normalizedMail) {
+        
+        return _userRepository.findByNormalizedMail(normalizedMail);
+    }
+
+    @Override
+
     public User update(User user) {
         return _userRepository.save(user);
     }
