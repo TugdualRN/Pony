@@ -1,6 +1,5 @@
 package com.pony.controllers;
 
-<<<<<<< HEAD
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
@@ -17,15 +16,6 @@ import com.pony.viewmodels.RegisterViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
-=======
-import javax.validation.Valid;
-
-import com.pony.models.User;
-import com.pony.services.UserService;
-import com.pony.viewmodels.RegisterViewModel;
-
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> master
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -100,7 +90,6 @@ public class AccountController {
         return new ModelAndView("authentication/login-failure");
     }
 
-<<<<<<< HEAD
     @RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
     public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
         
