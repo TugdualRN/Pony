@@ -53,7 +53,7 @@ public class NewsController {
 
 		News news = new News();
 //		System.out.println(viewModel.getContent().substring(1, viewModel.getContent().length()-1));
-		news.setContent(viewModel.getContent().substring(1, viewModel.getContent().length()-1).replace("\\", ""));
+		news.setContent(_newsService.formatContent(viewModel.getContent()));
 		String title = viewModel.getTitle();
 		news.setTitle(title);
 		_newsService.createNews(news);

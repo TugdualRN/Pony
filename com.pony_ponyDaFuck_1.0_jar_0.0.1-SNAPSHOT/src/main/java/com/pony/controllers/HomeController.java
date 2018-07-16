@@ -18,7 +18,7 @@ public class HomeController {
 		_newsService = newsService;
 	}
     @RequestMapping(value = {"", "/", "/home"})
-    public ModelAndView home(Model model) {
+    public ModelAndView home() {
 
         return new ModelAndView("home").addObject("newsList", _newsService.findAll());
     }

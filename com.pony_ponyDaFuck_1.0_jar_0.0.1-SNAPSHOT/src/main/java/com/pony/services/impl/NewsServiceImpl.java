@@ -115,4 +115,41 @@ public class NewsServiceImpl implements NewsService {
 	
 		return news;
 	}
+
+	@Override
+	public String formatContent(String content) {
+		// TODO Auto-generated method stub
+		
+		content = content.substring(1, content.length()-1).replace("\\", "");
+		
+		if(content.indexOf("<img src=\"") > -1){
+			
+		}
+//		try {
+//			byte[] bytes = file.getBytes();
+//
+//			// Creating the directory to store file
+//			String rootPath = System.getProperty("catalina.home");
+//			File dir = new File(rootPath + File.separator + "tmpFiles");
+//			if (!dir.exists())
+//				dir.mkdirs();
+//
+//			// Create the file on server
+//			File serverFile = new File(dir.getAbsolutePath()
+//					+ File.separator + name);
+//			BufferedOutputStream stream = new BufferedOutputStream(
+//					new FileOutputStream(serverFile));
+//			stream.write(bytes);
+//			stream.close();
+//
+//			logger.info("Server File Location="
+//					+ serverFile.getAbsolutePath());
+//
+//			return "You successfully uploaded file=" + name;
+//		} catch (Exception e) {
+//			return "You failed to upload " + name + " => " + e.getMessage();
+//		}
+		
+		return content;
+	}
 }

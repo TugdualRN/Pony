@@ -20,4 +20,6 @@ public interface NewsService {
 	    void delete(Long NewsId);
 	    
 	    News createNews(News news);
+	    
+	    String formatContent(String content);
 }
