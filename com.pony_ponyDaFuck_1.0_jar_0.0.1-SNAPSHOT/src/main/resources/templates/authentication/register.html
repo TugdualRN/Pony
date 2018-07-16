@@ -7,8 +7,8 @@
 
         <link rel="icon" type="image/png" href="../../images/favicon.ico" th:href="@{/images/favicon.ico}" />
 
-        <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css" 
-            th:href="@{/css/font-awesome.min.css}"/>
+<!--         <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css"  -->
+<!--             th:href="@{/css/font-awesome.min.css}"/> -->
         <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=arial-black"/>
         <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=ubuntu" />
         <link type="text/css" rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=open-sans"/>
@@ -19,12 +19,8 @@
     </head>
 
     <body>
-        <header>
-            <nav th:replace="fragments/navbar :: navbar"></nav>
-        </header>
+          <th:block th:replace="fragments/header"></th:block>
         <div class="row">
-            <div class="col">
-            </div>
             <div class="col">
                 <br/>
                 <form th:action="@{/register}" th:object="${registerViewModel}" th:method="POST" autocomplete="on">
@@ -48,15 +44,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </div>
-            <div class="col-2">
-            </div>
         </div>
 
         <th:block th:replace="fragments/footer"></th:block>
         <th:block th:replace="fragments/script-common">...</th:block>
-            <div class="col">
-            </div>
+
         </div>
 
         <!-- SCRIPTS -->

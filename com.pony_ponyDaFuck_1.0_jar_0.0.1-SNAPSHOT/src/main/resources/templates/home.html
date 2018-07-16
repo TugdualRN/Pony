@@ -1,37 +1,18 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<!-- Tell the browser to be responsive to screen width -->
-<meta
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-	name="viewport" />
-<title>PonyDaFuck</title>
+     <head>
+        <title>PonyDaFuck</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta http-equiv="Content-Type" content="text/html"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-<!-- Bootstrap -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous" />
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-	<header>
-		<nav th:replace="fragments/navbar :: navbar"></nav>
-	</header>
-	<div class="row">
-		<div class="col"></div>
+        <th:block th:replace="fragments/style-common">...</th:block>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <th:block th:replace="fragments/header"></th:block>
+        <div class="row">
+            <div class="col-2"></div>
 		<div class="col">
 			<h1>Welcome to the HomePage</h1>
 
@@ -45,15 +26,16 @@
 		<div class="col"></div>
 	</div>
 	<div class="row">
-
-			<ul class="list-group" >
-			<th:block  th:each="news : ${newsList}"> 
-				<a th:href="@{'news/'+${news.slug}}" ><li class="list-group-item" th:text="${news.title}"></li></a>
+		<ul class="list-group">
+			<th:block th:each="news : ${newsList}">
+				<a th:href="@{'news/'+${news.slug}}">
+					<li class="list-group-item" th:text="${news.title}"></li>
+				</a>
 			</th:block>
-			</ul>
-		</div>
-		    <th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>      
+		</ul>
+	</div>
+	<th:block th:replace="fragments/footer"></th:block>
+	<th:block th:replace="fragments/script-common">...</th:block>
 </body>
-  
+
 </html>
