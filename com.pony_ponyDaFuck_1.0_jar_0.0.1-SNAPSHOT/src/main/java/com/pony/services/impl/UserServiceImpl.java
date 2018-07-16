@@ -1,4 +1,3 @@
-
 package com.pony.services.impl;
 
 import java.util.List;
@@ -29,7 +28,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository _userRepository;
     private final RoleRepository _roleRepository;
     
-
     @Autowired
     public UserServiceImpl(
         BCryptPasswordEncoder passwordEncoder, 

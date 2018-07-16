@@ -1,6 +1,7 @@
 package com.pony.models;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -70,6 +72,7 @@ public class User {
         joinColumns =           { @JoinColumn(name = "user_id")}, 
         inverseJoinColumns =    { @JoinColumn(name = "role_id")}
     )
+<<<<<<< HEAD
     private List<Role> roles = new ArrayList<Role>();
 
     @OneToMany(
@@ -164,6 +167,7 @@ public class User {
         this.roles = roles;
     }
 
+<<<<<<< HEAD
     public List<Token> getTokens() {
         return this.tokens;
     }
@@ -172,6 +176,8 @@ public class User {
         this.tokens = tokens;
     }
 
+=======
+>>>>>>> master
     public String getNormalizedUserName()
 	{
 		return this.normalizedUserName;
@@ -190,6 +196,7 @@ public class User {
 	public void setNormalizedMail(String normalizedMail)
 	{
 		this.normalizedMail = normalizedMail;
+<<<<<<< HEAD
     }
     
     public boolean getIsActive()
@@ -220,6 +227,8 @@ public class User {
 	public void setIsSuspended(boolean isSuspended)
 	{
 		this.isSuspended = isSuspended;
+=======
+>>>>>>> master
 	}
     // </editor-fold>
 
