@@ -54,5 +54,4 @@ public class RoleServiceImpl implements RoleService {
     public void delete(Long roleId) {
         _roleRepository.delete(roleId);
     }
->>>>>>> master
 }
