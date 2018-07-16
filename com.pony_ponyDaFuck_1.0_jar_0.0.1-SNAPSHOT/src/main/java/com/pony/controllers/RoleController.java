@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pony.controllers;
 
 import java.util.List;
@@ -18,10 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pony.models.Role;
 import com.pony.services.RoleService;
 
-/**
- *
- * @author Gotug
- */
 @Controller
 @RequestMapping("/managment")
 // @PreAuthorize("hasRole('ADMIN')")
@@ -39,10 +30,8 @@ public class RoleController {
 
         List<Role> roles = _roleService.findAll();
 
-        ModelAndView moa = new ModelAndView("managment/roles");
-        moa.addObject("roles", roles);
-
-        return moa;
+        return new ModelAndView("managment/roles")
+            .addObject("roles", roles);
     }
 
     @GetMapping(value = {"/role/add"})

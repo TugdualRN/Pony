@@ -2,6 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>PonyDaFuck</title>
+<<<<<<< HEAD
+        <meta charset="UTF-8"/>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta http-equiv="Content-Type" content="text/html"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+        <th:block th:replace="fragments/style-common">...</th:block>
+    </head>
+    <body>
+        <th:block th:replace="fragments/header"></th:block>
+
+        <div class="row">
+            <div class="col-2">
+=======
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -24,11 +39,15 @@
         </header>
         <div class="row">
             <div class="col">
+>>>>>>> master
             </div>
             <div class="col">
                 <br/>
                 <form th:action="@{/register}" th:object="${registerViewModel}" th:method="POST" autocomplete="on">
+<<<<<<< HEAD
+=======
                     <!-- method="POST" action="#"  -->
+>>>>>>> master
                     <div class="form-group">
                         <label for="UserName">User Name</label>
                         <input th:field="*{userName}" class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"/>
@@ -50,6 +69,14 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
+<<<<<<< HEAD
+            <div class="col-2">
+            </div>
+        </div>
+
+        <th:block th:replace="fragments/footer"></th:block>
+        <th:block th:replace="fragments/script-common">...</th:block>
+=======
             <div class="col">
             </div>
         </div>
@@ -69,5 +96,6 @@
         <script type="text/javascript" src="../static/plugins/TweenMax/TweenMax.js"
             th:src="@{/plugins/TweenMax/TweenMax.js}"></script>
         -->
+>>>>>>> master
     </body>
 </html>

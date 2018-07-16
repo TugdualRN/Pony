@@ -1,3 +1,52 @@
+<<<<<<< HEAD
+<header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/}">Pony Application v0.1</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                    Navigate
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Something Must go Here</a>
+                        <a class="dropdown-item" href="#">Here too</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isFullyAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Managment
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/managment/users}">Users</a>
+                        <a class="dropdown-item" th:href="@{/managment/roles}">Roles</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto" sec:authorize="!isFullyAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}">Register</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto" sec:authorize="isFullyAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Profile}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+=======
 <header class="main-header" th:fragment="header(title)">
      <a href="../home_old.html" th:href="@{/home}" class="logo">
           <span class="logo-mini">
@@ -263,3 +312,4 @@
      </nav>
 </header>
 <!-- Left side column. contains the logo and sidebar -->
+>>>>>>> master

@@ -3,7 +3,8 @@ package com.pony.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.Message;
+import com.pony.models.User;
+import com.pony.models.Token;
 
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -34,7 +35,28 @@ public class Mailer {
 		message.setFrom(_sender);
 		message.setTo(to.toArray(new String[to.size()]));
 		message.setSubject(subject);
-		message.setText(body);
+        message.setText(body);
+        
 		_mailSender.send(message);
+    }
+
+    public void SendRegisterMail(User user, Token token) {
+        // load templating instead
+        String html = 
+            "<p>Welcom blablabla, please clic here to confirm your account : localhost:8000/confirm-mail?userId=" 
+            + user.getId() 
+            + "&tokenValue=" + token.getValue();
+
+        sendMail(user.getMail(), "Welcome", html);
+    }
+
+    public void SendResetPassword(User user, Token token) {
+        // load templating instead
+        String html = 
+            "<p>To change your password, please follow the link: localhost:8000/confirm-mail?userId=" 
+            + user.getId() 
+            + "&tokenValue=" + token.getValue();
+
+        sendMail(user.getMail(), "Welcome", html);
     }
 }

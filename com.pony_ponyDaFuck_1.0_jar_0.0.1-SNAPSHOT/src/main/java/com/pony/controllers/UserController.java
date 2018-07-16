@@ -35,11 +35,9 @@ public class UserController {
         List<User> users = _userService.findAll();
         List<Role> roles = _roleService.findAll();
 
-        ModelAndView mav = new ModelAndView("/managment/users");
-        mav.addObject("users", users);
-        mav.addObject("roles", roles);
-
-        return mav;
+        return new ModelAndView("/managment/users")
+            .addObject("users", users)
+            .addObject("roles", roles);
     }
 
     @GetMapping(value = {"/user/addrole"})

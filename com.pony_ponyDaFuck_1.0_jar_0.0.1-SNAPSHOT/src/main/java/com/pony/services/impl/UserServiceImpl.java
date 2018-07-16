@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pony.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.UUID;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,16 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.log4j.Logger;
 
 import com.pony.models.Role;
+import com.pony.models.Token;
 import com.pony.models.User;
 import com.pony.repositories.RoleRepository;
 import com.pony.repositories.UserRepository;
 import com.pony.services.UserService;
+import com.pony.enumerations.TokenType;
 
-
-/**
- *
- * @author Gotug
- */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,7 +28,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository _userRepository;
     private final RoleRepository _roleRepository;
     
-
     @Autowired
     public UserServiceImpl(
         BCryptPasswordEncoder passwordEncoder, 
@@ -61,9 +54,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    public User findByUserName(String userName) {
+
+        return _userRepository.findByUserName(userName);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findByNormalizedUserName(String normalizedUserName) {
+
+        return _userRepository.findByNormalizedUserName(normalizedUserName);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public User findByMail(String mail) {
         
         return _userRepository.findByMail(mail);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findByNormalizedMail(String normalizedMail) {
+        
+        return _userRepository.findByNormalizedMail(normalizedMail);
     }
 
     @Override
@@ -77,6 +91,7 @@ public class UserServiceImpl implements UserService {
         _userRepository.delete(userId);
     }
 
+    @Override
     public synchronized User createUser(User user, String password) {
 
         user.setNormalizedUserName(user.getUserName().toUpperCase());
@@ -86,11 +101,10 @@ public class UserServiceImpl implements UserService {
             String hashedPassword = _passwordEncoder.encode(password);
             user.setPasswordHash(hashedPassword);
 
+            // Add USER role as the default role
             Role baseRole = _roleRepository.findByName("USER");
-        
             List<Role> roles = new ArrayList<Role>();
             roles.add(baseRole);
-    
             user.setRoles(roles);
 
             User savedUser = _userRepository.save(user);
@@ -106,6 +120,17 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public Token generateToken(TokenType type, User user) {
+
+        Token token = new Token(type, UUID.randomUUID(), LocalDateTime.now());
+        user.getTokens().add(token);
+
+        _userRepository.save(user);
+
+        return token;
     }
 
     /**

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pony.config;
 
 import javax.sql.DataSource;
@@ -70,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/home").permitAll()
             .antMatchers("/login*").anonymous()
             .antMatchers("/register").anonymous()
+            .antMatchers("/reset-password").anonymous()
             .antMatchers("/logout").authenticated()
             .anyRequest().authenticated()
             .antMatchers("/admin/**").hasAnyRole("ADMIN")
@@ -92,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")
             .logoutSuccessUrl("/")
 
-            // // RememberMe
+            // RememberMe
             // .and()
             // .rememberMe()
             // .rememberMeParameter("remember-me")
