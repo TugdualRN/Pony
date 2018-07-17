@@ -89,6 +89,9 @@ public class User {
 
     @Column(nullable = false)
     private boolean isSuspended = false;
+    
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="author")
+	private List<News> newsList;
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
@@ -224,7 +227,13 @@ public class User {
 		this.isSuspended = isSuspended;
 	}
     // </editor-fold>
+	public List<News> getNewsList() {
+		return newsList;
+	}
 
+	public void setNewsList(List<News> newsList) {
+		this.newsList = newsList;
+	}
     @Override
     public String toString() {
         return "Users" + 
