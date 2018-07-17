@@ -50,20 +50,8 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public News update(Long newsId, News news) {
-
-        News newsById = _newsRepository.findOne(newsId);
-
-        if (newsById != null) {
-        	
-        	newsById.setTitle(news.getTitle());
-        	newsById.setContent(news.getContent());
-        	newsById.setSlug(news.getSlug());
-        	newsById.setAuthor(news.getAuthor());
-        	newsById.setModificationDate(LocalDateTime.now());
-        }
-
-        return _newsRepository.save(newsById);
+    public News update(News news) {
+        return _newsRepository.save(news);
     }
 
     @Override

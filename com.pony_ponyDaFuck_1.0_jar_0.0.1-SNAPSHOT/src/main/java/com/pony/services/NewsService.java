@@ -15,7 +15,7 @@ public interface NewsService {
 	    
 	    News insert(News News);
 
-	    News update(Long NewsId, News News);
+	    News update(News News);
 
 	    void delete(Long NewsId);
 	    
