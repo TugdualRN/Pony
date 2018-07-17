@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+        </Property>
+    </Properties>
+    <Appenders>
+        <Elasticsearch name="elasticsearchAsyncBatch">
+            <IndexName indexName="log4j2" />
+            <AsyncBatchDelivery>
+                <JestHttp serverUris="http://localhost:9200" />
+            </AsyncBatchDelivery>
+        </Elasticsearch>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="elasticsearchAsyncBatch"/>
+            <!--
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="MyFile"/>
+            -->
+        </Root>
+    </Loggers>
+</Configuration>

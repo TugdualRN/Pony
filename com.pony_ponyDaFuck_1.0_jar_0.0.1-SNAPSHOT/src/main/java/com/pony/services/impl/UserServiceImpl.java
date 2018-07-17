@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-
     public User findByUserName(String userName) {
 
         return _userRepository.findByUserName(userName);
@@ -69,14 +68,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-
     public User findByMail(String mail) {
         
         return _userRepository.findByMail(mail);
     }
 
     @Override
-
     @Transactional(readOnly = true)
     public User findByNormalizedMail(String normalizedMail) {
         
@@ -84,7 +81,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-
     public User update(User user) {
         return _userRepository.save(user);
     }

@@ -97,5 +97,4 @@ public class News {
 		return "News [id=" + id + ", title=" + title + ", content=" + content + ", slug=" + slug + ", author=" + author
 				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + "]";
 	}
-
 }

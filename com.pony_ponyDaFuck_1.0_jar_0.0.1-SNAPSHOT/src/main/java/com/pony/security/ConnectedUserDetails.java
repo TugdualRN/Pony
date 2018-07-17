@@ -9,6 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * This Object is Returned By UserDetailsServiceImpl to Spring Security
+ * Our User Object interact with Spring Security by the UserDetails Interface Implementation
+ */
 public class ConnectedUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;

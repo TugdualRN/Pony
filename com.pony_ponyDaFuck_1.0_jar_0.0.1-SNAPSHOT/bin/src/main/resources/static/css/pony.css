@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD:com.pony_ponyDaFuck_1.0_jar_0.0.1-SNAPSHOT/bin/src/main/resources/static/css/pony.css
 
 /* =========== LOGO =========== */
 
@@ -76,6 +77,85 @@ button > #error-return > a {
 }
 .load {
      display: block;
+=======
+
+/* =========== LOGO =========== */
+
+.logo-mini > img {
+     max-height: 40px;
+     max-width: 45px;
+     background-color: #ffffff;
+     border: 1px solid #ffffff;
+}
+.logo-lg > img {
+     max-height: 40px;
+     max-width: 75px;
+     margin-right: 5px; 
+     margin-top: -5px;
+     background-color: #ffffff;
+     border: 2px solid #ffffff;
+}
+footer {
+     margin-bottom: 0 !important;
+}
+
+.box-footer {
+     margin-bottom: 0 !important;
+}
+
+.table {
+     width: 100% !important;
+}
+
+.content-wrapper {
+     min-height: 1106px !important;
+}
+
+.error-img {
+     margin: auto;
+     width: 30%;
+}
+.error-content{
+     text-align: center;
+}
+
+.error-tiltle{
+     font-size: 5vw;
+}
+.error-box {
+     font-size: 2vw;
+     max-height: 65em !important;
+     margin:  auto !important;
+     height: auto;
+}
+.error-result {
+     font-size: 2vw;
+     width: 50%;
+     width: content-box;
+     margin: auto; 
+     margin-top: 2em;
+     height: auto;
+     padding-bottom: 20px;
+}
+.error-return {
+     font-size: 2vw;
+     margin: auto;
+     color: white !important;
+}
+
+button > #error-return > a {
+     color: white !important;
+}
+
+.user-dropdown {
+     box-shadow: -1px 1px 20px #999;
+}
+.unLoad {
+     display: none;
+}
+.load {
+     display: block;
+>>>>>>> master:com.pony_ponyDaFuck_1.0_jar_0.0.1-SNAPSHOT/src/main/resources/static/css/pony.css
 =======
 
 /* =========== LOGO =========== */
