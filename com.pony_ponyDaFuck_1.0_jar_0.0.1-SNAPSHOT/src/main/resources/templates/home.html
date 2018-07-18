@@ -28,5 +28,13 @@
 
         <th:block th:replace="fragments/footer"></th:block>
         <th:block th:replace="fragments/script-common">...</th:block>
+        <div class="row">
+
+			<ul class="list-group" >
+			<th:block  th:each="news : ${newsList}"> 
+				<li class="list-group-item"><tr><td th:text="${news.title}"></td><td th:text="${news.content}" ></td></tr></li>
+			</th:block>
+			</ul>
+		</div>
     </body>
 </html>

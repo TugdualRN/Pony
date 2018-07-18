@@ -64,6 +64,6 @@ public class NewsController {
 		// test if user
 		User user = _userService.findByMail(((ConnectedUserDetails) userConnected).getUsername());		
 		_newsService.createNews(news, user);
-		return new ModelAndView("redirect:home");
+		return new ModelAndView("home").addObject("newsList", _newsService.findAll());
 	}
 }
