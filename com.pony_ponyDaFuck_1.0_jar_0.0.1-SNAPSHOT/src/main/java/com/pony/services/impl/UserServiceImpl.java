@@ -104,10 +104,8 @@ public class UserServiceImpl implements UserService {
             user.setPasswordHash(hashedPassword);
 
             // Add USER role as the default role
-            Role baseRole = _roleRepository.findByName("USER");
-            List<Role> roles = new ArrayList<Role>();
-            roles.add(baseRole);
-            user.setRoles(roles);
+            Role role = _roleRepository.findByName("USER");
+            user.getRoles().add(role);
 
             User savedUser = _userRepository.save(user);
             if (savedUser != null) {

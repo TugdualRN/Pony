@@ -14,20 +14,28 @@
         <th:block th:replace="fragments/header"></th:block>
 
         <div class="row">
-            <div class="col">
+            <div class="col-2">
             </div>
             <div class="col">
                 <br/>
                 <form th:action="@{/register}" th:object="${registerViewModel}" th:method="POST" autocomplete="on">
                     <div class="form-group">
                         <label for="UserName">User Name</label>
-                        <input th:field="*{userName}" class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"/>
-                        <small id="UserNameHelp" class="form-text text-muted">May this name make the social networks tremble</small>
+                        <input 
+                            th:field="*{userName}"
+                            th:value="${registerViewModel.userName}" 
+                            th:classappend="${errors.isUserNameAlreadyTaken} ? 'is-invalid' : ''" 
+                            class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"/>
+                        <div th:if="${errors.isUserNameAlreadyTaken}" class="invalid-feedback">Sorry, that username's taken. Try another?</div>
                     </div>
                     <div class="form-group">
                         <label for="Email">Email address</label>
-                        <input th:field="*{mail}" type="email" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Enter email"/>
-                        <small id="EmailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <input 
+                            th:field="*{mail}"
+                            th:value="${registerViewModel.mail}"
+                            th:classappend="${errors.isMailAlreadyTaken} ? 'is-invalid' : ''" 
+                            type="email" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Enter email"/>
+                        <div th:if="${errors.isMailAlreadyTaken}" class="invalid-feedback">Sorry, that Email's taken. Try another?</div>
                     </div>
                     <div class="form-group">
                         <label for="Password">Password</label>
