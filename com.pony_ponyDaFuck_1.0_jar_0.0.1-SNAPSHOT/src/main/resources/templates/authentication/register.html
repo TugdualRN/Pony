@@ -24,26 +24,51 @@
                         <input 
                             th:field="*{userName}"
                             th:value="${registerViewModel.userName}" 
-                            th:classappend="${errors.isUserNameAlreadyTaken} ? 'is-invalid' : ''" 
-                            class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"/>
+                            th:classappend="${errors.isUserNameAlreadyTaken || #fields.hasErrors('userName')} ? 'is-invalid' : ''" 
+                            class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"
+                        />
                         <div th:if="${errors.isUserNameAlreadyTaken}" class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+                        <div
+                            th:each="error : ${#fields.errors('userName')}"
+                            th:text="${error}"
+                            class="invalid-feedback">...
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="Email">Email address</label>
                         <input 
                             th:field="*{mail}"
                             th:value="${registerViewModel.mail}"
-                            th:classappend="${errors.isMailAlreadyTaken} ? 'is-invalid' : ''" 
-                            type="email" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Enter email"/>
+                            th:classappend="${errors.isMailAlreadyTaken || #fields.hasErrors('mail')} ? 'is-invalid' : ''" 
+                            type="email" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Enter email"
+                        />
                         <div th:if="${errors.isMailAlreadyTaken}" class="invalid-feedback">Sorry, that Email's taken. Try another?</div>
+                        <div 
+                            th:each="error : ${#fields.errors('mail')}"
+                            th:text="${error}" 
+                            class="invalid-feedback">...
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="Password">Password</label>
-                        <input th:field="*{password}" type="text" class="form-control" id="Password" placeholder="Password"/>
+                        <input 
+                            th:field="*{password}"
+                            th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" 
+                            type="text" class="form-control" id="Password" placeholder="Password"/>
+                        <div 
+                            th:each="error : ${#fields.errors('password')}"
+                            th:text="${error}"
+                            class="invalid-feedback">...
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="ConfirmPassword">Confirm Password</label>
                         <input th:field="*{confirmPassword}" type="text" class="form-control" id="ConfirmPassword" placeholder="Confirm Password"/>
+                        <div 
+                            th:if="${#fields.hasErrors('global')}" 
+                            
+                            class="invalid-feedback">test
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

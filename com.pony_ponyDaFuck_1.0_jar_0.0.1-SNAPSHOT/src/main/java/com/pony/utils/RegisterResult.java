@@ -6,9 +6,18 @@ public class RegisterResult {
     
     private boolean isUserNameAlreadyTaken = false;
 
-    private boolean isMailAlreadyTaken = false;
+	private boolean isMailAlreadyTaken = false;
+	
+	private boolean passwordMatches = true;
 
-    private User user;
+	private User user;
+
+	public RegisterResult() {
+	}
+	
+	public RegisterResult(boolean passwordMatches) {
+		this.passwordMatches = passwordMatches;
+	}
 
 	public boolean getIsUserNameAlreadyTaken()
 	{
@@ -38,7 +47,17 @@ public class RegisterResult {
 	public void setUser(User user)
 	{
 		this.user = user;
-    }
+	}
+	
+	public boolean getPasswordMatches()
+	{
+		return this.passwordMatches;
+	}
+
+	public void setPasswordMatches(boolean passwordMatch)
+	{
+		this.passwordMatches = passwordMatch;
+	}
     
     public boolean isValid() {
         return this.user != null && !isUserNameAlreadyTaken && !isMailAlreadyTaken;
