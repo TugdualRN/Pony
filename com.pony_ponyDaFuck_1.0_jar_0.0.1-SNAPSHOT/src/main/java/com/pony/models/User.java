@@ -62,6 +62,15 @@ public class User {
 
     private String phone;
 
+    @Column(nullable = false)
+    private boolean isActive = false;
+
+    @Column(nullable = false)
+    private boolean isBanned = false;
+
+    @Column(nullable = false)
+    private boolean isSuspended = false;
+
     @ManyToMany(fetch = FetchType.EAGER,
     cascade = {
         CascadeType.PERSIST,
@@ -74,21 +83,8 @@ public class User {
     )
     private List<Role> roles = new ArrayList<Role>();
 
-    @OneToMany(
-        cascade = CascadeType.ALL, 
-        orphanRemoval = true
-    )
-    //@JoinColumn(name = "user_id")
+	@OneToMany(mappedBy = "user")
     private List<Token> tokens = new ArrayList<Token>();
-
-    @Column(nullable = false)
-    private boolean isActive = false;
-
-    @Column(nullable = false)
-    private boolean isBanned = false;
-
-    @Column(nullable = false)
-    private boolean isSuspended = false;
     
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="author")
 	private List<News> newsList;
@@ -177,63 +173,55 @@ public class User {
         this.tokens = tokens;
     }
 
-    public String getNormalizedUserName()
-	{
+    public String getNormalizedUserName() {
 		return this.normalizedUserName;
 	}
 
-	public void setNormalizedUserName(String normalizedMail)
-	{
+	public void setNormalizedUserName(String normalizedMail) {
 		this.normalizedUserName = normalizedMail;
     }
     
-    public String getNormalizedMail()
-	{
+    public String getNormalizedMail() {
 		return this.normalizedMail;
 	}
 
-	public void setNormalizedMail(String normalizedMail)
-	{
+	public void setNormalizedMail(String normalizedMail) {
 		this.normalizedMail = normalizedMail;
     }
     
-    public boolean getIsActive()
-	{
+    public boolean getIsActive() {
 		return this.isActive;
 	}
 
-	public void setIsActive(boolean isActive)
-	{
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
     }
     
-    public boolean getIsBanned()
-	{
+    public boolean getIsBanned() {
 		return this.isBanned;
 	}
 
-	public void setIsBanned(boolean isBanned)
-	{
+	public void setIsBanned(boolean isBanned) {
 		this.isBanned = isBanned;
     }
     
-	public boolean getIsSuspended()
-	{
+	public boolean getIsSuspended() {
 		return this.isSuspended;
 	}
 
-	public void setIsSuspended(boolean isSuspended)
-	{
+	public void setIsSuspended(boolean isSuspended) {
 		this.isSuspended = isSuspended;
 	}
-    // </editor-fold>
-	public List<News> getNewsList() {
+
+    public List<News> getNewsList() {
 		return newsList;
 	}
 
 	public void setNewsList(List<News> newsList) {
 		this.newsList = newsList;
-	}
+    }
+    // </editor-fold>
+    
     @Override
     public String toString() {
         return "Users" + 
