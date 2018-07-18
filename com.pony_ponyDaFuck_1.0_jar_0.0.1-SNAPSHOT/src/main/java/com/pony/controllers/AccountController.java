@@ -48,7 +48,8 @@ public class AccountController {
     public ModelAndView register(Model model) {
     
         return new ModelAndView("authentication/register")
-            .addObject("registerViewModel", new RegisterViewModel());
+            .addObject("registerViewModel", new RegisterViewModel())
+            .addObject("errors", new RegisterResult());
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
@@ -58,7 +59,9 @@ public class AccountController {
         boolean passworsMatch = viewModel.getPassword().equals(viewModel.getConfirmPassword());
         if (bindingResult.hasErrors() || !passworsMatch)
         {   
-            return new ModelAndView("authentication/register");
+            return new ModelAndView("authentication/register")
+                .addObject("registerViewModel", viewModel)
+                .addObject("errors", new RegisterResult());
         }
 
         // Creation
@@ -85,7 +88,9 @@ public class AccountController {
         }
 
         // return RegisterResult to display in view
-        return new ModelAndView("authentication/register");
+        return new ModelAndView("authentication/register")
+            .addObject("registerViewModel", viewModel)
+            .addObject("errors", registerResult);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

@@ -24,10 +24,13 @@ public class RegisterViewModel {
     @Size(min = 8, max = 15)
     private String confirmPassword;
 
-    public RegisterViewModel()
-    {
-
-    }
+    public RegisterViewModel() {
+	}
+	
+	public RegisterViewModel(String userName, String mail) {
+		this.userName = userName;
+		this.mail = mail;
+	}
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
 	public String getUserName()
