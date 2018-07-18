@@ -3,8 +3,10 @@ package com.pony.services;
 import java.util.List;
 
 import com.pony.enumerations.TokenType;
+import com.pony.models.Role;
 import com.pony.models.Token;
 import com.pony.models.User;
+import com.pony.utils.RegisterResult;
 
 public interface UserService {
 
@@ -23,10 +25,10 @@ public interface UserService {
 
     User update(User user);
 
-    void delete(Long userId);
+    void delete(User user);
     // <editor fold/>
 
-    User createUser(User user, String password);
+    RegisterResult createUser(User user, String password);
 
-    Token generateToken(TokenType token, User user);
+    boolean hasRole(User user, Role role);
 }

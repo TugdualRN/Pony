@@ -11,6 +11,7 @@ import com.pony.models.User;
 import com.pony.services.TokenService;
 import com.pony.services.UserService;
 import com.pony.utils.Mailer;
+import com.pony.utils.RegisterResult;
 import com.pony.viewmodels.ForgotPasswordViewModel;
 import com.pony.viewmodels.RegisterViewModel;
 
@@ -61,13 +62,21 @@ public class AccountController {
         }
 
         // Creation
-        User user = _userService.createUser(new User(viewModel.getUserName(), viewModel.getMail()), viewModel.getPassword());
+        RegisterResult registerResult = _userService.createUser(
+            new User(viewModel.getUserName(), viewModel.getMail()),
+            viewModel.getPassword()
+        );
 
         // Mailing
-        if (user != null) {
+        if (registerResult.isValid()) {
             try {
-                Token token = _userService.generateToken(TokenType.ACTIVATE_ACCOUNT, user);
-                _mailer.SendRegisterMail(user, token);
+                // Generate Token and Update User
+                Token token = _tokenService.generateToken(TokenType.ACTIVATE_ACCOUNT, registerResult.getUser());
+                registerResult.getUser().getTokens().add(token);
+                _userService.update(registerResult.getUser());
+
+                // Send Mail
+                _mailer.SendRegisterMail(registerResult.getUser(), token);
             } catch (MailSendException e) {
                 _logger.fatal("Mailing connection timeout");
             }
@@ -75,6 +84,7 @@ public class AccountController {
             return new ModelAndView("authentication/register-success");
         }
 
+        // return RegisterResult to display in view
         return new ModelAndView("authentication/register");
     }
 
@@ -133,7 +143,7 @@ public class AccountController {
         User user = _userService.findByNormalizedMail(viewModel.getMail().toUpperCase());
         
         if (user != null) {
-            Token token = _tokenService.generateToken(TokenType.RESET_PASSWORD);
+            Token token = _tokenService.generateToken(TokenType.RESET_PASSWORD, user);
             user.getTokens().add(token);
             _userService.update(user);
 
