@@ -67,32 +67,20 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public News createNews(News news) {
+	public News createNews(News news, User user) {
 		
 		news.setCreationDate(LocalDateTime.now());
 		
-		// get user in session
-		Object userConnected = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		// test if user
-		User user = _userRepository.findByMail(((ConnectedUserDetails) userConnected).getUsername());
-		
-		if((User)user instanceof User) {
-			news.setAuthor((User)user);
-		}
-		
+		news.setAuthor(user);
 		Slugify slg = new Slugify();
 		String slugifyTitle = slg.slugify(news.getTitle());
 		
-		News oldNews = _newsRepository.findBySlug(slugifyTitle);
-		
-		int index = 0;
-		String slug = slugifyTitle;
-		while (oldNews != null) {
-			slug = slugifyTitle + "_" + index;
-			index++;
-			oldNews = _newsRepository.findBySlug(slug);
+		int count = _newsRepository.findBySlugLike(slugifyTitle);
+		if(count == 0){
+			news.setSlug(slugifyTitle);
+		} else {
+			news.setSlug(slugifyTitle + "_" + count);
 		}
-		news.setSlug(slug);
 		try {			
 			_newsRepository.save(news);
 		} catch (Exception e) {
@@ -100,7 +88,6 @@ public class NewsServiceImpl implements NewsService {
 			System.out.println(e);
 			return null;
 		}
-	
 		return news;
 	}
 

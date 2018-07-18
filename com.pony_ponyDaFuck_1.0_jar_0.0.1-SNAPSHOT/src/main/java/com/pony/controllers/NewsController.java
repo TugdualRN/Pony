@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import com.github.slugify.Slugify;
 import com.pony.models.News;
 import com.pony.models.User;
+import com.pony.security.ConnectedUserDetails;
 import com.pony.services.NewsService;
 import com.pony.services.UserService;
 import com.pony.viewmodels.NewsViewModel;
@@ -28,10 +29,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class NewsController {
 
 	private NewsService _newsService;
-
+	private UserService _userService;
+	
 	@Autowired
-	public NewsController(NewsService newsService) {
+	public NewsController(NewsService newsService, UserService userService) {
 		_newsService = newsService;
+		_userService = userService;
 	}
 
 	@RequestMapping(value = { "/create-news" })
@@ -46,19 +49,21 @@ public class NewsController {
 		News news = _newsService.findBySlug(slug);
 		return new ModelAndView("news/displayNews").addObject("news", news);
 	}
-	@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {
-			"application/x-www-form-urlencoded" })
+	
+	@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded" })
 	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel,
 			BindingResult bindingResult) {
 
 		News news = new News();
-//		System.out.println(viewModel.getContent().substring(1, viewModel.getContent().length()-1));
+
 		news.setContent(_newsService.formatContent(viewModel.getContent()));
 		String title = viewModel.getTitle();
 		news.setTitle(title);
-		_newsService.createNews(news);
+		// get user in session
+		Object userConnected = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// test if user
+		User user = _userService.findByMail(((ConnectedUserDetails) userConnected).getUsername());		
+		_newsService.createNews(news, user);
 		return new ModelAndView("redirect:home");
-
 	}
-
 }

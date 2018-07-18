@@ -36,7 +36,7 @@ public class PonyDaFuckNewsServiceTests {
 	
 	@Test
 	public void testFindById(){
-			News news = testedNewsService.findById(49L);
+			News news = testedNewsService.findById(1L);
 			String expected = "toto";
 			assertEquals(expected, news.getTitle());
 	}
