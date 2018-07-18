@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +37,10 @@ public class Token {
 	@Column(nullable = false)
 	@Convert(converter = LocalDateTimeConverter.class)
 	private LocalDateTime creationDate;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id", nullable = true)
+	private User user;
 	// </editor-fold>
 	
 	public Token() {
@@ -87,6 +92,16 @@ public class Token {
 	public void setCreationdate(LocalDateTime creationDate)
 	{
 		this.creationDate = creationDate;
+	}
+
+	public User getUser()
+	{
+		return this.user;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
 	}
 
 	// public User getUser()

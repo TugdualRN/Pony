@@ -17,6 +17,7 @@ import com.pony.models.User;
 import com.pony.repositories.RoleRepository;
 import com.pony.repositories.UserRepository;
 import com.pony.services.UserService;
+import com.pony.utils.RegisterResult;
 import com.pony.enumerations.TokenType;
 
 @Service
@@ -87,31 +88,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(Long userId) {
-        _userRepository.delete(userId);
+    public void delete(User user) {
+        _userRepository.delete(user);
     }
 
     @Override
-    public synchronized User createUser(User user, String password) {
+    public synchronized RegisterResult createUser(User user, String password) {
 
         user.setNormalizedUserName(user.getUserName().toUpperCase());
         user.setNormalizedMail(user.getMail().toUpperCase());
 
-        if (!this.exists(user)) {
+        RegisterResult registerResult = new RegisterResult();
+        if (!this.exists(user, registerResult)) {
             String hashedPassword = _passwordEncoder.encode(password);
             user.setPasswordHash(hashedPassword);
 
             // Add USER role as the default role
-            Role baseRole = _roleRepository.findByName("USER");
-            List<Role> roles = new ArrayList<Role>();
-            roles.add(baseRole);
-            user.setRoles(roles);
+            Role role = _roleRepository.findByName("USER");
+            user.getRoles().add(role);
 
             User savedUser = _userRepository.save(user);
             if (savedUser != null) {
+    
+                registerResult.setUser(savedUser); 
+
                 _logger.info("Created User " + user.getUserName() + " with Mail " + user.getMail());
 
-                return savedUser;
+                return registerResult;
             }
 
             _logger.info("Failed to created User " + user.getUserName() + " with Mail " + user.getMail());
@@ -119,34 +122,37 @@ public class UserServiceImpl implements UserService {
             _logger.info("User " + user.getNormalizedUserName() + " with Mail " + user.getNormalizedMail() + "was already present in Database");
         }
 
-        return null;
-    }
-
-    @Override
-    public Token generateToken(TokenType type, User user) {
-
-        Token token = new Token(type, UUID.randomUUID(), LocalDateTime.now());
-        user.getTokens().add(token);
-
-        _userRepository.save(user);
-
-        return token;
+        return registerResult;
     }
 
     /**
      * Verify the given User doesn"t already exists
      */
-    private boolean exists(User user) {
+    private boolean exists(User user, RegisterResult registerResult) {
+
+        boolean exists = false;
 
         String normalizedUserName = user.getNormalizedUserName();
         String normalizedMail = user.getNormalizedMail();
 
         if (_userRepository.findByNormalizedUserName(normalizedUserName) != null) {
-            return true;
+            registerResult.setIsUserNameAlreadyTaken(true);
+            exists = true;
         }
 
         if (_userRepository.findByNormalizedMail(normalizedMail) != null) {
-            return true;
+            registerResult.setIsMailAlreadyTaken(true);
+            exists = true;
+        }
+
+        return exists;
+    }
+
+    public boolean hasRole(User user, Role role) {
+        for (Role userRole : user.getRoles()) {
+            if (userRole.getName().equals(role.getName())) {
+                return true;
+            }
         }
 
         return false;
