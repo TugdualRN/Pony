@@ -47,7 +47,7 @@ public class UserController {
         List<Role> userRoles = user.getRoles();
         Role role = _roleService.findById(roleId);
 
-        if (userRoles.stream().filter(x -> x.getId() == roleId).count() == 0) {
+        if (_userService.hasRole(user, role)) {
             if (userRoles.add(role)) {
                 _userService.update(user);
             }
