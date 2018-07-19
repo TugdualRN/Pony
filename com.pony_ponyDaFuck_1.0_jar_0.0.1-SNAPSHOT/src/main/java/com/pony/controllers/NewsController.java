@@ -1,21 +1,14 @@
 package com.pony.controllers;
 
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
-import com.github.slugify.Slugify;
 import com.pony.models.News;
-import com.pony.models.User;
 import com.pony.services.NewsService;
-import com.pony.services.UserService;
 import com.pony.viewmodels.NewsViewModel;
-import com.pony.viewmodels.RegisterViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
