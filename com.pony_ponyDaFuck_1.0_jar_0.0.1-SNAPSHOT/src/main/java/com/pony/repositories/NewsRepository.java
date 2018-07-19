@@ -2,6 +2,7 @@ package com.pony.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import com.pony.models.News;
 
 public interface NewsRepository extends JpaRepository<News, Long> {

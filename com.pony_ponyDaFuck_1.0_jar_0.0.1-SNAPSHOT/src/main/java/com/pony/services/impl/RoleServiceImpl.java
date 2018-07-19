@@ -52,6 +52,29 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public void delete(Long roleId) {
+
         _roleRepository.delete(roleId);
+    }
+
+    public Role addRole(Role role) {
+
+        if (_roleRepository.findByName(role.getName()) == null) {
+            return _roleRepository.save(role);
+        }
+
+        return null;
+    }
+
+    public boolean deleteRole(Role role) {
+
+        Role targetRole = _roleRepository.findByName(role.getName());
+
+        if (targetRole != null) {
+            _roleRepository.delete(targetRole);
+
+            return true;
+        }
+
+        return false;
     }
 }
