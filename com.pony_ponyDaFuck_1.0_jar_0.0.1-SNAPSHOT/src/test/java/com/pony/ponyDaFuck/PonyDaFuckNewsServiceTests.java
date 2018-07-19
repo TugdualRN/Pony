@@ -1,6 +1,7 @@
 package com.pony.ponyDaFuck;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class PonyDaFuckNewsServiceTests {
 	
 	@Test
 	public void testFindById(){
-			News news = testedNewsService.findById(49L);
+			News news = testedNewsService.findById(1L);
 			String expected = "toto";
 			assertEquals(expected, news.getTitle());
 	}
@@ -70,12 +71,42 @@ public class PonyDaFuckNewsServiceTests {
 		Long savedNewsId = testedNewsService.findById(newsId).getId();
 		assertEquals(newsId, savedNewsId);
 	}
-
-//
-//	    News update(Long NewsId, News News);
-//
-//	    void delete(Long NewsId);
-//	    
+	@Test
+	@Transactional
+    @Rollback(true)
+	public void testUpdate(){
+		
+		News news = testedNewsService.findById(1L);
+		String title = "the title updated";
+		news.setTitle(title);
+		// TODO news.set...
+		
+		news = testedNewsService.update(news);
+		
+		assertEquals(title, news.getTitle());
+	}
+	@Test
+	@Transactional
+    @Rollback(true)
+	public void testDelete(){
+		
+		testedNewsService.delete(1L);
+		News news = testedNewsService.findById(1L);
+		
+		assertNotNull(news);
+	}
+	@Test
+	@Transactional
+    @Rollback(true)
+	public void testCreateNews(){
+		
+		News news = new News();
+		news.setTitle("Created News test");
+		
+		
+		assertEquals(null, news);
+	}
+	
 //	    News createNews(News news);
 //	    
 //	    String formatContent(String content);
