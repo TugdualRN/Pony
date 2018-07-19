@@ -11,7 +11,6 @@ import com.github.slugify.Slugify;
 import com.pony.models.News;
 import com.pony.models.User;
 import com.pony.repositories.NewsRepository;
-import com.pony.repositories.UserRepository;
 import com.pony.services.NewsService;
 
 @Service
