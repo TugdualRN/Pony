@@ -2,9 +2,7 @@ package com.pony.services;
 
 import java.util.List;
 
-import com.pony.enumerations.TokenType;
 import com.pony.models.Role;
-import com.pony.models.Token;
 import com.pony.models.User;
 import com.pony.utils.RegisterResult;
 
@@ -31,4 +29,8 @@ public interface UserService {
     RegisterResult createUser(User user, String password);
 
     boolean hasRole(User user, Role role);
+
+    User addRoleToUser(User user, Role role);
+
+    User removeRoleToUser(User user, Role role);
 }

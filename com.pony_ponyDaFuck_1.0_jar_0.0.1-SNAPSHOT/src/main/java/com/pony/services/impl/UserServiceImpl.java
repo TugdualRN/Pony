@@ -1,9 +1,6 @@
 package com.pony.services.impl;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.UUID;
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,13 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.log4j.Logger;
 
 import com.pony.models.Role;
-import com.pony.models.Token;
 import com.pony.models.User;
 import com.pony.repositories.RoleRepository;
 import com.pony.repositories.UserRepository;
 import com.pony.services.UserService;
 import com.pony.utils.RegisterResult;
-import com.pony.enumerations.TokenType;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -156,5 +151,25 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    public User addRoleToUser(User user, Role role) {
+        if (!hasRole(user, role)) {
+            user.getRoles().add(role);
+
+            return _userRepository.save(user);
+        }
+
+        return null;
+    }
+
+    public User removeRoleToUser(User user, Role role) {
+        if (hasRole(user, role)) {
+            user.getRoles().removeIf(x -> x.getId() == role.getId());
+
+            return _userRepository.save(user);
+        }
+
+        return null;
     }
 }
