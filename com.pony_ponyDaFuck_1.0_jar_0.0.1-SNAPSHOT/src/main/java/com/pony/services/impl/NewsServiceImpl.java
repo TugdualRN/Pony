@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,19 +12,16 @@ import com.pony.models.News;
 import com.pony.models.User;
 import com.pony.repositories.NewsRepository;
 import com.pony.repositories.UserRepository;
-import com.pony.security.ConnectedUserDetails;
 import com.pony.services.NewsService;
 
 @Service
 public class NewsServiceImpl implements NewsService {
 
 	 private final NewsRepository _newsRepository;
-	 private final UserRepository _userRepository;
 
     @Autowired
-    public NewsServiceImpl(NewsRepository newsRepository, UserRepository userRepository) {
+    public NewsServiceImpl(NewsRepository newsRepository) {
         this._newsRepository = newsRepository;
-        this._userRepository = userRepository;
     }
 	
     @Override
