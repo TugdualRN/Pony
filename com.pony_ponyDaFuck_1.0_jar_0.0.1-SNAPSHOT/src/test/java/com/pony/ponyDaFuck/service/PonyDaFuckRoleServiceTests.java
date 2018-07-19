@@ -22,7 +22,7 @@ import com.pony.services.UserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class PonyDaFuckRoleService {
+public class PonyDaFuckRoleServiceTests {
 	
 	@Autowired
 	private RoleService testedRoleService;

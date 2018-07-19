@@ -16,7 +16,7 @@ import com.pony.services.UserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class PonyDaFuckTokenService {
+public class PonyDaFuckTokenServiceTests {
 	
 	@Autowired
 	TokenService testedTokenService;
