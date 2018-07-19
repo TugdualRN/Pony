@@ -1,5 +1,6 @@
 package com.pony.controllers;
 
+import javax.annotation.security.DenyAll;
 import javax.validation.Valid;
 
 import com.pony.models.News;
@@ -10,6 +11,7 @@ import com.pony.services.UserService;
 import com.pony.viewmodels.NewsViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,7 +33,8 @@ public class NewsController {
 		_newsService = newsService;
 		_userService = userService;
 	}
-
+	
+	@PreAuthorize("hasRole('WRITER')")
 	@RequestMapping(value = { "/create-news" })
 	public ModelAndView createNews() {
 
@@ -48,7 +51,9 @@ public class NewsController {
 	@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded" })
 	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel,
 			BindingResult bindingResult) {
-
+		if (bindingResult.hasErrors()){
+			return new ModelAndView("redirect:create-news");
+		}
 		News news = new News();
 
 		news.setContent(_newsService.formatContent(viewModel.getContent()));

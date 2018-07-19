@@ -26,6 +26,11 @@
                     </div>
                 </li>
             </ul>
+            <ul class="navbar-nav ml-auto" sec:authorize="hasAuthority('ROLE_WRITER')">
+        		<li class="nav-item" >
+                	<a class="nav-link" th:href="@{/create-news}">Create News</a>
+            	</li>
+       		</ul>
             <ul class="navbar-nav ml-auto" sec:authorize="!isFullyAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/login}">Login</a>
