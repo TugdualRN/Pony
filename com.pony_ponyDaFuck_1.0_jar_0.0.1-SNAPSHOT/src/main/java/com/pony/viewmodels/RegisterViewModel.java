@@ -1,12 +1,10 @@
 package com.pony.viewmodels;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.pony.utils.validation.PasswordsMatch;
 import com.pony.utils.validation.ValidMail;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 //@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")

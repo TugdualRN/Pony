@@ -57,7 +57,7 @@ public class PonyDaFuckNewsServiceTests {
 	}
 	@Test
 	@Transactional
-    @Rollback(true)
+	@Rollback(true)
 	public void testInsert(){
 		
 		News news = new News();
