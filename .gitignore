@@ -1,0 +1,6 @@
+.gitignore
+com.pony_ponyDaFuck_1.0_jar_0.0.1-SNAPSHOT/bin
+com.pony_ponyDaFuck_1.0_jar_0.0.1-SNAPSHOT/target
+.vscode
+com.pony_ponyDaFuck_1.0_jar_0.0.1-SNAPSHOT/.vscode
+db.sql

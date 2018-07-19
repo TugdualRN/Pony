@@ -1,6 +1,7 @@
 package com.pony.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,10 +45,10 @@ public class UserController {
     public ModelAndView addUserToRole(@RequestParam long userId, @RequestParam long roleId)
     {
         User user = _userService.findById(userId);
-        List<Role> userRoles = user.getRoles();
+        Set<Role> userRoles = user.getRoles();
         Role role = _roleService.findById(roleId);
 
-        if (_userService.hasRole(user, role)) {
+        if (!_userService.hasRole(user, role)) {
             if (userRoles.add(role)) {
                 _userService.update(user);
             }
@@ -60,7 +61,7 @@ public class UserController {
     public ModelAndView removeUserFromRole(@PathVariable long userId, @PathVariable long roleId)
     {
         User user = _userService.findById(userId);
-        List<Role> userRoles = user.getRoles();
+        Set<Role> userRoles = user.getRoles();
         Role role = _roleService.findById(roleId);
 
         if (userRoles.removeIf(x -> x.getId() == role.getId())) {

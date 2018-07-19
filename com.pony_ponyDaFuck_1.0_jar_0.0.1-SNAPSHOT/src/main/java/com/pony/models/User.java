@@ -1,8 +1,9 @@
 package com.pony.models;
 
 import java.util.ArrayList;
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -71,17 +72,18 @@ public class User {
     @Column(nullable = false)
     private boolean isSuspended = false;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-    cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    })
+    @ManyToMany(
+        fetch = FetchType.EAGER,
+        cascade = {
+            CascadeType.ALL
+        }
+    )
     @JoinTable( 
         name = "T_user_roles", 
         joinColumns =           { @JoinColumn(name = "user_id")}, 
         inverseJoinColumns =    { @JoinColumn(name = "role_id")}
     )
-    private List<Role> roles = new ArrayList<Role>();
+    private Set<Role> roles = new HashSet<Role>();
 
 	@OneToMany(mappedBy = "user")
     private List<Token> tokens = new ArrayList<Token>();
@@ -157,11 +159,11 @@ public class User {
         this.mail = mail;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return this.roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
