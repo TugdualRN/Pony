@@ -3,6 +3,7 @@ package com.pony.services;
 import java.util.List;
 
 import com.pony.models.News;
+import com.pony.models.User;
 
 
 public interface NewsService {
@@ -15,11 +16,11 @@ public interface NewsService {
 	    
 	    News insert(News News);
 
-	    News update(Long NewsId, News News);
+	    News update(News News);
 
 	    void delete(Long NewsId);
 	    
-	    News createNews(News news);
-	    
 	    String formatContent(String content);
+
+		News createNews(News news, User user);
 }
