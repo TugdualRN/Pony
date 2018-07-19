@@ -25,16 +25,14 @@
             <div class="col-2">
             </div>
         </div>
-
-        <th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>
-        <div class="row">
-
+		<div class="row">
 			<ul class="list-group" >
 			<th:block  th:each="news : ${newsList}"> 
-				<li class="list-group-item"><tr><td th:text="${news.title}"></td><td th:text="${news.content}" ></td></tr></li>
+				<li class="list-group-item"><a th:href="@{/news/{slug}(slug=${news.slug})}"><tr><td th:text="${news.title}"></td></tr></a></li>
 			</th:block>
 			</ul>
 		</div>
+  		<th:block th:replace="fragments/footer"></th:block>
+        <th:block th:replace="fragments/script-common">...</th:block>
     </body>
 </html>
