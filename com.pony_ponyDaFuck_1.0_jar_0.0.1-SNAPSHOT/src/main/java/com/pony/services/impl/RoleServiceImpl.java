@@ -40,13 +40,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role update(Long roleId, Role role) {
+    public Role update(Role role) {
 
-        Role roleById = _roleRepository.findOne(roleId);
-
-        roleById.setName(role.getName());
-
-        return _roleRepository.save(roleById);
+        return _roleRepository.save(role);
     }
 
     @Override
@@ -61,7 +57,6 @@ public class RoleServiceImpl implements RoleService {
         if (_roleRepository.findByName(role.getName()) == null) {
             return _roleRepository.save(role);
         }
-
         return null;
     }
 

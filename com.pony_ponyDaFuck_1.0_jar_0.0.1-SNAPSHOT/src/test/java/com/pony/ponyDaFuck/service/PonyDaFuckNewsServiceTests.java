@@ -1,9 +1,7 @@
-package com.pony.ponyDaFuck;
+package com.pony.ponyDaFuck.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,30 +12,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pony.models.News;
+import com.pony.models.User;
 import com.pony.services.NewsService;
+import com.pony.services.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = DataSourceConnectTest.class)
 @ActiveProfiles("test")
 public class PonyDaFuckNewsServiceTests {
-
-//	@Test
-//	public void contextLoads() {
-//		News testedNews = new News();
-//		assertEquals(testedNews, new News());
-//	}
+	
 	@Autowired
 	private NewsService testedNewsService;
+	
+	@Autowired
+	private UserService testedUserService;
 	
 	@Test
 	public void testFindById(){
 			News news = testedNewsService.findById(1L);
-			String expected = "toto";
+			String expected = "Title";
 			assertEquals(expected, news.getTitle());
 	}
 	
@@ -45,15 +41,13 @@ public class PonyDaFuckNewsServiceTests {
 	public void testFindAll(){
 		
 		List<News> newsList = testedNewsService.findAll();
-		// TODO add test db
-		List<News> all = new ArrayList<News>();
-			
-		assertEquals(all, newsList);
+		int all = 6;
+		assertEquals(all, newsList.size());
 	}
 	@Test
 	public void testFindBySlug(){
-		News news = testedNewsService.findBySlug("slug");
-		String expected = "slug";
+		News news = testedNewsService.findBySlug("title");
+		String expected = "title";
 		assertEquals(expected, news.getSlug());
 	}
 	@Test
@@ -64,8 +58,7 @@ public class PonyDaFuckNewsServiceTests {
 		News news = new News();
 		
 		news.setTitle("the title");
-		// TODO news.set...
-		
+		news.setContent("content");
 		testedNewsService.insert(news);
 		Long newsId = news.getId();
 		Long savedNewsId = testedNewsService.findById(newsId).getId();
@@ -79,8 +72,6 @@ public class PonyDaFuckNewsServiceTests {
 		News news = testedNewsService.findById(1L);
 		String title = "the title updated";
 		news.setTitle(title);
-		// TODO news.set...
-		
 		news = testedNewsService.update(news);
 		
 		assertEquals(title, news.getTitle());
@@ -92,22 +83,20 @@ public class PonyDaFuckNewsServiceTests {
 		
 		testedNewsService.delete(1L);
 		News news = testedNewsService.findById(1L);
-		
-		assertNotNull(news);
+		assertEquals(null, news);
 	}
 	@Test
 	@Transactional
     @Rollback(true)
 	public void testCreateNews(){
 		
-		News news = new News();
-		news.setTitle("Created News test");
+		News news = testedNewsService.findById(1L);	
+		User user = testedUserService.findById(1L);
 		
-		
-		assertEquals(null, news);
+		news = testedNewsService.createNews(news, user);
+		assertEquals(user, news.getAuthor());
 	}
 	
-//	    News createNews(News news);
 //	    
 //	    String formatContent(String content);
 

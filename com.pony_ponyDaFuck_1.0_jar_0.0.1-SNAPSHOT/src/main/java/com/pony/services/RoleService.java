@@ -12,7 +12,7 @@ public interface RoleService {
 
     Role insert(Role role);
 
-    Role update(Long roleId, Role role);
+    Role update(Role role);
 
     void delete(Long roleId);
 
