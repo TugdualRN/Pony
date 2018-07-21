@@ -102,8 +102,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             .maximumSessions(1)
-            .and()
-            .and()
-            .csrf().disable();
+            // .and()
+            // .and()
+            // .csrf().disable()
+            ;
     }
 }

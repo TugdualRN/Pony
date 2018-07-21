@@ -27,6 +27,7 @@ public class UserRepositoryTests {
 		User user = userRepository.findByUserName(userName);
 		assertEquals(userName, user.getUserName());
 	}
+
 	@Test
 	public void testFindByNormalizedUserName(){
 		

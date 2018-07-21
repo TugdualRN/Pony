@@ -85,6 +85,7 @@ public class PonyDaFuckRoleServiceTests {
 		Role role = testedRoleService.findById(idRole);
 		assertEquals(true, testedRoleService.deleteRole(role));
 	}
+	
 	@Test
 	@Transactional
     @Rollback(true)
