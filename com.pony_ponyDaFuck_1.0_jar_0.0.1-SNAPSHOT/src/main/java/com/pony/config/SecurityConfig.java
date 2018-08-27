@@ -70,6 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/reset-password").anonymous()
             .antMatchers("/news/**").permitAll()
             .antMatchers("/logout").authenticated()
+            .antMatchers("/connect/**").permitAll()
+            .antMatchers("/connect/twitter").permitAll()
             .antMatchers("/create-news").hasRole("WRITER") 
             .antMatchers("/admin/**").hasAnyRole("ADMIN")
             .antMatchers("/user/**").hasAnyRole("USER")

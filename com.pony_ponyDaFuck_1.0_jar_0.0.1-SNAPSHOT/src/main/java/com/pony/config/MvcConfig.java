@@ -89,8 +89,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public MappedInterceptor myInterceptor()
-    {
+    public MappedInterceptor myInterceptor() {
+        
         return new MappedInterceptor(null, new LoggerMiddleware());
     }
 

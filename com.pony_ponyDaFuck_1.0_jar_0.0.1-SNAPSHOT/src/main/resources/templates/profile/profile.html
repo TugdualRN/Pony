@@ -19,13 +19,7 @@
                 <br/>
                 <h1>Profile Page</h1>
                 <h3>Connect to Twitter</h3>
-                <span th:if="${social_provider_error}">Provider error (maybe you need to configure the app id and secret?)</span>
-                <form action="/connect/twitter" method="POST">
-                    <div class="formInfo">
-                        <p>You aren't connected to Twitter yet. Click the button to connect this application with your Twitter account.</p>
-                    </div>
-                    <p><button type="submit">Connect to Twitter</button></p>
-                </form>
+                <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
             </div>
             <div class="col-2">
             </div>
