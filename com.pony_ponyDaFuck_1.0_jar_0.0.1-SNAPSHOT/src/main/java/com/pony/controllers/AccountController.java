@@ -26,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class AccountController {
 
-    private static Logger _logger = Logger.getLogger(AccountController.class);
+    private final Logger _logger = LoggerFactory.getLogger(AccountController.class);
 
     private UserService _userService;
     private TokenService _tokenService;
@@ -81,7 +83,7 @@ public class AccountController {
                 // Send Mail
                 _mailer.SendRegisterMail(registerResult.getUser(), token);
             } catch (MailSendException e) {
-                _logger.fatal("Mailing connection timeout");
+                _logger.error("Mailing connection timeout");
             }
 
             return new ModelAndView("authentication/register-success");

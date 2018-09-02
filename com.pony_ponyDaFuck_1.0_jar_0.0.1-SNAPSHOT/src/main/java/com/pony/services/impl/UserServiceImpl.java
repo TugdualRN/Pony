@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.log4j.Logger;
 
 import com.pony.models.Role;
 import com.pony.models.User;
@@ -15,10 +14,13 @@ import com.pony.repositories.UserRepository;
 import com.pony.services.UserService;
 import com.pony.utils.RegisterResult;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static Logger _logger = Logger.getLogger(UserService.class);
+    private static Logger _logger = LoggerFactory.getLogger(UserService.class);
 
     private final BCryptPasswordEncoder _passwordEncoder;
     private final UserRepository _userRepository;

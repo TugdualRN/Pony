@@ -84,7 +84,7 @@ public class NewsServiceImpl implements NewsService {
 		
 		content = content.substring(1, content.length()-1).replace("\\", "");
 		
-		if(content.indexOf("<img src=\"") > -1){
+		if (content.indexOf("<img src=\"") > -1){
 			
 		}
 		/*

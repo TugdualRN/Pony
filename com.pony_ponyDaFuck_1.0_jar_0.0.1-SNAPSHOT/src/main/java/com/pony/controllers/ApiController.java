@@ -2,7 +2,6 @@ package com.pony.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,11 +19,14 @@ import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @PreAuthorize("hasRole('USER')")
 public class ApiController {
 
-    private static Logger _logger = Logger.getLogger(AccountController.class);
+    private static Logger _logger = LoggerFactory.getLogger(AccountController.class);
 
     @Value("${twitter.callback}")
     private String _twitterCallback;

@@ -2,12 +2,15 @@ package com.pony.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class LoggerMiddleware extends HandlerInterceptorAdapter {
-    private static Logger _logger = Logger.getLogger(LoggerMiddleware.class);
+    private static Logger _logger = LoggerFactory.getLogger(LoggerMiddleware.class);
 
     private long _startTimer; 
     private boolean _isDynamic;
