@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pony.services.NewsService;
 
 @Controller
+//@PreAuthorize()
 public class HomeController {
 	
 	private NewsService _newsService;
@@ -17,6 +18,7 @@ public class HomeController {
 	public HomeController(NewsService newsService) {
 		_newsService = newsService;
 	}
+
     @RequestMapping(value = {"", "/", "/home"})
     public ModelAndView home(Model model) {
 
