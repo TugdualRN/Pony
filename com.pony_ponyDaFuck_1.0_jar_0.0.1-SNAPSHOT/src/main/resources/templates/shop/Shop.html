@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>PonyDaFuck</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta http-equiv="Content-Type" content="text/html"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+        <th:block th:replace="fragments/style-common">...</th:block>
+    </head>
+    <body>
+        <th:block th:replace="fragments/header"></th:block>
+ <th:block th:each=" offer: ${offerList}">
+ <form action="/charge" method="POST">
+ <script src="https://checkout.stripe.com/checkout.js"
+			class="stripe-button"
+			 th:attr='data-amount=${offer.amount}, 
+         	data-currency=${offer.currency},
+         	data-name=${offer.description} '
+         	data-key="pk_test_giDrHaEkcYOAGi3caBNnSo5i"
+			data-description="Demo Site"
+			data-customer="cus_DV3rMmrMZpHosv"
+			data-locale="auto">
+		</script>
+<!-- 		<button class="btn btn-primary" ></button> -->
+      </form>
+   </th:block>
+	<th:block th:replace="fragments/footer"></th:block>
+        <th:block th:replace="fragments/script-common">...</th:block>
+    </body>
+</html>
