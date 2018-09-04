@@ -104,20 +104,12 @@
         </dependency>
 
         <!-- Logging -->
-        <!-- 
-        <dependency>
-            <groupId>org.serilogj.serilogj</groupId>
-            <artifactId>serilogj</artifactId>
-            <version>0.5.1</version>
-            <type>pom</type>
-        </dependency> -->
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
         </dependency>
-        <dependency> <!-- Will be removed in the near future if Serilog has strong Java Support -->
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
