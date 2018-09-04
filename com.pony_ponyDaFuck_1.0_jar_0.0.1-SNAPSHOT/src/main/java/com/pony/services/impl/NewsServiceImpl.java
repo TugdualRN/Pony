@@ -80,7 +80,7 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public String formatContent(String content) {
-		// TODO Auto-generated method stub
+		// TO DO Auto-generated method stub
 		
 		content = content.substring(1, content.length()-1).replace("\\", "");
 		

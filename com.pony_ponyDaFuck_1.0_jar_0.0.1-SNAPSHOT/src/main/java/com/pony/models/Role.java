@@ -22,35 +22,18 @@ public class Role {
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
+    public Role() {}
+    
     public Role(String name) {
         this.name = name;
     }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Role() {
-        super();
-    }
-
-    public Role(long id) {
-        this.id = id;
-    }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
     // </editor-fold>
     
     @Override

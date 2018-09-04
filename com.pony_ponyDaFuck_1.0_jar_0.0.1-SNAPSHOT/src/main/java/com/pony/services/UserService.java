@@ -2,9 +2,12 @@ package com.pony.services;
 
 import java.util.List;
 
+import com.pony.enumerations.TokenType;
 import com.pony.models.Role;
 import com.pony.models.User;
 import com.pony.utils.RegisterResult;
+
+import org.springframework.mail.MailException;
 
 public interface UserService {
 
@@ -33,4 +36,8 @@ public interface UserService {
     User addRoleToUser(User user, Role role);
 
     User removeRoleToUser(User user, Role role);
+
+    User updatePassword(User user, String password);
+
+    User generateToken(User user, TokenType tokenType) throws MailException;
 }
