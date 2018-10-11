@@ -18,7 +18,7 @@ public class TokenServiceImpl implements TokenService {
 	@Override
 	public Token generateToken(TokenType tokenType, User user) {
 		
-		Token token = new Token(tokenType, UUID.randomUUID(), LocalDateTime.now());
+		Token token = new Token(tokenType);
 		token.setUser(user);
 
 		return token;
