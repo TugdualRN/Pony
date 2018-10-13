@@ -2,6 +2,9 @@ package com.pony.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.pony.services.ApiService;
+import com.pony.services.UserService;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import twitter4j.ResponseList;
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -30,6 +35,15 @@ public class ApiController {
 
     @Value("${twitter.callback}")
     private String _twitterCallback;
+
+    private UserService _userService;
+    private ApiService _apiService;
+
+    public ApiController(UserService userService, ApiService apiService)
+    {
+        _userService = userService;
+        _apiService = apiService;
+    }
 
     @RequestMapping("/connect/twitter")
     public RedirectView getTwitterToken(HttpServletRequest request, Model model) {
@@ -57,27 +71,41 @@ public class ApiController {
 		}
     	
 		//redirect to the Twitter URL
-		RedirectView redirectView = new RedirectView();
-	    redirectView.setUrl(twitterUrl);
-	    return redirectView;
+	    return new RedirectView(twitterUrl);
     }
 
     @RequestMapping("/callback/twitter")
     public ModelAndView twitterCallBack(
         @RequestParam(value="oauth_verifier", required=false) String oauthVerifier,
         @RequestParam(value="denied", required=false) String denied,
-        HttpServletRequest request) {
+        HttpServletRequest request
+    ) {
         
         Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
         RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
         
         try {
             AccessToken token = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
+
+            System.out.println("REQUEST_TOKEN TOKEN : " + requestToken.getToken());
+            System.out.println("ACCESS_TOKEN : " + token.getToken());
+            System.out.println("ACCESS_TOKEN SECRET : " + token.getTokenSecret());
             
-            _logger.info("Registered USER ID: " + token.getUserId());
-            _logger.info("Registered USER NAME: " + token.getScreenName());
-            _logger.info("Registered USER TOKEN: " + token.getToken());
-            _logger.info("Registered USER SECRET: " + token.getTokenSecret());
+            System.out.println("Registered USER ID: " + token.getUserId());
+            System.out.println("Registered USER NAME: " + token.getScreenName());
+            System.out.println("Registered USER TOKEN: " + token.getToken());
+            System.out.println("Registered USER SECRET: " + token.getTokenSecret());
+
+            ResponseList<Status> lastStatus = twitter.getUserTimeline();
+
+            System.out.println("----");
+            System.out.println();
+
+            for (Status status : lastStatus)
+            {
+                System.out.println(status.getText());
+                System.out.println();
+            }
 
             return new ModelAndView("/profile/twitter.html").addObject("twitter", twitter);
         }

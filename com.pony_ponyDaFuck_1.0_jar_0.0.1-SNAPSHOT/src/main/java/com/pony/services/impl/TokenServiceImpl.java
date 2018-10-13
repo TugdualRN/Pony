@@ -1,7 +1,6 @@
 package com.pony.services.impl;
 
 import java.util.List;
-import java.util.UUID;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -36,10 +35,10 @@ public class TokenServiceImpl implements TokenService {
 	@Override
 	public Token findToken(String tokenValue, List<Token> tokens, TokenType tokenType) {
 		return tokens
-		.stream()
-		.filter(x -> x.getValue().toString() == tokenValue && x.getType() == tokenType)
-		.findFirst()
-		.get();
+			.stream()
+			.filter(x -> x.getValue().toString() == tokenValue && x.getType() == tokenType)
+			.findFirst()
+			.get();
 	}
 
 	@Override

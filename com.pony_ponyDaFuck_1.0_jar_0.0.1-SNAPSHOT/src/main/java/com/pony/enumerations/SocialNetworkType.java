@@ -1,6 +1,6 @@
 package com.pony.enumerations;
 
-public enum SocialNetwork {
+public enum SocialNetworkType {
     FACEBOOK,
     TWITTER,
     INSTAGRAM,

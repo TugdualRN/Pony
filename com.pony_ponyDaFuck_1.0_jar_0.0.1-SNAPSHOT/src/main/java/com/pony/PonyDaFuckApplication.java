@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "com.pony")
-public static class PonyDaFuckApplication {
+public class PonyDaFuckApplication {
 
     public static boolean isDevelopment = false;
 
