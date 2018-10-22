@@ -27,10 +27,7 @@ public class ShopController {
 		ChargeRequest chargeRequest = new ChargeRequest();
 		// TODO get all chargeRequest
 		List<ChargeRequest> toto = _stripeService.findAll();
-		for(ChargeRequest titi: toto ){
-			System.out.println(titi.getDescription());
-		}
-	
+		
 		return new ModelAndView("shop/Shop").addObject("offerList", toto);
 	}
 }

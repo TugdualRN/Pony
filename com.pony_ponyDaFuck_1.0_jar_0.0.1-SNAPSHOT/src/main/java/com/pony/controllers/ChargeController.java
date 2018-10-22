@@ -26,12 +26,14 @@ public class ChargeController {
     {
 //        chargeRequest.setCurrency(Currency.EUR);
         Charge charge = paymentsService.charge(chargeRequest);
+        System.out.println(charge);
         return new ModelAndView("shop/result").addObject("charge", charge);
     }
  
     @ExceptionHandler(StripeException.class)
     public ModelAndView handleError(StripeException ex) {
      String error = ex.getMessage();
-        return new ModelAndView("shop/result").addObject(error);
+   
+        return new ModelAndView("shop/result").addObject("error", error);
     }
 }

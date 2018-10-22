@@ -12,14 +12,18 @@
 		<header>
 			<nav th:replace="fragments/navbar :: navbar"></nav>
 		</header>
-		<div class="row">
-			<div class="col">
-				<h1>Welcome to the NewsPage</h1>		
-				<div class="row" th:text="${news.title}"></div>
-				<div class="row" th:remove="tag" th:utext="${news.content}"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+<!-- 					<h1>Welcome to the NewsPage</h1>		 -->
+					<div class="row">
+						<h3 th:text="${news.title}"></h3>
+					</div>
+					<div class="row" th:remove="tag" th:utext="${news.content}"></div>
+				</div>
 			</div>
-		</div>
-		<th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>
+			<th:block th:replace="fragments/footer"></th:block>
+	        <th:block th:replace="fragments/script-common">...</th:block>
+        </div>
 	</body>
 </html>

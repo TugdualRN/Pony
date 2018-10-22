@@ -24,6 +24,9 @@ public class StripeExample {
         Map<String, Object> sourceParams = new HashMap<String, Object>();
         sourceParams.put("type", "ach_credit_transfer");
         sourceParams.put("currency", "usd");
+        Map<String, Long> metadata = new HashMap<String, Long>();
+        metadata.put("user", 1l);
+        sourceParams.put("metadata", metadata);
         Map<String, Object> ownerParams = new HashMap<String, Object>();
         ownerParams.put("email", "ponydafuk@gmail.com");
         sourceParams.put("owner", ownerParams);

@@ -46,6 +46,6 @@ public class StripeService {
 //	@Override
     @Transactional(readOnly = true)
     public List<ChargeRequest> findAll() {
-        return _chargeRequestRepo.findAll();
+        return _chargeRequestRepo.findAllByOrderByAmountAsc();
     }
 }
