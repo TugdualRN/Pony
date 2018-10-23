@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.NoHandlerFoundException;
+// import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +26,11 @@ public class ErrorController {
         return new ModelAndView("error").addObject("exception", throwable);
     }
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ModelAndView notfoundExceptionHandler(HttpServletRequest request, Exception e)   {
-        _logger.error("Request: " + request.getRequestURL() + "returned 404", e);
+    // @ExceptionHandler(NoHandlerFoundException.class)
+    // @ResponseStatus(HttpStatus.NOT_FOUND)
+    // public ModelAndView notfoundExceptionHandler(HttpServletRequest request, Exception e)   {
+    //     _logger.error("Request: " + request.getRequestURL() + "returned 404", e);
         
-        return new ModelAndView("error").addObject("exception", e);
-    }
-
+    //     return new ModelAndView("error").addObject("exception", e);
+    // }
 }
