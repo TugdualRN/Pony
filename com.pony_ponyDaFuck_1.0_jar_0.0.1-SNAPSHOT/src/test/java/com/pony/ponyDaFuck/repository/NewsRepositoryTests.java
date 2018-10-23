@@ -28,7 +28,8 @@ public class NewsRepositoryTests {
 		News news = testedNewsRepo.findBySlug("title");
 		assertEquals(expected, news.getSlug());
 	}
-	@Test
+
+  @Test
 	public void testFindBySlugLike() {
 		
 		int expected = 6;

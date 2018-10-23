@@ -8,26 +8,28 @@
         <meta http-equiv="Content-Type" content="text/html"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <th:block th:replace="fragments/style-common">...</th:block>
+        <th:block th:replace="fragments/style-common"/>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
-        <th:block th:replace="fragments/header"></th:block>
+        <th:block th:replace="fragments/header"/>
 
-		<div class="container">
         <div class="row">
             <div class="col">
             </div>
             <div class="col">
-                <h1>Welcome to the HomePage</h1>
-                <p><a th:href="@{/register}">Click Here</a> To access Register Page</p>
-                <p><a th:href="@{/login}">Click Here</a> To access Login Page</p>
+                <h1 th:text="#{welcome.homepage}"></h1>
+    
+                <p th:text="#{access.register-page}">
+                    <a th:href="@{/register}" th:text="#{click.here}"></a></p>
+                <p th:text="#{access.login-page}">
+                    <a th:href="@{/login}" th:text="#{click.here}"></a></p>
             </div>
             <div class="col-2">
             </div>
         </div>
 		<div class="row">
 			<ul class="list-group" >
-			<th:block  th:each="news : ${newsList}"> 
+      <th:block  th:each="news : ${newsList}"> 
 				<li class="list-group-item" >
 					<a th:href="@{/news/{slug}(slug=${news.slug})}" >
 						<img alt="" th:src="${news.img}" height="50" width="50"></img>
@@ -38,8 +40,7 @@
 			</th:block>
 			</ul>
 		</div>
-  		<th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>
-        </div>
+  		<th:block th:replace="fragments/footer"/>
+        <th:block th:replace="fragments/script-common"/>
     </body>
 </html>

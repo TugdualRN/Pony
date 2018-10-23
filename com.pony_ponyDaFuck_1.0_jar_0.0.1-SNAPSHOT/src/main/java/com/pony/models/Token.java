@@ -42,76 +42,24 @@ public class Token {
 	private User user;
 	// </editor-fold>
 	
-	public Token() {
-	}
+	public Token() {}
 
-	public Token(TokenType type, UUID value, LocalDateTime creationDate)
-	{
+	public Token(TokenType type) {
 		this.type = type;
-		this.value = value;
-		this.creationDate = creationDate;
+		this.value = UUID.randomUUID();
+		this.creationDate = LocalDateTime.now();
 	}
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
-	public long getId()
-	{
-		return this.id;
-	}
-
-	public void setId(long id)
-	{
-		this.id = id;
-	}
-
-	public TokenType getType()
-	{
-		return this.type;
-	}
-
-	public void setType(TokenType type)
-	{
-		this.type = type;
-	}
-
-	public UUID getValue()
-	{
-		return this.value;
-	}
-
-	public void setValue(UUID value)
-	{
-		this.value = value;
-	}
-
-	public LocalDateTime getCreationdate()
-	{
-		return this.creationDate;
-	}
-
-	public void setCreationdate(LocalDateTime creationDate)
-	{
-		this.creationDate = creationDate;
-	}
-
-	public User getUser()
-	{
-		return this.user;
-	}
-
-	public void setUser(User user)
-	{
-		this.user = user;
-	}
-
-	// public User getUser()
-	// {
-	// 	return this.user;
-	// }
-
-	// public void setUser(User user)
-	// {
-	// 	this.user = user;
-	// }
-	
+	public long getId() { return this.id; }
+	public void setId(long id) { this.id = id; }
+	public TokenType getType() { return this.type; }
+	public void setType(TokenType type) { this.type = type; }
+	public UUID getValue() { return this.value; }
+	public void setValue(UUID value) { this.value = value; }
+	public LocalDateTime getCreationdate() { return this.creationDate; }
+	public void setCreationdate(LocalDateTime creationDate) { this.creationDate = creationDate; }
+	public User getUser() { return this.user; }
+	public void setUser(User user) { this.user = user; }
     // </editor-fold>
 }

@@ -10,7 +10,6 @@ TABLESPACE = pg_default
 CONNECTION LIMIT = -1;
 \c test;
 
-
 --
 -- PostgreSQL database dump
 --

@@ -29,24 +29,33 @@
 	<!-- <repositories> <repository> <id>jcenter</id> <url>https://jcenter.bintray.com/</url> 
 		</repository> </repositories> -->
 
-	<dependencies>
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
+    <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency> -->
+        <!-- <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.6.RELEASE</version>
+        </dependency> -->
 		<!-- https://mvnrepository.com/artifact/com.github.slugify/slugify -->
 		<dependency>
 			<groupId>com.github.slugify</groupId>
@@ -93,14 +102,35 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Logging -->
-		<!-- <dependency> <groupId>org.serilogj.serilogj</groupId> <artifactId>serilogj</artifactId> 
-			<version>0.5.1</version> <type>pom</type> </dependency> -->
-		<dependency> <!-- Will be removed in the near future if Serilog has strong Java Support -->
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
+        <!-- Logging -->
+        <!-- <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency> -->
+        <!-- <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency> -->
+        
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
+        <!-- <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <scope>test</scope>
+        </dependency> -->
+        <dependency>
+            <groupId>com.internetitem</groupId>
+            <artifactId>logback-elasticsearch-appender</artifactId>
+            <version>1.6</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -147,6 +177,23 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
+        <!-- Social -->
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>[4.0,)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.facebook4j</groupId>
+            <artifactId>facebook4j-core</artifactId>
+            <version>[2.4,)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sachinhandiekar</groupId>
+            <artifactId>jInstagram</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

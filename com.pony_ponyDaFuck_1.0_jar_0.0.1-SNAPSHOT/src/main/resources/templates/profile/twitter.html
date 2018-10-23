@@ -16,10 +16,7 @@
             <div class="col-2">
             </div>
             <div class="col">
-                <br/>
-                <h1>Profile Page</h1>
-                <h3>Connect to Twitter</h3>
-                <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
+                <h3 th:text="'Congratulations! You are logged in as Twitter user ' + ${twitter.username} + '!'"></h3>
             </div>
             <div class="col-2">
             </div>

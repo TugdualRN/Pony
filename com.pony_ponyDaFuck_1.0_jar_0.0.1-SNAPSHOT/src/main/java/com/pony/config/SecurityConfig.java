@@ -71,26 +71,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/reset-password").anonymous()
             .antMatchers("/news/**").permitAll()
             .antMatchers("/logout").authenticated()
+            .antMatchers("/connect/**").permitAll()
+            .antMatchers("/connect/twitter").permitAll()
             .antMatchers("/create-news").hasRole("WRITER") 
             .antMatchers("/admin/**").hasAnyRole("ADMIN")
             .antMatchers("/user/**").hasAnyRole("USER")
-            .and()
 
             // Login
-            .formLogin()
-            .usernameParameter("login")
-            .passwordParameter("password")
-            .loginPage("/login")
-            .loginProcessingUrl("/login")
-            .permitAll()
-            .defaultSuccessUrl("/")
-            .failureUrl("/login/fail")
+            .and()
+                .formLogin()
+                .usernameParameter("login")
+                .passwordParameter("password")
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .permitAll()
+                .defaultSuccessUrl("/")
+                .failureUrl("/login/fail")
 
             // Logout
             .and()
-            .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/")
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
 
             // RememberMe
             // .and()
@@ -100,11 +102,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // .tokenValiditySeconds(86400)
 
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-            .maximumSessions(1)
-            .and()
-            .and()
-            .csrf().disable();
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .maximumSessions(1)
+            // .and()
+            // .and()
+            // .csrf().disable()
+            ;
     }
 }

@@ -8,19 +8,19 @@ import com.pony.models.User;
 
 public interface NewsService {
 	
-	 	List<News> findAll();
+	List<News> findAll();
 
-	    News findById(Long NewsId);
+	News findById(Long NewsId);
 
-	    News findBySlug(String slug);
-	    
-	    News insert(News News);
+	News findBySlug(String slug);
+	
+	News insert(News News);
 
-	    News update(News News);
+	News update(News News);
 
-	    void delete(Long NewsId);
-	    
-	    String formatContent(String content);
+	void delete(Long NewsId);
+	
+	String formatContent(String content);
 
 		News createNews(News news, User user);
 		

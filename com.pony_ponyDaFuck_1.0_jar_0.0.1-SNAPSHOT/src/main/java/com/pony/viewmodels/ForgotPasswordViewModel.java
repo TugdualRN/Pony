@@ -1,26 +1,19 @@
 package com.pony.viewmodels;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 public class ForgotPasswordViewModel {
 
-    @NotNull
+    @NotBlank
     @Size(min = 3, max = 20)
     private String mail;
 
-    public ForgotPasswordViewModel()
-    {
-        
-    }
+    public ForgotPasswordViewModel() {}
 
-    public String getMail()
-	{
-		return this.mail;
-	}
-
-	public void setMail(String mail)
-	{
-		this.mail = mail;
-	}
+    // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
+    public String getMail() { return this.mail; }
+	public void setMail(String mail) { this.mail = mail; }
+    // </editor-fold>
 }

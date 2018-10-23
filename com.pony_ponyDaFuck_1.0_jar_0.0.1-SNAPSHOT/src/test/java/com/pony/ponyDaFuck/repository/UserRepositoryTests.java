@@ -28,7 +28,8 @@ public class UserRepositoryTests {
 		User user = userRepository.findByUserName(userName);
 		assertEquals(userName, user.getUserName());
 	}
-	@Test
+
+  @Test
 	public void testFindByNormalizedUserName(){
 		
 		String userName = "KEVIN";

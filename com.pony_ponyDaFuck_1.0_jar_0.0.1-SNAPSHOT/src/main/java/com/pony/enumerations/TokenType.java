@@ -2,5 +2,6 @@ package com.pony.enumerations;
 
 public enum TokenType {
     ACTIVATE_ACCOUNT,
-    RESET_PASSWORD
+    RESET_PASSWORD,
+    CHANGE_MAIL
 }
