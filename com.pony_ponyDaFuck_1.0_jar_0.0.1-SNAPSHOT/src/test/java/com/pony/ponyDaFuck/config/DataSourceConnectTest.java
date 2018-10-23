@@ -19,7 +19,7 @@ public class DataSourceConnectTest extends DataSourceConnect {
         DataSource dataSource = DataSourceBuilder
             .create()
             .url("jdbc:postgresql://localhost:5432/test")
-            .username("pony")
+            .username("postgres")
             .password("azerty1234")
             .driverClassName("org.postgresql.Driver")
             .build();

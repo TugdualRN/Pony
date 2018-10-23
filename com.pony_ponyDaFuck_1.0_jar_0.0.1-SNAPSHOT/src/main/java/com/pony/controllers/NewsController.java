@@ -1,9 +1,9 @@
 package com.pony.controllers;
 
-import javax.annotation.security.DenyAll;
 import javax.validation.Valid;
 
 import com.pony.models.News;
+
 import com.pony.models.User;
 import com.pony.security.ConnectedUserDetails;
 import com.pony.services.NewsService;
@@ -49,11 +49,10 @@ public class NewsController {
 	}
 	
 	@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded" })
-	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel,
-			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()){
+	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, BindingResult bindingResult) {
+		if (bindingResult.hasErrors())
 			return new ModelAndView("redirect:create-news");
-		}
+		
 		News news = new News();
 
 		news.setContent(_newsService.formatContent(viewModel.getContent()));

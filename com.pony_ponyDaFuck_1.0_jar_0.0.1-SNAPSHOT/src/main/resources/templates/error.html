@@ -17,10 +17,19 @@
             </div>
             <div class="col">
                 <br/>
-                <h1>An Error occured</h1>
-                <p th-value="${exception.class}"></p>
-                <p th-value="${exception.message}"></p>
-                <p th-value="${exception.stackTrace}"></p>
+                <h1 th:text="#{error.generic}"></h1>
+
+                <p th:text="#{error.cause}"></p>
+                <p th:text="${exception.cause}"></p>
+                
+                <p th:text="#{error.message}"></p>
+                <p th-text="${exception.localizedMessage}"></p>
+
+                <p th-text="#{error.raw-message}"></p>
+                <p th-text="${exception.message}"></p>
+                
+                <p th-text="#{error.stack-trace}"></p>
+                <p th-text="${exception.stackTrace}"></p>
             </div>
             <div class="col-2">
             </div>

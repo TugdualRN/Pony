@@ -68,7 +68,7 @@ public class ConnectedUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getIsActive();
     }
     // </editor-fold>
 }

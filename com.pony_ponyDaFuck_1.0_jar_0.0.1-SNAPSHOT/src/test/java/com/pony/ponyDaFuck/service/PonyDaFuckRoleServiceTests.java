@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pony.models.Role;
 import com.pony.services.RoleService;
-import com.pony.services.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,9 +25,6 @@ public class PonyDaFuckRoleServiceTests {
 	
 	@Autowired
 	private RoleService testedRoleService;
-	
-	@Autowired
-	private UserService testedUserService;
 	
 	@Test
 	public void testFindById(){
@@ -85,6 +81,7 @@ public class PonyDaFuckRoleServiceTests {
 		Role role = testedRoleService.findById(idRole);
 		assertEquals(true, testedRoleService.deleteRole(role));
 	}
+	
 	@Test
 	@Transactional
     @Rollback(true)

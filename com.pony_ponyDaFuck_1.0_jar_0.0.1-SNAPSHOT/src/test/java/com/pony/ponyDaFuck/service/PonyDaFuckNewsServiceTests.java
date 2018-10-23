@@ -32,9 +32,9 @@ public class PonyDaFuckNewsServiceTests {
 	
 	@Test
 	public void testFindById(){
-			News news = testedNewsService.findById(1L);
-			String expected = "Title";
-			assertEquals(expected, news.getTitle());
+		News news = testedNewsService.findById(1L);
+		String expected = "Title";
+		assertEquals(expected, news.getTitle());
 	}
 	
 	@Test

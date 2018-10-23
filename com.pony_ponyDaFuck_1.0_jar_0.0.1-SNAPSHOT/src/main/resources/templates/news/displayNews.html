@@ -9,12 +9,11 @@
 		<th:block th:replace="fragments/style-common">...</th:block>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
-		<header>
-			<nav th:replace="fragments/navbar :: navbar"></nav>
-		</header>
+		<th:block th:replace="fragments/header"></th:block>
+
 		<div class="row">
 			<div class="col">
-				<h1>Welcome to the NewsPage</h1>		
+				<h1 th:text="#{welcome.newspage}"></h1>		
 				<div class="row" th:text="${news.title}"></div>
 				<div class="row" th:remove="tag" th:utext="${news.content}"></div>
 			</div>

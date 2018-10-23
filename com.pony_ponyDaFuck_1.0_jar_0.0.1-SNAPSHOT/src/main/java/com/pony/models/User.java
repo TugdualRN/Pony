@@ -93,8 +93,7 @@ public class User {
     // </editor-fold>
 
     // <editor-fold desc="Constructors">
-    public User() {
-    }
+    public User() {}
 
     public User(String userName, String mail) {
         this.userName = userName;
@@ -103,125 +102,36 @@ public class User {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
-    public long getId() {
-        return this.id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return this.userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPasswordHash() {
-        return this.passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastname) {
-        this.lastName = lastname;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getMail() {
-        return this.mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public Set<Role> getRoles() {
-        return this.roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<Token> getTokens() {
-        return this.tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
-    }
-
-    public String getNormalizedUserName() {
-		return this.normalizedUserName;
-	}
-
-	public void setNormalizedUserName(String normalizedMail) {
-		this.normalizedUserName = normalizedMail;
-    }
-    
-    public String getNormalizedMail() {
-		return this.normalizedMail;
-	}
-
-	public void setNormalizedMail(String normalizedMail) {
-		this.normalizedMail = normalizedMail;
-    }
-    
-    public boolean getIsActive() {
-		return this.isActive;
-	}
-
-	public void setIsActive(boolean isActive) {
-		this.isActive = isActive;
-    }
-    
-    public boolean getIsBanned() {
-		return this.isBanned;
-	}
-
-	public void setIsBanned(boolean isBanned) {
-		this.isBanned = isBanned;
-    }
-    
-	public boolean getIsSuspended() {
-		return this.isSuspended;
-	}
-
-	public void setIsSuspended(boolean isSuspended) {
-		this.isSuspended = isSuspended;
-	}
-
-    public List<News> getNewsList() {
-		return newsList;
-	}
-
-	public void setNewsList(List<News> newsList) {
-		this.newsList = newsList;
-    }
+    public long getId() { return this.id; }
+    public void setId(long id) { this.id = id; }
+    public String getUserName() { return this.userName; }
+    public void setUserName(String userName) { this.userName = userName; }
+    public String getPasswordHash() { return this.passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public String getFirstName() { return this.firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getLastName() { return this.lastName; }
+    public void setLastName(String lastname) { this.lastName = lastname; }
+    public String getPhone() { return this.phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public String getMail() { return this.mail; }
+    public void setMail(String mail) { this.mail = mail; }
+    public Set<Role> getRoles() { return this.roles; }
+    public void setRoles(Set<Role> roles) { this.roles = roles;  }
+    public List<Token> getTokens() { return this.tokens; }
+    public void setTokens(List<Token> tokens) { this.tokens = tokens; }
+    public String getNormalizedUserName() { return this.normalizedUserName; }
+	public void setNormalizedUserName(String normalizedMail) { this.normalizedUserName = normalizedMail; }
+    public String getNormalizedMail() { return this.normalizedMail; }
+	public void setNormalizedMail(String normalizedMail) { this.normalizedMail = normalizedMail; }
+    public boolean getIsActive() { return this.isActive; }
+	public void setIsActive(boolean isActive) { this.isActive = isActive; }
+    public boolean getIsBanned() { return this.isBanned; }
+	public void setIsBanned(boolean isBanned) { this.isBanned = isBanned; }
+	public boolean getIsSuspended() { return this.isSuspended; }
+	public void setIsSuspended(boolean isSuspended) { this.isSuspended = isSuspended; }
+    public List<News> getNewsList() { return newsList; }
+	public void setNewsList(List<News> newsList) { this.newsList = newsList; }
     // </editor-fold>
     
     @Override

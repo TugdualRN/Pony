@@ -42,44 +42,15 @@ public class UserCurrencies {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
-    public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getDiamonds() {
-		return this.diamonds;
-	}
-
-	public void setDiamonds(long diamonds) {
-		this.diamonds = diamonds;
-	}
-
-	public long getGolds() {
-		return this.golds;
-	}
-
-	public void setGolds(long gold) {
-		this.golds = gold;
-	}
-
-	public long getWoods() {
-		return this.woods;
-	}
-
-	public void setWoods(long woods) {
-		this.woods = woods;
-    }
-    
-    public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public long getId() { return this.id; }
+	public void setId(long id) { this.id = id; }
+	public long getDiamonds() { return this.diamonds; }
+	public void setDiamonds(long diamonds) { this.diamonds = diamonds; }
+	public long getGolds() { return this.golds; }
+	public void setGolds(long gold) { this.golds = gold; }
+	public long getWoods() { return this.woods; }
+	public void setWoods(long woods) { this.woods = woods; }
+    public User getUser() { return this.user; }
+	public void setUser(User user) { this.user = user; }
     // </editor-fold>
 }

@@ -21,31 +21,40 @@
                     Managment
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:href="@{/managment/users}">Users</a>
-                        <a class="dropdown-item" th:href="@{/managment/roles}">Roles</a>
+                        <a class="dropdown-item" th:href="@{/managment/users}" th:text="#{users}"></a>
+                        <a class="dropdown-item" th:href="@{/managment/roles}" th:text="#{roles}"></a>
                     </div>
                 </li>
-            </ul>
-            <ul class="navbar-nav ml-auto" sec:authorize="hasAuthority('ROLE_WRITER')">
-        		<li class="nav-item" >
-                	<a class="nav-link" th:href="@{/create-news}">Create News</a>
-            	</li>
-       		</ul>
-            <ul class="navbar-nav ml-auto" sec:authorize="!isFullyAuthenticated()">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/register}">Register</a>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_WRITER')">
+                    <a class="nav-link" th:href="@{/create-news}" th:text="#{news.create}"></a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto" sec:authorize="isFullyAuthenticated()">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/Profile}">My Profile</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false" th:text="#{lang}">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="?lang=en" th:text="#{lang.en}"></a>
+                        <a class="dropdown-item" href="?lang=fr" th:text="#{lang.fr}"></a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/logout}">Logout</a>
-                </li>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/profile}" th:text="#{profile}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}" th:text="#{logout}"></a>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}" th:text="#{login}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/register}" th:text="#{register}"></a>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </nav>

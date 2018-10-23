@@ -3,36 +3,50 @@ package com.pony.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.log4j.Logger;
 
+import com.pony.enumerations.TokenType;
 import com.pony.models.Role;
+import com.pony.models.Token;
 import com.pony.models.User;
-import com.pony.repositories.RoleRepository;
 import com.pony.repositories.UserRepository;
+import com.pony.services.RoleService;
+import com.pony.services.TokenService;
 import com.pony.services.UserService;
+import com.pony.utils.Mailer;
 import com.pony.utils.RegisterResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static Logger _logger = Logger.getLogger(UserService.class);
+    private static Logger _logger = LoggerFactory.getLogger(UserService.class);
+    private final UserRepository _userRepository;
+
+    private final TokenService _tokenService;
+    private final RoleService _roleService;
 
     private final BCryptPasswordEncoder _passwordEncoder;
-    private final UserRepository _userRepository;
-    private final RoleRepository _roleRepository;
+    private final Mailer _mailer;
 
     @Autowired
     public UserServiceImpl(
-        BCryptPasswordEncoder passwordEncoder, 
         UserRepository userRepository, 
-        RoleRepository roleRepository
+        TokenService tokenService,
+        RoleService roleService,
+        BCryptPasswordEncoder passwordEncoder,
+        Mailer mailer
     ) {
-        this._passwordEncoder = passwordEncoder;
-        this._userRepository = userRepository;
-        this._roleRepository = roleRepository;
+        _userRepository = userRepository;
+        _tokenService = tokenService;
+        _roleService = roleService;
+        _passwordEncoder = passwordEncoder;
+        _mailer = mailer;
     }
 
     @Override
@@ -99,7 +113,7 @@ public class UserServiceImpl implements UserService {
             user.setPasswordHash(hashedPassword);
 
             // Add USER role as the default role
-            Role role = _roleRepository.findByName("USER");
+            Role role = _roleService.findByName("USER");
             user.getRoles().add(role);
 
             User savedUser = _userRepository.save(user);
@@ -156,20 +170,67 @@ public class UserServiceImpl implements UserService {
     public User addRoleToUser(User user, Role role) {
         if (!hasRole(user, role)) {
             user.getRoles().add(role);
+            
+            _logger.info(
+                "Removed role " 
+                + role.getName() 
+                + " to user " 
+                + user.getMail());
 
             return _userRepository.save(user);
         }
 
-        return null;
+        _logger.error(
+            "Tried to add role " 
+            + role.getName() 
+            + " from user " 
+            + user.getMail() 
+            + "but he already has it");
+
+        return user;
     }
 
     public User removeRoleToUser(User user, Role role) {
         if (hasRole(user, role)) {
             user.getRoles().removeIf(x -> x.getId() == role.getId());
+            
+            _logger.info(
+                "Removed role " 
+                + role.getName() 
+                + " to user " 
+                + user.getMail());
 
             return _userRepository.save(user);
         }
 
-        return null;
+        _logger.error(
+            "Tried to remove role " 
+            + role.getName() 
+            + " from user " 
+            + user.getMail() 
+            + "but he did not have the role in the first place");
+
+        return user;
+    }
+
+    public User updatePassword(User user, String password) {
+        String hashedPassword = _passwordEncoder.encode(password);
+        user.setPasswordHash(hashedPassword);
+
+        return _userRepository.save(user);
+    }
+
+    public User generateToken(User user, TokenType tokenType) throws MailException {
+
+        Token token = _tokenService.generateToken(tokenType, user);
+        user.getTokens().add(token);
+
+        if (tokenType == TokenType.ACTIVATE_ACCOUNT) {
+            _mailer.SendRegisterMail(user, token);
+        } else {
+            _mailer.SendResetPassword(user, token);
+        }
+
+        return _userRepository.save(user);
     }
 }

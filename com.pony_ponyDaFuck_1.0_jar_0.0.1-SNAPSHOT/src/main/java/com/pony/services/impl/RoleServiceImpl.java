@@ -29,8 +29,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(readOnly = true)
     public Role findById(Long roleId) {
-
         return _roleRepository.findOne(roleId);
+    }
+
+    @Override
+    public Role findByName(String roleName) {
+        return _roleRepository.findByName(roleName); 
     }
 
     @Override
@@ -57,6 +61,7 @@ public class RoleServiceImpl implements RoleService {
         if (_roleRepository.findByName(role.getName()) == null) {
             return _roleRepository.save(role);
         }
+        
         return null;
     }
 

@@ -1,8 +1,5 @@
 package com.pony.controllers;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import javax.validation.Valid;
 
 import com.pony.enumerations.TokenType;
@@ -10,13 +7,13 @@ import com.pony.models.Token;
 import com.pony.models.User;
 import com.pony.services.TokenService;
 import com.pony.services.UserService;
-import com.pony.utils.Mailer;
 import com.pony.utils.RegisterResult;
 import com.pony.viewmodels.ForgotPasswordViewModel;
 import com.pony.viewmodels.RegisterViewModel;
+import com.pony.viewmodels.ResetPasswordViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSendException;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,24 +23,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class AccountController {
 
-    private static Logger _logger = Logger.getLogger(AccountController.class);
+    private final Logger _logger = LoggerFactory.getLogger(AccountController.class);
 
     private UserService _userService;
     private TokenService _tokenService;
-    private Mailer _mailer;
 
     @Autowired
-    public AccountController(UserService userService, TokenService tokenService, Mailer mailer) {
+    public AccountController(UserService userService, TokenService tokenService) {
         _tokenService = tokenService;
         _userService = userService;
-        _mailer = mailer;
     }
 
+    // <editor-fold desc="Register">
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(Model model) {
     
@@ -73,15 +71,11 @@ public class AccountController {
         // Mailing
         if (registerResult.isValid()) {
             try {
-                // Generate Token and Update User
-                Token token = _tokenService.generateToken(TokenType.ACTIVATE_ACCOUNT, registerResult.getUser());
-                registerResult.getUser().getTokens().add(token);
-                _userService.update(registerResult.getUser());
+                _userService.generateToken(registerResult.getUser(), TokenType.ACTIVATE_ACCOUNT);
+            } catch (MailException e) {
+                _logger.error("Mailing connection timeout");
 
-                // Send Mail
-                _mailer.SendRegisterMail(registerResult.getUser(), token);
-            } catch (MailSendException e) {
-                _logger.fatal("Mailing connection timeout");
+                throw e;
             }
 
             return new ModelAndView("authentication/register-success");
@@ -92,7 +86,9 @@ public class AccountController {
             .addObject("registerViewModel", viewModel)
             .addObject("errors", registerResult);
     }
+    // </editor-fold>
 
+    // <editor-fold desc="Login">
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
 
@@ -105,32 +101,35 @@ public class AccountController {
         return new ModelAndView("authentication/login-failure");
     }
 
+    /*
+     *  The Login POST Method is handled by Spring Security
+     */
+    // </editor-fold>
+
+    // <editor-fold desc="Confirmation">
     @RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
     public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
         
         User user = _userService.findById(userId);
 
         if (user != null) {
-            try {
-                // retrieve token matching the given one
-                Token token = user.getTokens().stream().filter(x -> x.getValue().toString() == tokenValue).findFirst().get();
+            // retrieve token matching the given one
+            Token token = _tokenService.findToken(tokenValue, user.getTokens(), TokenType.ACTIVATE_ACCOUNT);
+            
+            // Check if token didn't expire
+            if (_tokenService.isValidToken(token)) {
+                user.setIsActive(true);
+                _userService.update(user);
                 
-                LocalDateTime now = LocalDateTime.now();
-
-                if (Duration.between(token.getCreationdate(), now).toHours() < 48) {
-                    user.setIsActive(true);
-                    _userService.update(user);
-                }
-            }
-            catch (NoSuchElementException e) {
-                _logger.error("No token found", e);
-
+                return new ModelAndView("authentication/confirm-success");
             }
         }
 
-        return new ModelAndView("authentication/confirmSuccess");
+        return new ModelAndView("authentication/confirm-failure");
     }
+    // </editor-fold>
 
+    // <editor-fold desc="PasswordReset">
     @RequestMapping(value = "/reset-password", method = RequestMethod.GET)
     public ModelAndView resetPassword() {
 
@@ -140,19 +139,14 @@ public class AccountController {
 
     @RequestMapping(value = "/reset-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
     public ModelAndView resetPassword(@Valid @RequestBody @ModelAttribute ForgotPasswordViewModel viewModel, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-        {   
+        
+        if (bindingResult.hasErrors())   
             return new ModelAndView("home");
-        }
 
         User user = _userService.findByNormalizedMail(viewModel.getMail().toUpperCase());
         
         if (user != null) {
-            Token token = _tokenService.generateToken(TokenType.RESET_PASSWORD, user);
-            user.getTokens().add(token);
-            _userService.update(user);
-
-            _mailer.SendResetPassword(user, token);
+            _userService.generateToken(user, TokenType.RESET_PASSWORD);
 
             return new ModelAndView("authentication/reset-password-success");
         }
@@ -161,25 +155,31 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.GET)
-    public ModelAndView changePassword(@RequestParam long userId, @RequestParam String tokenValue)
-    {
-        User user = _userService.findById(userId);
-
-        if (user != null) {
-            //Token token = user.getTokens().str
-            
-        }
-
-        return null;
+    public ModelAndView changePassword(@RequestParam long userId, @RequestParam String tokenValue) {
+        return new ModelAndView("authentication/change-password")
+            .addObject("userId", userId)
+            .addObject("token", tokenValue);
     }
 
-    /**
-     * The POST Login action is Handled By SpringSecurity
-     * Login logic is handled in pony.security.UserDetailsServiceImpl.loadUserByUsername(String login)
-     * The Above Method will be called by Spring Security Authentication Middleware
-     */
+    @RequestMapping(value = "/change-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
+    public ModelAndView changePassword(@Valid @RequestBody @ModelAttribute ResetPasswordViewModel viewModel, BindingResult bindingResult) {
+        
+        if (bindingResult.hasErrors())
+            return new ModelAndView("home");
 
-    // @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
-    // public ModelAndView login(@Valid @RequestBody @ModelAttribute LoginViewModel viewModel, BindingResult bindingResult) {
-    // }
+        User user = _userService.findById(viewModel.getUserId());
+
+        if (user != null) {
+            Token token = _tokenService.findToken(viewModel.getToken(), user.getTokens(), TokenType.RESET_PASSWORD);
+
+            if (_tokenService.isValidToken(token)) {
+                _userService.updatePassword(user, viewModel.getPassword());
+
+                return new ModelAndView("authentication/change-password-success");
+            }
+        }
+
+        return new ModelAndView("authentication/change-password-failure");
+    }
+    // </editor-fold>
 }
