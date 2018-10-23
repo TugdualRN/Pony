@@ -10,7 +10,6 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Source;
-import com.stripe.net.RequestOptions;
 
 public class StripeExample {
 
@@ -24,12 +23,15 @@ public class StripeExample {
         Map<String, Object> sourceParams = new HashMap<String, Object>();
         sourceParams.put("type", "ach_credit_transfer");
         sourceParams.put("currency", "usd");
+
         Map<String, Long> metadata = new HashMap<String, Long>();
         metadata.put("user", 1l);
         sourceParams.put("metadata", metadata);
+        
         Map<String, Object> ownerParams = new HashMap<String, Object>();
         ownerParams.put("email", "ponydafuk@gmail.com");
         sourceParams.put("owner", ownerParams);
+        
         try {
 			Source source = Source.create(sourceParams);
 			System.out.println(source.toJson());
@@ -39,22 +41,20 @@ public class StripeExample {
 			String result = jobject.get("id").getAsString();
 			System.out.println(result);
 			chargeMap.put("source", "tok_visa");
-		} catch (StripeException e1) {
-			// TODO Auto-generated catch block
+        }
+        catch (StripeException e1) {
 			e1.printStackTrace();
 		}
         
-         // obtained via Stripe.js
-
+        // obtained via Stripe.js
         try {
         	
         	Charge charge = Charge.create(chargeMap);
             
             System.out.println(charge);
-        } catch (StripeException e) {
+        }
+        catch (StripeException e) {
             e.printStackTrace();
         }
     }
-    
-   
 }

@@ -27,10 +27,7 @@ public class PonyDaFuckRoleServiceTests {
 	@Autowired
 	private RoleService testedRoleService;
 	
-	@Autowired
-	private UserService testedUserService;
-
-  @Test
+  	@Test
 	public void testFindById(){
 		
 		Long idRole = 3L;
@@ -38,6 +35,7 @@ public class PonyDaFuckRoleServiceTests {
 		String expected = "ADMIN";
 		assertEquals(expected, role.getName());
 	}
+
 	@Test
 	public void testFindAll(){
 		
@@ -45,6 +43,7 @@ public class PonyDaFuckRoleServiceTests {
 		int all = 4;
 		assertEquals(all, roleList.size());
 	}
+
 	@Test
 	@Transactional
 	@Rollback(true)
@@ -55,6 +54,7 @@ public class PonyDaFuckRoleServiceTests {
 		role = testedRoleService.insert(role);
 		assertNotNull(role);
 	}
+	
 	@Test
 	@Transactional
     @Rollback(true)
@@ -67,6 +67,7 @@ public class PonyDaFuckRoleServiceTests {
 		
 		assertNotNull(role);
 	}
+	
 	@Test
 	@Transactional
     @Rollback(true)
@@ -76,6 +77,7 @@ public class PonyDaFuckRoleServiceTests {
 		Role role = testedRoleService.findById(idRole);
 		assertEquals(null, role);
 	}
+	
 	@Test
 	@Transactional
     @Rollback(true)

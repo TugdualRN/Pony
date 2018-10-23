@@ -14,7 +14,7 @@ public class NewsViewModel {
     @Size(min = 10)
     private String content;
 
-    @NotNull
+    @NotBlank
     @Size(min = 3, max = 250)
     private String description;
    

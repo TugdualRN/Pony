@@ -176,7 +176,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-	</dependencies>
         <!-- Social -->
         <dependency>
             <groupId>org.twitter4j</groupId>

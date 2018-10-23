@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pony.models.ChargeRequest;
-import com.pony.models.News;
 import com.pony.repositories.ChargeRequestRepository;
-import com.pony.repositories.NewsRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.*;
 import com.stripe.model.Charge;
