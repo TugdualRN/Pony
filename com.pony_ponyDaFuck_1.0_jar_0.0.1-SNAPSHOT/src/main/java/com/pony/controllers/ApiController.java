@@ -18,11 +18,8 @@ import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-import twitter4j.conf.Configuration;
-import twitter4j.conf.ConfigurationBuilder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +36,7 @@ public class ApiController {
     private UserService _userService;
     private ApiService _apiService;
 
-    public ApiController(UserService userService, ApiService apiService)
-    {
+    public ApiController(UserService userService, ApiService apiService) {
         _userService = userService;
         _apiService = apiService;
     }
@@ -51,23 +47,22 @@ public class ApiController {
     	
 		try {
 			//get the Twitter object
-			Twitter twitter = getTwitter();
+			Twitter twitter = _apiService.getTwitter();
 			
 			//get the callback url so they get back here
 			//go get the request token from Twitter
-			RequestToken requestToken = twitter.getOAuthRequestToken(_twitterCallback);
-			
+			RequestToken requestToken = twitter.getOAuthRequestToken(_twitterCallback);			
 			//put the token in the session because we'll need it later
 			request.getSession().setAttribute("requestToken", requestToken);
 			//let's put Twitter in the session as well
-			request.getSession().setAttribute("twitter", twitter);
+			//request.getSession().setAttribute("twitter", twitter);
 			
 			//now get the authorization URL from the token
 			twitterUrl = requestToken.getAuthorizationURL();
 			
 			System.out.println("Authorization url is " + twitterUrl);
 		} catch (Exception e) {
-			System.out.println("Problem logging in with Twitter! " + e.getClass());
+			System.out.println("Problem login in with Twitter! " + e.getClass());
 		}
     	
 		//redirect to the Twitter URL
@@ -80,14 +75,17 @@ public class ApiController {
         @RequestParam(value="denied", required=false) String denied,
         HttpServletRequest request
     ) {
-        
-        Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
+
+        // Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
         RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
         
         try {
+
+            Twitter twitter = _apiService.getTwitter();
+            //AccessToken token = twitter.getOAuthAccessToken(oauthVerifier);
             AccessToken token = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
 
-            System.out.println("REQUEST_TOKEN TOKEN : " + requestToken.getToken());
+            //System.out.println("REQUEST_TOKEN TOKEN : " + requestToken.getToken());
             System.out.println("ACCESS_TOKEN : " + token.getToken());
             System.out.println("ACCESS_TOKEN SECRET : " + token.getTokenSecret());
             
@@ -114,22 +112,5 @@ public class ApiController {
         }
 
         return null;
-    }
-
-    // Move this shit in a service
-    private Twitter getTwitter()
-    {
-        // Set the consumer key and secret for our app
-        String consumerKey = "MyKfxtg9Qi5XkvHlvKq1phf5m";
-        String consumerSecret = "aM4hsNAWLgn7jAMDKwYMJY2oCfKNVpXnkTYia1bel87bV34Jbp";
-        
-        // Build the configuration
-        Configuration configuration = new ConfigurationBuilder()
-            .setOAuthConsumerKey(consumerKey)
-            .setOAuthConsumerSecret(consumerSecret)
-            .build();
-
-        // Instantiate the Twitter object with the configuration
-        return new TwitterFactory(configuration).getInstance();
     }
 }

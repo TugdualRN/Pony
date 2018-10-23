@@ -1,18 +1,13 @@
 package com.pony.models;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import com.pony.converters.LocalDateTimeConverter;
 import com.pony.enumerations.SocialNetworkType;
 
@@ -50,8 +45,7 @@ public class SocialNetwork {
         String requestToken,
         String accessToken,
         String tokenSecret
-    )
-    {
+    ) {
         this.socialNetworkType = socialNetworkType;
         this.requestToken = requestToken;
         this.accessToken = accessToken;

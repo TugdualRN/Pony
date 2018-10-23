@@ -2,8 +2,10 @@ package com.pony;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication(scanBasePackages = "com.pony")
+@EnableWebMvc
 public class PonyDaFuckApplication {
 
     public static boolean isDevelopment = false;

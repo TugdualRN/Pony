@@ -15,6 +15,8 @@ public class LoggerMiddleware extends HandlerInterceptorAdapter {
     private long _startTimer; 
     private boolean _isDynamic;
     private static String[] _matches = {".cancer", ".css", ".js", ".img", ".ico"};
+
+    public LoggerMiddleware() { }
     
     @Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

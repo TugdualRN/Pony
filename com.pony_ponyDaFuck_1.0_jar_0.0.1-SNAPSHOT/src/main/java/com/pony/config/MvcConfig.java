@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -21,17 +24,23 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import com.pony.config.LoggerMiddleware;
+
 @Configuration
 @ComponentScan("com.pony")
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
     private final ApplicationContext _applicationContext;
+    private final DispatcherServlet _dispatcherServlet;
     
     @Autowired
-    public MvcConfig(ApplicationContext applicationContext) {
-
+    public MvcConfig(ApplicationContext applicationContext, DispatcherServlet dispatcherServlet) {
         super();
-        this._applicationContext = applicationContext;
+        
+        _applicationContext = applicationContext;
+        _dispatcherServlet = dispatcherServlet;
+
+        System.out.println(_applicationContext.getDisplayName());
     }
 
     /**
@@ -65,8 +74,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
         CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setDefaultLocale(Locale.ENGLISH);
-        // resolver.setCookieName("PonyCookie");
-        // resolver.setCookieMaxAge(4800);
+        resolver.setCookieName("lang");
+        resolver.setCookieMaxAge(-1);
 
         return resolver;
     }
@@ -89,9 +98,18 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public CommandLineRunner getCommandLineRunner() {
+        _dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+        
+        return args -> {};
+    }
+
+    @Bean
     public MappedInterceptor myInterceptor() {
         
-        return new MappedInterceptor(null, new LoggerMiddleware());
+        String[] filters = new String[0];
+        HandlerInterceptorAdapter loggerMiddleware = new LoggerMiddleware();
+        return new MappedInterceptor(filters, loggerMiddleware);
     }
 
     @Bean
