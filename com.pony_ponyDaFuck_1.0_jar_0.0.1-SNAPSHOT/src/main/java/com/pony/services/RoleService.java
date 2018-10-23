@@ -11,7 +11,7 @@ public interface RoleService {
     Role findById(Long roleId);
 
     Role findByName(String roleName);
-
+  
     Role insert(Role role);
 
     Role update(Role role);

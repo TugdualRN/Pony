@@ -20,7 +20,7 @@ import com.pony.services.UserService;
 import com.pony.utils.RegisterResult;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class PonyDaFuckUserServiceTests {
 

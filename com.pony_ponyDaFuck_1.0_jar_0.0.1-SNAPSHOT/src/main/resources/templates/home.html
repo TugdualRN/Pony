@@ -29,8 +29,14 @@
         </div>
 		<div class="row">
 			<ul class="list-group" >
-			<th:block  th:each="news : ${newsList}"> 
-				<li class="list-group-item"><a th:href="@{/news/{slug}(slug=${news.slug})}"><tr><td th:text="${news.title}"></td></tr></a></li>
+      <th:block  th:each="news : ${newsList}"> 
+				<li class="list-group-item" >
+					<a th:href="@{/news/{slug}(slug=${news.slug})}" >
+						<img alt="" th:src="${news.img}" height="50" width="50"></img>
+					</a>
+					<a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>
+					<div th:text="${news.description}"></div>
+				</li>
 			</th:block>
 			</ul>
 		</div>

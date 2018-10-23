@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,14 +20,17 @@ import com.pony.models.Role;
 import com.pony.services.RoleService;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class PonyDaFuckRoleServiceTests {
 	
 	@Autowired
 	private RoleService testedRoleService;
 	
-	@Test
+	@Autowired
+	private UserService testedUserService;
+
+  @Test
 	public void testFindById(){
 		
 		Long idRole = 3L;
@@ -81,7 +85,7 @@ public class PonyDaFuckRoleServiceTests {
 		Role role = testedRoleService.findById(idRole);
 		assertEquals(true, testedRoleService.deleteRole(role));
 	}
-	
+
 	@Test
 	@Transactional
     @Rollback(true)

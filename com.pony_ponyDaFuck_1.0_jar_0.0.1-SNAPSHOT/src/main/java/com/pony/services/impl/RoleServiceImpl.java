@@ -57,12 +57,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     public Role addRole(Role role) {
-
         if (_roleRepository.findByName(role.getName()) == null) {
             return _roleRepository.save(role);
         }
-        
-        return null;
+
+      return null;
     }
 
     public boolean deleteRole(Role role) {

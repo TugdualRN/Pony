@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -13,7 +14,7 @@ import com.pony.models.News;
 import com.pony.repositories.NewsRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class NewsRepositoryTests {
 	
@@ -27,8 +28,8 @@ public class NewsRepositoryTests {
 		News news = testedNewsRepo.findBySlug("title");
 		assertEquals(expected, news.getSlug());
 	}
-	
-	@Test
+
+  @Test
 	public void testFindBySlugLike() {
 		
 		int expected = 6;

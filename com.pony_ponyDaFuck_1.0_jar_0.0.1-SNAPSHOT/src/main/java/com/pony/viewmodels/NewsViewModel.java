@@ -14,10 +14,32 @@ public class NewsViewModel {
     @Size(min = 10)
     private String content;
 
-    // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
-	public String getTitle() { return title; }
-	public void setTitle(String title) { this.title = title; }
-	public String getContent() { return content; }
-	public void setContent(String content) { this.content = content; }
-	// </editor-fold>
+    @NotNull
+    @Size(min = 3, max = 250)
+    private String description;
+   
+    
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
