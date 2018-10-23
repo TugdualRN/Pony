@@ -23,4 +23,6 @@ public interface NewsService {
 	    String formatContent(String content);
 
 		News createNews(News news, User user);
+		
+		List<News> findByLangOrderByIdDesc(String lang);
 }

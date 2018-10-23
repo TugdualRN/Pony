@@ -32,10 +32,18 @@ public class News {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private User author;
 	
+	@Column(columnDefinition = "TEXT")
+	private String description;
+	
+	private String img;
+	
 	@Column(nullable = false)
 	private LocalDateTime creationDate;
 
 	private LocalDateTime modificationDate;
+	
+	@Column(nullable = false)
+	private String lang;
 
 	public long getId() {
 		return id;
@@ -59,6 +67,22 @@ public class News {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public String getSlug() {
@@ -92,9 +116,18 @@ public class News {
 		this.modificationDate = modificationDate;
 	}
 
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
 	@Override
 	public String toString() {
 		return "News [id=" + id + ", title=" + title + ", content=" + content + ", slug=" + slug + ", author=" + author
-				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + "]";
+				+ ", description=" + description + ", img=" + img + ", creationDate=" + creationDate
+				+ ", modificationDate=" + modificationDate + "]";
 	}
 }

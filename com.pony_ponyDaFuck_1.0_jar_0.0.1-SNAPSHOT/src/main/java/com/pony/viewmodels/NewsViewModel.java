@@ -13,7 +13,11 @@ public class NewsViewModel {
     @Size(min = 10)
     private String content;
 
-
+    @NotNull
+    @Size(min = 3, max = 250)
+    private String description;
+   
+    
 	public String getTitle() {
 		return title;
 	}
@@ -29,4 +33,13 @@ public class NewsViewModel {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

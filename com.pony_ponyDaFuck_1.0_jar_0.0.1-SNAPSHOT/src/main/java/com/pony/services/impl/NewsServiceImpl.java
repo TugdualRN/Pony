@@ -122,4 +122,9 @@ public class NewsServiceImpl implements NewsService {
 		
 		return content;
 	}
+	@Override
+	public List<News> findByLangOrderByIdDesc(String lang){
+		
+		return _newsRepository.findByLangOrderByIdDesc(lang);
+	}
 }

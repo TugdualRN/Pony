@@ -19,6 +19,9 @@
 					<div class="row">
 						<h3 th:text="${news.title}"></h3>
 					</div>
+					<div class="row">
+						<img th:src="${news.img}"/>
+					</div>
 					<div class="row" th:remove="tag" th:utext="${news.content}"></div>
 				</div>
 			</div>
