@@ -42,14 +42,23 @@ public class SocialNetwork {
     }
 
     public SocialNetwork(SocialNetworkType socialNetworkType,
-        String requestToken,
         String accessToken,
-        String tokenSecret
-    ) {
-        this.socialNetworkType = socialNetworkType;
-        this.requestToken = requestToken;
+        String tokenSecret) {
+
+        this(socialNetworkType);
+
         this.accessToken = accessToken;
         this.tokenSecret = tokenSecret;
+    }
+
+    public SocialNetwork(SocialNetworkType socialNetworkType,
+        String requestToken,
+        String accessToken,
+        String tokenSecret) {
+        
+        this(socialNetworkType, accessToken, tokenSecret);
+
+        this.requestToken = requestToken;
     }
     
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">

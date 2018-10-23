@@ -7,6 +7,8 @@ import twitter4j.auth.RequestToken;
 
 public interface ApiService {
 
+    public boolean isValidCallback(String oauthVerifier, String denied);
+
     public RequestToken getTwitterRequestToken() throws TwitterException, IllegalStateException ;
 
     public Twitter getTwitter();

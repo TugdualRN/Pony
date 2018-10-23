@@ -1,5 +1,7 @@
 package com.pony.services.impl;
 
+import com.pony.enumerations.SocialNetworkType;
+import com.pony.models.SocialNetwork;
 import com.pony.services.ApiService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,10 @@ public class ApiServiceImpl implements ApiService {
         _twitterFactory = twitterFactory;
     }
 
+    public boolean isValidCallback(String oauthVerifier, String denied) {
+        return oauthVerifier != null && !oauthVerifier.isEmpty() && denied == null;
+    }
+
     public RequestToken getTwitterRequestToken() throws TwitterException, IllegalStateException {
         return _twitterFactory.getInstance().getOAuthRequestToken(_twitterCallback);	
     }
@@ -37,5 +43,9 @@ public class ApiServiceImpl implements ApiService {
 
     public Twitter getTwitter(String token, String tokenSecret) {
         return _twitterFactory.getInstance(new AccessToken(token, tokenSecret));
+    }
+
+    public SocialNetwork createSocialNetwork(SocialNetworkType type, String accesToken, String tokenSecret) {
+        return new SocialNetwork(type, accesToken, tokenSecret);
     }
 }
