@@ -12,33 +12,39 @@
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <th:block th:replace="fragments/header"/>
-
+		<div class="container">
         <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
+            <div class="col" style="text-align: center">
                 <h1 th:text="#{welcome.homepage}"></h1>
-    
-                <p th:text="#{access.register-page}">
-                    <a th:href="@{/register}" th:text="#{click.here}"></a></p>
-                <p th:text="#{access.login-page}">
-                    <a th:href="@{/login}" th:text="#{click.here}"></a></p>
-            </div>
-            <div class="col-2">
             </div>
         </div>
 		<div class="row">
-			<ul class="list-group" >
-      <th:block  th:each="news : ${newsList}"> 
-				<li class="list-group-item" >
-					<a th:href="@{/news/{slug}(slug=${news.slug})}" >
-						<img alt="" th:src="${news.img}" height="50" width="50"></img>
-					</a>
-					<a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>
-					<div th:text="${news.description}"></div>
-				</li>
-			</th:block>
+			<ul class="list-group" style="margin: auto;">
+      			<th:block  th:each="news : ${newsList}"> 
+					<li class="list-group-item col-sm-12" >
+						<table style="width: 100%;">
+						<tr>
+							<td rowspan="2">
+								<a th:href="@{/news/{slug}(slug=${news.slug})}" >
+									<img alt="" th:src="${news.img}" height="150" width="150"></img>
+								</a>
+							</td>
+							<td colspan="3">
+								<a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+							   <div th:text="${#strings.substring(news.content,0,10)}"></div>
+<!-- 								<div th:text="${strings.substring(news.content,0,99)}"></div> -->
+							</td>
+							
+						</tr>
+						</table>
+					</li>
+				</th:block>
 			</ul>
+		</div>
 		</div>
   		<th:block th:replace="fragments/footer"/>
         <th:block th:replace="fragments/script-common"/>
