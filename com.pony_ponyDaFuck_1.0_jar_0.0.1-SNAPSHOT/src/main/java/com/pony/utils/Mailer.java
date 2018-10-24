@@ -44,10 +44,11 @@ public class Mailer {
 
     public void SendRegisterMail(User user, Token token) {
         // load templating instead
+
+        String url = "localhost:8000/confirm-mail?userId=" + user.getId() + "&tokenValue=" + token.getValue();
+
         String html = 
-            "<p>Welcom blablabla, please clic here to confirm your account : localhost:8000/confirm-mail?userId=" 
-            + user.getId() 
-            + "&tokenValue=" + token.getValue();
+            "<p>Welcom blablabla, please clic <a href='" + url + "'>here</a> to confirm your account</p>";
 
         sendMail(user.getMail(), "Welcome", html);
     }

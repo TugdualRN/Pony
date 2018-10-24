@@ -107,7 +107,7 @@ public class AccountController {
     // </editor-fold>
 
     // <editor-fold desc="Confirmation">
-    @RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirm-mail", method = RequestMethod.GET)
     public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
         
         User user = _userService.findById(userId);

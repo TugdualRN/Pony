@@ -15,7 +15,7 @@ public class DataSourceConnect {
         DataSource dataSource = DataSourceBuilder
             .create()
             .url("jdbc:postgresql://localhost:5432/pony")
-            .username("pony")
+            .username("admin")
             .password("azerty1234")
             .driverClassName("org.postgresql.Driver")
             .build();
