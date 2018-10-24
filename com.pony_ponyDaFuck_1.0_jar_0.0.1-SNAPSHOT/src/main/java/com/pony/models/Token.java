@@ -37,8 +37,8 @@ public class Token {
 	@Convert(converter = LocalDateTimeConverter.class)
 	private LocalDateTime creationDate;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id", nullable = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 	// </editor-fold>
 	

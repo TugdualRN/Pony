@@ -2,6 +2,7 @@ package com.pony.services.impl;
 
 import com.pony.enumerations.SocialNetworkType;
 import com.pony.models.SocialNetwork;
+import com.pony.models.User;
 import com.pony.services.ApiService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,10 @@ public class ApiServiceImpl implements ApiService {
         return _twitterFactory.getInstance().getOAuthRequestToken(_twitterCallback);	
     }
 
+    // public AccessToken getTwitterAccessToken() {
+    //     return _twitterFactory.getInstance()
+    // }
+
     public Twitter getTwitter() {
         return _twitterFactory.getInstance();
     }
@@ -47,5 +52,13 @@ public class ApiServiceImpl implements ApiService {
 
     public SocialNetwork createSocialNetwork(SocialNetworkType type, String accesToken, String tokenSecret) {
         return new SocialNetwork(type, accesToken, tokenSecret);
+    }
+
+    public boolean userHasSocialNetwork(User user, SocialNetworkType socialNetworkType) {
+        if (user.getSocialNetworks().containsKey(socialNetworkType)) {
+            return true;
+        }
+
+        return false;
     }
 }

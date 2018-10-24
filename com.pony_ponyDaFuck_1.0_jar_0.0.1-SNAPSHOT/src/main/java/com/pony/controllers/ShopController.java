@@ -23,8 +23,8 @@ public class ShopController {
 	@RequestMapping(value = { "/shop" })
 	public ModelAndView displayShop() {
 
-		ChargeRequest chargeRequest = new ChargeRequest();
-		// TODO get all chargeRequest
+		//ChargeRequest chargeRequest = new ChargeRequest();
+		// {TO DO} get all chargeRequest
 		List<ChargeRequest> toto = _stripeService.findAll();
 		
 		return new ModelAndView("shop/Shop").addObject("offerList", toto);
