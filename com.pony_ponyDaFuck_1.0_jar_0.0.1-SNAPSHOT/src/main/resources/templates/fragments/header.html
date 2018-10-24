@@ -40,19 +40,27 @@
                     </div>
                 </li>
                 <th:block sec:authorize="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/profile}" th:text="#{profile}"></a>
+                    <li class="nav-item ml-1">
+                        <a th:href="@{/profile}">
+                            <input class="btn btn-outline-info my-2 my-sm-0" type="submit" th:value="#{profile}"/>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/logout}" th:text="#{logout}"></a>
+                    <li class="nav-item ml-1">
+                        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
+                            <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" th:value="#{logout}"/>
+                        </form>
                     </li>
                 </th:block>
                 <th:block sec:authorize="isAnonymous()">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}" th:text="#{login}"></a>
+                    <li class="nav-item ml-1">
+                        <a th:href="@{/register}">
+                            <input class="btn btn-outline-info my-2 my-sm-0" type="submit" th:value="#{register}"/>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/register}" th:text="#{register}"></a>
+                    <li class="nav-item ml-1">
+                        <a th:href="@{/login}">
+                            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" th:value="#{login}"/>
+                        </a>
                     </li>
                 </th:block>
             </ul>

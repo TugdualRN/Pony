@@ -1,26 +1,22 @@
 package com.pony.controllers;
 
-import java.lang.ProcessBuilder.Redirect;
-
 import javax.servlet.http.HttpServletRequest;
 
+import com.pony.enumerations.SocialNetworkType;
+import com.pony.models.SocialNetwork;
+import com.pony.models.User;
 import com.pony.services.ApiService;
 import com.pony.services.UserService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
@@ -46,7 +42,7 @@ public class ApiController extends BaseController {
     }
 
     @RequestMapping("/connect/twitter")
-    public ModelAndView getTwitterToken(HttpServletRequest request, Model model) throws TwitterException {
+    public RedirectView getTwitterToken(HttpServletRequest request, Model model) throws TwitterException {
 
         try {
             RequestToken requestToken = _apiService.getTwitterRequestToken();		
@@ -57,10 +53,10 @@ public class ApiController extends BaseController {
             //now get the authorization URL from the token
             String twitterUrl = requestToken.getAuthorizationURL();
             
-            return new ModelAndView("forward:" + twitterUrl);
+            return new RedirectView(twitterUrl);
         }
         catch (TwitterException e) {
-            return new ModelAndView("error").addObject("error", e);
+            return new RedirectView("http://localhost:8000/error");
         }
     }
 
@@ -70,48 +66,45 @@ public class ApiController extends BaseController {
         @RequestParam(value="denied", required=false) String denied,
         HttpServletRequest request) {
         
-        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         if (_apiService.isValidCallback(oauthVerifier, denied)) {
 
-            try {
-                RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
-            
-                Twitter twitter = _apiService.getTwitter();
-                AccessToken token = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
-    
-                printDebug(token, twitter);
-            }
-            catch (TwitterException e) { }
+            RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
 
-        }
+            if (requestToken != null) {
+                AccessToken accessToken;
+                try {
+                    accessToken = _apiService.getTwitter()
+                        .getOAuthAccessToken(requestToken, oauthVerifier);
+                }
+                catch (TwitterException e) { 
+                    _logger.error("Error while trying to retrieve the twitter access token", e);
+                    return new ModelAndView("error").addObject("error", e);
+                }
 
-        return new ModelAndView("/home");
-    }
+                User user = _userService.findByMail(this.getConnectedUserMail());
 
-    public static void printDebug(AccessToken token, Twitter twitter)
-    {
-        //System.out.println("REQUEST_TOKEN TOKEN : " + requestToken.getToken());
-        System.out.println("ACCESS_TOKEN : " + token.getToken());
-        System.out.println("ACCESS_TOKEN SECRET : " + token.getTokenSecret());
-        
-        System.out.println("Registered USER ID: " + token.getUserId());
-        System.out.println("Registered USER NAME: " + token.getScreenName());
-        System.out.println("Registered USER TOKEN: " + token.getToken());
-        System.out.println("Registered USER SECRET: " + token.getTokenSecret());
+                if (user != null) {
+                    SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.TWITTER, 
+                        accessToken.getToken(),
+                        accessToken.getTokenSecret());
 
-        try {
-            ResponseList<Status> lastStatus = twitter.getUserTimeline();
+                    if (!_apiService.userHasSocialNetwork(user, SocialNetworkType.TWITTER)) {
+                        user.getSocialNetworks().put(socialNetwork.getSocialNetworkType(), socialNetwork);
+                        socialNetwork.setUser(user);
 
-            System.out.println("----");
-            System.out.println();
-    
-            for (Status status : lastStatus)
-            {
-                System.out.println(status.getText());
-                System.out.println();
+                        _userService.update(user);
+
+                        return new ModelAndView("redirect:/");
+                    }
+
+                    _logger.error("User " + user.getUserName() + "already had a social network for this type, which should not be possible");
+                }
+
+                _logger.error("User is null, which should not be possible");
             }
         }
-        catch (Exception e) { }
+
+        _logger.info("User refused Twitter");
+        return new ModelAndView("error");
     }
 }

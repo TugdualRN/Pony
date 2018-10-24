@@ -127,7 +127,8 @@ public class UserServiceImpl implements UserService {
             }
 
             _logger.info("Failed to created User " + user.getUserName() + " with Mail " + user.getMail());
-        } else {
+        } 
+        else {
             _logger.info("User " + user.getNormalizedUserName() + " with Mail " + user.getNormalizedMail() + "was already present in Database");
         }
 

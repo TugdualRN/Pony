@@ -58,8 +58,10 @@ public class NewsController {
 	}
 //	, consumes = {"application/x-www-form-urlencoded" }
 	@RequestMapping(value = "/create-news", method = RequestMethod.POST)
-	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, @RequestParam("img") MultipartFile myFile,
-			BindingResult bindingResult) {
+	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, 
+		@RequestParam("img") MultipartFile myFile,
+		BindingResult bindingResult) {
+		
 		System.out.println(myFile);
 		System.out.println(bindingResult);
 		if (bindingResult.hasErrors()){

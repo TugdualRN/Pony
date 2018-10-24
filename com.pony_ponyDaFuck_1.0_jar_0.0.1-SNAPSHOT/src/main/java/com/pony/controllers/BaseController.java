@@ -1,43 +1,50 @@
 package com.pony.controllers;
 
-import com.pony.models.User;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class BaseController {
     
-    protected long getAuthenticatedUserId() {
-        User user = this.getUser();
-        if (user != null) {
-            return user.getId();
-        }
-
-        return -1;
+    public String getConnectedUserMail() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    protected String getAuthenticatedUserName() {
-        User user = this.getUser();
-        if (user != null) {
-            return user.getUserName();
-        }
+    // protected long getAuthenticatedUserId() {
+    //     User user = this.getUser();
+    //     if (user != null) {
+    //         return user.getId();
+    //     }
 
-        return "";
-    }
+    //     return -1;
+    // }
 
-    protected String getAuthenticatedUserMail() {
-        User user = this.getUser();
-        if (user != null) {
-            return user.getMail();
-        }
+    // protected String getAuthenticatedUserName() {
+    //     User user = this.getUser();
+    //     if (user != null) {
+    //         return user.getUserName();
+    //     }
 
-        return "";
-    }
+    //     return "";
+    // }
 
-    private User getUser() {
-        try {
-            return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch(ClassCastException exception) {
-            return null;
-        }
-    }
+    // protected String getAuthenticatedUserMail() {
+    //     User user = this.getUser();
+    //     if (user != null) {
+    //         return user.getMail();
+    //     }
+
+    //     return "";
+    // }
+
+    // public String getConnectedUserMail() {
+    //     return SecurityContextHolder.getContext().getAuthentication().getName();
+    // }
+
+    // public User getUser() {
+
+    //     try {
+    //         return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    //     } catch(ClassCastException exception) {
+    //         return null;
+    //     }
+    // }
 }

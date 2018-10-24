@@ -1,5 +1,8 @@
 package com.pony.services;
 
+import com.pony.enumerations.SocialNetworkType;
+import com.pony.models.User;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
@@ -16,4 +19,6 @@ public interface ApiService {
     public Twitter getTwitter(AccessToken accessToken);
 
     public Twitter getTwitter(String token, String tokenSecret);
+
+    public boolean userHasSocialNetwork(User user, SocialNetworkType socialNetworkType);
 }

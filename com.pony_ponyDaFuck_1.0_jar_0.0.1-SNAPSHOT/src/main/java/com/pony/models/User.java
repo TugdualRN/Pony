@@ -1,8 +1,10 @@
 package com.pony.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,6 +20,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
+
+import com.pony.enumerations.SocialNetworkType;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -85,10 +89,13 @@ public class User {
     )
     private Set<Role> roles = new HashSet<Role>();
 
-	@OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Token> tokens = new ArrayList<Token>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Map<SocialNetworkType, SocialNetwork> socialNetworks = new HashMap<SocialNetworkType, SocialNetwork>();
     
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="author")
+	@OneToMany(mappedBy="author", cascade = CascadeType.ALL)
 	private List<News> newsList;
     // </editor-fold>
 
@@ -120,6 +127,8 @@ public class User {
     public void setRoles(Set<Role> roles) { this.roles = roles;  }
     public List<Token> getTokens() { return this.tokens; }
     public void setTokens(List<Token> tokens) { this.tokens = tokens; }
+    public Map<SocialNetworkType, SocialNetwork> getSocialNetworks() { return socialNetworks; }
+    public void setSocialNetworks(Map<SocialNetworkType, SocialNetwork> socialNetworks) { this.socialNetworks = socialNetworks; }
     public String getNormalizedUserName() { return this.normalizedUserName; }
 	public void setNormalizedUserName(String normalizedMail) { this.normalizedUserName = normalizedMail; }
     public String getNormalizedMail() { return this.normalizedMail; }

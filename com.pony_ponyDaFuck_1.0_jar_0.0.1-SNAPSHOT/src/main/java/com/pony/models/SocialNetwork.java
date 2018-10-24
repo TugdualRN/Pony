@@ -4,13 +4,20 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.pony.converters.LocalDateTimeConverter;
 import com.pony.enumerations.SocialNetworkType;
 
+@Entity
+@Table(name = "T_SocialNetworks")
 public class SocialNetwork {
     
     @Id
@@ -29,8 +36,8 @@ public class SocialNetwork {
     private String accessToken;
     private String tokenSecret;
 
-    @Column(nullable = false)
-	@JoinColumn(name="user_id", nullable = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
     public SocialNetwork() {}
