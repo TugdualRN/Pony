@@ -38,22 +38,27 @@ public class ProfileController extends BaseController {
 
         User user = _userService.findByMail(this.getConnectedUserMail());
 
-        SocialNetwork twittus = user.getSocialNetworks().get(SocialNetworkType.TWITTER);
+        if (user != null) {
+            SocialNetwork twittus = user.getSocialNetworks().get(SocialNetworkType.TWITTER);
 
-        Twitter twitter = _apiService.getTwitter(twittus.getAccesstoken(), twittus.getTokensecret());
+            List<Status> tweets = null;
+            twitter4j.User infos = null;
 
-        List<Status> tweets = new ArrayList<Status>();
-        twitter4j.User infos = null;
-        try {
-            tweets = twitter.getUserTimeline();
-            infos = twitter.showUser(twitter.getId());
-        } catch (TwitterException e) {
-            e.printStackTrace();
-		}
+            if (twittus != null) {
+                Twitter twitter = _apiService.getTwitter(twittus.getAccesstoken(), twittus.getTokensecret());
+    
+                try {
+                    tweets = twitter.getUserTimeline();
+                    infos = twitter.showUser(twitter.getId());
+                } catch (TwitterException e) { }
+            }
 
-        return new ModelAndView("profile/profile")
-            .addObject("user", user)
-            .addObject("infos", infos)
-            .addObject("tweets", tweets);
+            return new ModelAndView("profile/profile")
+                .addObject("user", user)
+                .addObject("infos", infos)
+                .addObject("tweets", tweets);
+        }
+
+        return new ModelAndView("error");
     }
 }

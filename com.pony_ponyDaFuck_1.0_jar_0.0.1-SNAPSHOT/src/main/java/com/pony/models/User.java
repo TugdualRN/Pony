@@ -76,12 +76,7 @@ public class User {
     @Column(nullable = false)
     private boolean isSuspended = false;
 
-    @ManyToMany(
-        fetch = FetchType.EAGER,
-        cascade = {
-            CascadeType.ALL
-        }
-    )
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable( 
         name = "T_user_roles", 
         joinColumns =           { @JoinColumn(name = "user_id")}, 

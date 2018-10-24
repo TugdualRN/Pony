@@ -28,8 +28,8 @@ public class News {
 	@Column(nullable = false)
 	private String slug;
 
-	@JoinColumn(name="user_id")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User author;
 	
 	@Column(columnDefinition = "TEXT")
