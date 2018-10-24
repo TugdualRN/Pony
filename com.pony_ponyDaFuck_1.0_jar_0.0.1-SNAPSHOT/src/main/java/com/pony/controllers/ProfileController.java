@@ -1,7 +1,5 @@
 package com.pony.controllers;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import com.pony.enumerations.SocialNetworkType;
