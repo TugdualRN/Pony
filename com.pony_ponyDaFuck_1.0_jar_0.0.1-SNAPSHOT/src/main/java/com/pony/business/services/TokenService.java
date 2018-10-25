@@ -1,4 +1,4 @@
-package com.pony.services;
+package com.pony.business.services;
 
 import com.pony.models.Token;
 import com.pony.models.User;

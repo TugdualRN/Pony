@@ -1,4 +1,4 @@
-package com.pony.config;
+package com.pony.spring.injection;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
