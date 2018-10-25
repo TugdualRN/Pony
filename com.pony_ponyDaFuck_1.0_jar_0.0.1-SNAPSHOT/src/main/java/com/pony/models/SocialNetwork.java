@@ -32,55 +32,54 @@ public class SocialNetwork {
 	@Convert(converter = LocalDateTimeConverter.class)
 	private LocalDateTime creationDate;
 
-    private String requestToken;
+    @Column(nullable = false)
     private String accessToken;
+
+    @Column(nullable = false)
     private String tokenSecret;
+
+    @Column(nullable = false)
+    private boolean isRevoked;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
-    public SocialNetwork() {}
-
-    public SocialNetwork(SocialNetworkType socialNetworkType)
-    {
-        this.socialNetworkType = socialNetworkType;
+    public SocialNetwork() {
         this.creationDate = LocalDateTime.now();
+        this.isRevoked = false;
     }
 
-    public SocialNetwork(SocialNetworkType socialNetworkType,
-        String accessToken,
-        String tokenSecret) {
+    public SocialNetwork(SocialNetworkType socialNetworkType) {
+        this();
+        this.socialNetworkType = socialNetworkType;
+    }
 
+    public SocialNetwork(SocialNetworkType socialNetworkType, String accessToken, String tokenSecret) {
         this(socialNetworkType);
-
         this.accessToken = accessToken;
         this.tokenSecret = tokenSecret;
-    }
-
-    public SocialNetwork(SocialNetworkType socialNetworkType,
-        String requestToken,
-        String accessToken,
-        String tokenSecret) {
-        
-        this(socialNetworkType, accessToken, tokenSecret);
-
-        this.requestToken = requestToken;
     }
     
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
     public long getId() { return this.Id; }
     public void setId(long Id) { this.Id = Id; }
-	public SocialNetworkType getSocialNetworkType() { return this.socialNetworkType; }
+
+    public SocialNetworkType getSocialNetworkType() { return this.socialNetworkType; }
 	public void setSocialNetworkType(SocialNetworkType socialNetworkType) { this.socialNetworkType = socialNetworkType; }
-	public LocalDateTime getCreationDate() { return this.creationDate; }
+
+    public LocalDateTime getCreationDate() { return this.creationDate; }
 	public void setCreationDate(LocalDateTime creationDate) { this.creationDate = creationDate; }
-	public String getRequesttoken() { return this.requestToken; }
-	public void setRequesttoken(String requestToken) { this.requestToken = requestToken; }
-	public String getAccesstoken() { return this.accessToken; }
+
+    public String getAccesstoken() { return this.accessToken; }
 	public void setAccesstoken(String accessToken) { this.accessToken = accessToken; }
-	public String getTokensecret() { return this.tokenSecret; }
-	public void setTokensecret(String tokenSecret) { this.tokenSecret = tokenSecret; }
+
+    public String getTokensecret() { return this.tokenSecret; }
+    public void setTokensecret(String tokenSecret) { this.tokenSecret = tokenSecret; }
+
+    public boolean getIsrevoked() { return this.isRevoked; }
+	public void setIsrevoked(boolean isRevoked) { this.isRevoked = isRevoked; }
+
     public User getUser() { return this.user; }
 	public void setUser(User user) { this.user = user; }
     // </editor-fold>

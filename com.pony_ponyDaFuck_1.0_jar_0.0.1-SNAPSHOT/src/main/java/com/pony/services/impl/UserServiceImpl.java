@@ -16,7 +16,7 @@ import com.pony.repositories.UserRepository;
 import com.pony.services.RoleService;
 import com.pony.services.TokenService;
 import com.pony.services.UserService;
-import com.pony.utils.MailService;
+import com.pony.utils.mailing.MailService;
 import com.pony.utils.RegisterResult;
 
 import org.slf4j.Logger;

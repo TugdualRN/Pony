@@ -15,5 +15,7 @@ public interface TokenService {
 
     Token findToken(String tokenValue, List<Token> tokens, TokenType tokenType);
 
+    void consumeToken(Token token);
+
     boolean isValidToken(Token token);
 }

@@ -2,8 +2,6 @@ package com.pony.config;
 
 import java.util.Properties;
 
-import com.pony.utils.Mailer;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -47,10 +45,5 @@ public class UtilityClassesConfig {
         props.put("mail.debug", "true");
 
         return javaMailSender;
-    }
-
-    @Bean
-    public Mailer mailer(MailSender mailSender) {
-        return new Mailer(mailSender, _sender);
     }
 }
