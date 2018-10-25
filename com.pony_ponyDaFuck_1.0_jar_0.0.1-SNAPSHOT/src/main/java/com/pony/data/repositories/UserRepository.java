@@ -1,4 +1,4 @@
-package com.pony.repositories;
+package com.pony.data.repositories;
 
 import com.pony.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;

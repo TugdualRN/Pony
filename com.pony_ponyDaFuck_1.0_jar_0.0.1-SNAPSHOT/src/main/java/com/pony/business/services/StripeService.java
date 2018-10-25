@@ -1,4 +1,4 @@
-package com.pony.services;
+package com.pony.business.services;
 
 import java.util.HashMap;
 import java.util.List;
