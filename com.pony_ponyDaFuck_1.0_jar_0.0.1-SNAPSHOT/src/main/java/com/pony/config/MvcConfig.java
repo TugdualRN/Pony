@@ -1,7 +1,6 @@
 package com.pony.config;
 
 import java.util.Locale;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -106,27 +104,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public MappedInterceptor myInterceptor() {
-        
-        String[] filters = new String[0];
         HandlerInterceptorAdapter loggerMiddleware = new LoggerMiddleware();
-        return new MappedInterceptor(filters, loggerMiddleware);
-    }
-
-    @Bean
-    public JavaMailSenderImpl mailSender() {
         
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost("smtp.gmail.com");
-        javaMailSender.setPort(587);
-        javaMailSender.setUsername("unicorn.factory.sender@gmail.com");
-        javaMailSender.setPassword("azerty1234!");
-
-        Properties props = javaMailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
-        return javaMailSender;
+        return new MappedInterceptor(new String[0], loggerMiddleware);
     }
 }

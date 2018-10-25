@@ -11,14 +11,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Mailer {
+public class Mailer implements MailService {
 
     private MailSender _mailSender;
 
     private String _sender;
 
-    public Mailer(MailSender mailSender, String sender)
-    {
+    public Mailer(MailSender mailSender, String sender) {
         _mailSender = mailSender;
         _sender = sender;
     }
@@ -31,7 +30,6 @@ public class Mailer {
     }
 
     public void sendMail(List<String> to, String subject, String body) {
-        
         SimpleMailMessage message = new SimpleMailMessage();
 		
 		message.setFrom(_sender);
@@ -44,22 +42,21 @@ public class Mailer {
 
     public void SendRegisterMail(User user, Token token) {
         // load templating instead
-
-        String url = "localhost:8000/confirm-mail?userId=" + user.getId() + "&tokenValue=" + token.getValue();
-
-        String html = 
-            "<p>Welcom blablabla, please clic <a href='" + url + "'>here</a> to confirm your account</p>";
+        String url = String.format(
+            "localhost:8000/confirm-mail?userId={0}&tokenValue={1}", user.getId(), token.getValue());
+        String html = String.format(
+            "<p>To confirm your account, click <a href='{0}'>here</a> to confirm your account</p>", url);
 
         sendMail(user.getMail(), "Welcome", html);
     }
 
     public void SendResetPassword(User user, Token token) {
         // load templating instead
-        String html = 
-            "<p>To change your password, please follow the link: localhost:8000/confirm-mail?userId=" 
-            + user.getId() 
-            + "&tokenValue=" + token.getValue();
+        String url = String.format(
+        "localhost:8000/confirm-mail?userId={0}&tokenValue={1}", user.getId(), token.getValue());
+        String html = String.format(
+        "<p>To reset your password, click <a href='{0}'>here</a> to confirm your account</p>", url);
 
-        sendMail(user.getMail(), "Welcome", html);
+        sendMail(user.getMail(), "Password Reset", html);
     }
 }

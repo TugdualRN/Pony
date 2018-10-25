@@ -21,4 +21,6 @@ public interface RoleService {
     Role addRole(Role role);
 
     boolean deleteRole(Role role);
+
+    void insetDefaultRoles();
 }
