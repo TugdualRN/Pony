@@ -40,6 +40,13 @@ public class Token {
 	@Convert(converter = LocalDateTimeConverter.class)
 	private LocalDateTime creationDate;
 
+	@Column(nullable = false)
+	private boolean consumed;
+
+	@Column(nullable = false)
+	@Convert(converter = LocalDateTimeConverter.class)
+	private LocalDateTime consumationDate;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -48,6 +55,7 @@ public class Token {
 	public Token() {}
 
 	public Token(TokenType type) {
+		super();
 		this.type = type;
 		this.value = UUID.randomUUID();
 		this.creationDate = LocalDateTime.now();
@@ -56,13 +64,23 @@ public class Token {
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
 	public long getId() { return this.id; }
 	public void setId(long id) { this.id = id; }
+
 	public TokenType getType() { return this.type; }
 	public void setType(TokenType type) { this.type = type; }
+
 	public UUID getValue() { return this.value; }
 	public void setValue(UUID value) { this.value = value; }
+
 	public LocalDateTime getCreationdate() { return this.creationDate; }
 	public void setCreationdate(LocalDateTime creationDate) { this.creationDate = creationDate; }
+
+	public boolean getConsumed() { return this.consumed; }
+	public void setConsumed(boolean consumed) { this.consumed = consumed; }
+
+	public LocalDateTime getConsumationdate() { return this.consumationDate; }
+	public void setConsumationdate(LocalDateTime consumationDate) { this.consumationDate = consumationDate;}
+	
 	public User getUser() { return this.user; }
 	public void setUser(User user) { this.user = user; }
-    // </editor-fold>
+	// </editor-fold>
 }

@@ -118,6 +118,7 @@ public class AccountController {
             
             // Check if token didn't expire
             if (_tokenService.isValidToken(token)) {
+                _tokenService.consumeToken(token);
                 user.setIsActive(true);
                 _userService.update(user);
                 

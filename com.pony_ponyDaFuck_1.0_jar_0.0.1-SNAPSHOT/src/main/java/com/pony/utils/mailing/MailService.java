@@ -1,4 +1,4 @@
-package com.pony.utils;
+package com.pony.utils.mailing;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.pony.utils;
+package com.pony.utils.mailing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,20 +6,21 @@ import java.util.List;
 import com.pony.models.User;
 import com.pony.models.Token;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Mailer implements MailService {
+public class MailServiceImpl implements MailService {
 
+    @Value("${mailing.sender}")
     private MailSender _mailSender;
 
     private String _sender;
 
-    public Mailer(MailSender mailSender, String sender) {
+    public MailServiceImpl(MailSender mailSender) {
         _mailSender = mailSender;
-        _sender = sender;
     }
 
     public void sendMail(String to, String subject, String body) {

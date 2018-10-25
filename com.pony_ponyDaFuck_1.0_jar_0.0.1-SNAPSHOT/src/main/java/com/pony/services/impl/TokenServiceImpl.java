@@ -59,12 +59,19 @@ public class TokenServiceImpl implements TokenService {
 		return null;
 	}
 
+	public void consumeToken(Token token) {
+		if (token != null) {
+			token.setConsumed(true);
+			token.setConsumationdate(LocalDateTime.now());
+		}
+	}
+
 	@Override
 	public boolean isValidToken(Token token) {
-		if (token == null) {
-			return false;
+		if (token != null) {
+			return Duration.between(token.getCreationdate(), LocalDateTime.now()).toHours() < 48;
 		}
-
-		return Duration.between(token.getCreationdate(), LocalDateTime.now()).toHours() < 48;
+		
+		return false;
 	}
 }

@@ -22,7 +22,8 @@ public class JsonView {
             serverHttpResponse.setStatusCode(statusCode);
 
             jsonConverter.write(model, jsonMimeType, serverHttpResponse);
-        } catch (HttpMessageNotWritableException | IOException e) {
+        } 
+        catch (HttpMessageNotWritableException | IOException e) {
             //
         }
 

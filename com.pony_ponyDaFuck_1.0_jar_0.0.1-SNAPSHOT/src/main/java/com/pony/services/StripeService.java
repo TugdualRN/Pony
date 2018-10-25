@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,29 +18,30 @@ import com.stripe.model.Charge;
 @Service
 public class StripeService {
 
-	private String secretKey = "sk_test_fs1YEOVU6GNmmWAwS3QblWcy";
+    @Value("${stripe.secretKey}")
+	private String _secretKey = "sk_test_fs1YEOVU6GNmmWAwS3QblWcy";
 
-	private  ChargeRequestRepository _chargeRequestRepo;
-	@PostConstruct
-	public void init() {
-		Stripe.apiKey = secretKey;
+	private final ChargeRequestRepository _chargeRequestRepo;
+	
+	@Autowired
+	public StripeService(ChargeRequestRepository chargeRequestRepo) {
+		this._chargeRequestRepo = chargeRequestRepo;
+		
+		Stripe.apiKey = _secretKey;
 	}
-	 @Autowired
-	    public StripeService(ChargeRequestRepository chargeRequestRepo) {
-	        this._chargeRequestRepo = chargeRequestRepo;
-	    }
 		
 	public Charge charge(ChargeRequest chargeRequest) throws StripeException{
-		
-			Map<String, Object> chargeParams = new HashMap<>();
-			chargeParams.put("amount", chargeRequest.getAmount());
-			chargeParams.put("currency", chargeRequest.getCurrency());
-			chargeParams.put("description", chargeRequest.getDescription());
-			chargeParams.put("source", chargeRequest.getStripeToken());
+	
+		Map<String, Object> chargeParams = new HashMap<>();
+		chargeParams.put("amount", chargeRequest.getAmount());
+		chargeParams.put("currency", chargeRequest.getCurrency());
+		chargeParams.put("description", chargeRequest.getDescription());
+		chargeParams.put("source", chargeRequest.getStripeToken());
 
-			return Charge.create(chargeParams);
+		return Charge.create(chargeParams);
 	}
-//	@Override
+
+	//	@Override
     @Transactional(readOnly = true)
     public List<ChargeRequest> findAll() {
         return _chargeRequestRepo.findAllByOrderByAmountAsc();

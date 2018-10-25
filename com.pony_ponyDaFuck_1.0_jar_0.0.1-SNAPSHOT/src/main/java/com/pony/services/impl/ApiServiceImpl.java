@@ -34,10 +34,6 @@ public class ApiServiceImpl implements ApiService {
         return _twitterFactory.getInstance().getOAuthRequestToken(_twitterCallback);	
     }
 
-    // public AccessToken getTwitterAccessToken() {
-    //     return _twitterFactory.getInstance()
-    // }
-
     public Twitter getTwitter() {
         return _twitterFactory.getInstance();
     }
