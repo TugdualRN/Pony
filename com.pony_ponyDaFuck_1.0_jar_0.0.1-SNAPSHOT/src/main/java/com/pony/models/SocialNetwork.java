@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.pony.converters.LocalDateTimeConverter;
+import com.pony.data.converters.LocalDateTimeConverter;
 import com.pony.enumerations.SocialNetworkType;
 
 @Entity

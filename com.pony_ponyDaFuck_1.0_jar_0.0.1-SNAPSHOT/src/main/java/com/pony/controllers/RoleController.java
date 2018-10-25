@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pony.models.Role;
-import com.pony.services.RoleService;
+import com.pony.business.services.RoleService;
 
 @Controller
 @RequestMapping("/managment")

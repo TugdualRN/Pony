@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pony.models.Role;
 import com.pony.models.User;
-import com.pony.services.RoleService;
-import com.pony.services.UserService;
+import com.pony.business.services.RoleService;
+import com.pony.business.services.UserService;
 
 @Controller
 @RequestMapping("/managment")

@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.pony.enumerations.SocialNetworkType;
 import com.pony.models.SocialNetwork;
 import com.pony.models.User;
-import com.pony.services.ApiService;
-import com.pony.services.UserService;
+import com.pony.business.services.ApiService;
+import com.pony.business.services.UserService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
