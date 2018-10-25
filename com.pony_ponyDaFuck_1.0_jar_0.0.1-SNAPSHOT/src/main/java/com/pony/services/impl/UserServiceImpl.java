@@ -16,7 +16,7 @@ import com.pony.repositories.UserRepository;
 import com.pony.services.RoleService;
 import com.pony.services.TokenService;
 import com.pony.services.UserService;
-import com.pony.utils.Mailer;
+import com.pony.utils.MailService;
 import com.pony.utils.RegisterResult;
 
 import org.slf4j.Logger;
@@ -25,28 +25,28 @@ import org.slf4j.LoggerFactory;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static Logger _logger = LoggerFactory.getLogger(UserService.class);
+    private final Logger _logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    
     private final UserRepository _userRepository;
 
     private final TokenService _tokenService;
     private final RoleService _roleService;
+    private final MailService _mailService;
 
     private final BCryptPasswordEncoder _passwordEncoder;
-    private final Mailer _mailer;
 
     @Autowired
     public UserServiceImpl(
         UserRepository userRepository, 
         TokenService tokenService,
         RoleService roleService,
-        BCryptPasswordEncoder passwordEncoder,
-        Mailer mailer
-    ) {
+        MailService mailService,
+        BCryptPasswordEncoder passwordEncoder) {
         _userRepository = userRepository;
         _tokenService = tokenService;
         _roleService = roleService;
         _passwordEncoder = passwordEncoder;
-        _mailer = mailer;
+        _mailService = mailService;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public synchronized RegisterResult createUser(User user, String password) {
+    public RegisterResult createUser(User user, String password) {
 
         user.setNormalizedUserName(user.getUserName().toUpperCase());
         user.setNormalizedMail(user.getMail().toUpperCase());
@@ -114,6 +114,13 @@ public class UserServiceImpl implements UserService {
 
             // Add USER role as the default role
             Role role = _roleService.findByName("USER");
+
+            // Maybe the DB was wiped and there are no roles, we create them and retry
+            if (role == null) {
+                _roleService.insetDefaultRoles();
+                role = _roleService.findByName("USER");
+            }
+
             user.getRoles().add(role);
 
             User savedUser = _userRepository.save(user);
@@ -159,10 +166,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean hasRole(User user, Role role) {
-        for (Role userRole : user.getRoles()) {
-            if (userRole.getName().equals(role.getName())) {
-                return true;
-            }
+
+        if (user.getRoles().stream().anyMatch(x -> x.getName().equals(role.getName()))) {
+            return true;
         }
 
         return false;
@@ -171,22 +177,14 @@ public class UserServiceImpl implements UserService {
     public User addRoleToUser(User user, Role role) {
         if (!hasRole(user, role)) {
             user.getRoles().add(role);
+            User savedUser = _userRepository.save(user);
             
-            _logger.info(
-                "Removed role " 
-                + role.getName() 
-                + " to user " 
-                + user.getMail());
+            _logger.info("Added role {} to user {}", role.getName(), savedUser.getMail()); 
 
-            return _userRepository.save(user);
+            return savedUser;
         }
 
-        _logger.error(
-            "Tried to add role " 
-            + role.getName() 
-            + " from user " 
-            + user.getMail() 
-            + "but he already has it");
+        _logger.error("Tried to add role {} to user {} but he already has it", role.getName(), user.getMail()); 
 
         return user;
     }
@@ -194,22 +192,14 @@ public class UserServiceImpl implements UserService {
     public User removeRoleToUser(User user, Role role) {
         if (hasRole(user, role)) {
             user.getRoles().removeIf(x -> x.getId() == role.getId());
+            User savedUser = _userRepository.save(user);
             
-            _logger.info(
-                "Removed role " 
-                + role.getName() 
-                + " to user " 
-                + user.getMail());
+            _logger.info("Removed role {} to user {}", role.getName(), savedUser.getMail()); 
 
-            return _userRepository.save(user);
+            return savedUser;
         }
 
-        _logger.error(
-            "Tried to remove role " 
-            + role.getName() 
-            + " from user " 
-            + user.getMail() 
-            + "but he did not have the role in the first place");
+        _logger.error("Tried to remove role {} from user {} but he did not have the role in the first place", role.getName(), user.getMail()); 
 
         return user;
     }
@@ -217,21 +207,30 @@ public class UserServiceImpl implements UserService {
     public User updatePassword(User user, String password) {
         String hashedPassword = _passwordEncoder.encode(password);
         user.setPasswordHash(hashedPassword);
+        User savedUser = _userRepository.save(user);
 
-        return _userRepository.save(user);
+        _logger.info("Updated password for user {}", user.getMail());
+
+        return savedUser;
     }
 
+    /**
+     * Create and link the given token to the user and send a confirmation mail
+     */
     public User generateToken(User user, TokenType tokenType) throws MailException {
 
         Token token = _tokenService.generateToken(tokenType, user);
         user.getTokens().add(token);
+        User savedUser = _userRepository.save(user);
+
+        _logger.info("Created token {} for user {}", token.getType(), user.getMail());
 
         if (tokenType == TokenType.ACTIVATE_ACCOUNT) {
-            _mailer.SendRegisterMail(user, token);
+            _mailService.SendRegisterMail(user, token);
         } else {
-            _mailer.SendResetPassword(user, token);
+            _mailService.SendResetPassword(user, token);
         }
 
-        return _userRepository.save(user);
+        return savedUser;
     }
 }

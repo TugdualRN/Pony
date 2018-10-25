@@ -21,26 +21,38 @@
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">User Name</th>
-                                <th scope="col">Normalized User Name</th>
+                                <th scope="col">Username</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Normalized Email</th>
+                                <th scope="col">Activated</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th th:text="${user.id}" scope="row"></th>
                                 <td th:text="${user.userName}"></td>
-                                <td th:text="${user.normalizedUserName}"></td>
                                 <td th:text="${user.mail}"></td>
-                                <td th:text="${user.normalizedMail}"></td>
+                                <td th:text="${user.mail}"></td>
                             </tr>
                         </tbody>
                     </table>
                     <div th:each="role : ${user.roles}">
                         <p th:text="${role.name}"></p>
-                        <a th:href="@{/managment/user/removerole/{userId}/{roleId}(userId=${user.id}, roleId=${role.id})}"><p>Remove</p></a>
+                        <a th:href="@{/managment/user/removerole/{userId}/{roleId}(userId=${user.id}, roleId=${role.id})}">
+                            <p>Remove</p>
+                        </a>
                     </div>
+
+                    <ol class="breadcrumb">
+                    <th:block th:each="role: ${user.roles}">
+                            <li class="breadcrumb-item">
+                                <p th:text="${role.name}"></p>
+                                <a th:href="@{/managment/user/removerole/{userId}/{roleId}(userId=${user.id}, roleId=${role.id})}">
+                                    <span class="badge badge-danger">X</span>
+                                </a>
+                            </li>
+                    </th:block>
+                    </ol>
+                    
                     <form class="form-inline" th:action="@{/managment/user/addrole}">
                         <input type="hidden" name="userId" th:value="${user.id}"></input>
                         <select name="roleId">

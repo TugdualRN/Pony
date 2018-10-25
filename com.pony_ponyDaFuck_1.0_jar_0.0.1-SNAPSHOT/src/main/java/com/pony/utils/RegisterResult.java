@@ -12,50 +12,41 @@ public class RegisterResult {
 
 	private User user;
 
-	public RegisterResult() {
-	}
+	public RegisterResult() { }
 	
 	public RegisterResult(boolean passwordMatches) {
 		this.passwordMatches = passwordMatches;
 	}
 
-	public boolean getIsUserNameAlreadyTaken()
-	{
+	public boolean getIsUserNameAlreadyTaken() {
 		return this.isUserNameAlreadyTaken;
 	}
 
-	public void setIsUserNameAlreadyTaken(boolean isUserNameAlreadyTaken)
-	{
+	public void setIsUserNameAlreadyTaken(boolean isUserNameAlreadyTaken) {
 		this.isUserNameAlreadyTaken = isUserNameAlreadyTaken;
 	}
 
-	public boolean getIsMailAlreadyTaken()
-	{
+	public boolean getIsMailAlreadyTaken() {
 		return this.isMailAlreadyTaken;
 	}
 
-	public void setIsMailAlreadyTaken(boolean isMailAlreadyTaken)
-	{
+	public void setIsMailAlreadyTaken(boolean isMailAlreadyTaken) {
 		this.isMailAlreadyTaken = isMailAlreadyTaken;
     }
     
-    public User getUser()
-	{
+    public User getUser() {
 		return this.user;
 	}
 
-	public void setUser(User user)
-	{
+	public void setUser(User user) {
 		this.user = user;
 	}
 	
-	public boolean getPasswordMatches()
-	{
+	public boolean getPasswordMatches() {
 		return this.passwordMatches;
 	}
 
-	public void setPasswordMatches(boolean passwordMatch)
-	{
+	public void setPasswordMatches(boolean passwordMatch) {
 		this.passwordMatches = passwordMatch;
 	}
     

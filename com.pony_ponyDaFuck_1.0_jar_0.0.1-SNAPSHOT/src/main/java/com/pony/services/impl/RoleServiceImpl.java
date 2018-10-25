@@ -1,5 +1,6 @@
 package com.pony.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,23 @@ public class RoleServiceImpl implements RoleService {
         }
 
         return false;
+    }
+
+    @Override
+    @Transactional
+    public void insetDefaultRoles() {
+        String[] names = {"USER", "WRITER", "MODERATOR", "DEVELOPER", "ADMIN", "SUPERADMIN"};
+        
+        List<Role> existingRoles = _roleRepository.findAll();
+        List<Role> roles = new ArrayList<Role>();
+
+        for (String name : names)
+        {
+            if (existingRoles.stream().anyMatch(x -> x.getName().equals(name)) == false) {
+                roles.add(new Role(name));
+            }
+        }
+
+        _roleRepository.save(roles);
     }
 }

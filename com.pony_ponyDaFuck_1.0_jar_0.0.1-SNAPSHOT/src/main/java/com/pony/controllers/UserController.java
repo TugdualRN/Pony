@@ -45,14 +45,9 @@ public class UserController {
     public ModelAndView addUserToRole(@RequestParam long userId, @RequestParam long roleId)
     {
         User user = _userService.findById(userId);
-        Set<Role> userRoles = user.getRoles();
         Role role = _roleService.findById(roleId);
 
-        if (!_userService.hasRole(user, role)) {
-            if (userRoles.add(role)) {
-                _userService.update(user);
-            }
-        }
+        _userService.addRoleToUser(user, role);
 
         return new ModelAndView("redirect:/managment/users");
     }

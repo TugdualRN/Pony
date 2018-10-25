@@ -78,7 +78,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable( 
-        name = "T_user_roles", 
+        name = "T_user_roles",
         joinColumns =           { @JoinColumn(name = "user_id")}, 
         inverseJoinColumns =    { @JoinColumn(name = "role_id")}
     )
@@ -137,19 +137,4 @@ public class User {
     public List<News> getNewsList() { return newsList; }
 	public void setNewsList(List<News> newsList) { this.newsList = newsList; }
     // </editor-fold>
-    
-    @Override
-    public String toString() {
-        return "Users" + 
-            "{" + "\n"        +
-            "\tid = "         + id            + "\n" + 
-            "\tlogin = "      + userName      + "\n" + 
-            "\tpassword = "   + passwordHash  + "\n" + 
-            "\tfirstName ="   + firstName     + "\n" + 
-            "\tlastName = "   + lastName      + "\n" + 
-            "\tphone ="       + phone         + "\n" + 
-            "\tmail ="        + mail          + "\n" + 
-            "\troles = "      + roles         + "\n" + 
-            "}";
-    }
 }
