@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import javax.sql.DataSource;
 
-import com.pony.config.DataSourceConnect;
+import com.pony.spring.data.DataSourceConnect;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 

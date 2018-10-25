@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pony.models.ChargeRequest;
-import com.pony.services.StripeService;
+import com.pony.business.services.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 

@@ -11,9 +11,9 @@ import javax.validation.Valid;
 import com.pony.models.News;
 
 import com.pony.models.User;
-import com.pony.security.ConnectedUserDetails;
-import com.pony.services.NewsService;
-import com.pony.services.UserService;
+import com.pony.spring.security.ConnectedUserDetails;
+import com.pony.business.services.NewsService;
+import com.pony.business.services.UserService;
 import com.pony.viewmodels.NewsViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;

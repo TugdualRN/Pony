@@ -2,8 +2,8 @@ package com.pony.viewmodels;
 
 import javax.validation.constraints.Size;
 
-import com.pony.utils.validation.PasswordsMatch;
-import com.pony.utils.validation.ValidMail;
+import com.pony.business.utils.validation.PasswordsMatch;
+import com.pony.business.utils.validation.ValidMail;
 
 import org.hibernate.validator.constraints.NotBlank;
 

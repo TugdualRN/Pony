@@ -20,13 +20,13 @@ public class UserCurrencies {
     private long id;
 
 	@Column(nullable = false)
-    private long diamonds = 0;
+    private long diamonds;
 
 	@Column(nullable = false)
-    private long golds = 500;
+    private long golds;
     
 	@Column(nullable = false)
-    private long woods = 200;
+    private long woods;
 
     @OneToOne
     @JoinColumn(name="user_id")
@@ -43,13 +43,17 @@ public class UserCurrencies {
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
     public long getId() { return this.id; }
-	public void setId(long id) { this.id = id; }
+    public void setId(long id) { this.id = id; }
+    
 	public long getDiamonds() { return this.diamonds; }
 	public void setDiamonds(long diamonds) { this.diamonds = diamonds; }
-	public long getGolds() { return this.golds; }
+    
+    public long getGolds() { return this.golds; }
 	public void setGolds(long gold) { this.golds = gold; }
-	public long getWoods() { return this.woods; }
+    
+    public long getWoods() { return this.woods; }
 	public void setWoods(long woods) { this.woods = woods; }
+    
     public User getUser() { return this.user; }
 	public void setUser(User user) { this.user = user; }
     // </editor-fold>
