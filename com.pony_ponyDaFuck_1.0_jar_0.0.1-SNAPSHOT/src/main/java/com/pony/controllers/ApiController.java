@@ -50,10 +50,7 @@ public class ApiController extends BaseController {
             //put the token in the session because we'll need it later
             request.getSession().setAttribute("requestToken", requestToken);
             
-            //now get the authorization URL from the token
-            String twitterUrl = requestToken.getAuthorizationURL();
-            
-            return new RedirectView(twitterUrl);
+            return new RedirectView(requestToken.getAuthorizationURL());
         }
         catch (TwitterException e) {
             return new RedirectView("http://localhost:8000/error");
@@ -73,8 +70,7 @@ public class ApiController extends BaseController {
             if (requestToken != null) {
                 AccessToken accessToken;
                 try {
-                    accessToken = _apiService.getTwitter()
-                        .getOAuthAccessToken(requestToken, oauthVerifier);
+                    accessToken = _apiService.getTwitter().getOAuthAccessToken(requestToken, oauthVerifier);
                 }
                 catch (TwitterException e) { 
                     _logger.error("Error while trying to retrieve the twitter access token", e);
@@ -105,6 +101,7 @@ public class ApiController extends BaseController {
         }
 
         _logger.info("User refused Twitter");
+        
         return new ModelAndView("error");
     }
 }
