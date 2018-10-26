@@ -2,8 +2,6 @@ package com.pony.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.pony.enumerations.SocialNetworkType;
-import com.pony.entities.models.SocialNetwork;
 import com.pony.entities.models.User;
 import com.pony.business.services.ApiService;
 import com.pony.business.services.UserService;
@@ -18,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import twitter4j.TwitterException;
-import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 import org.slf4j.Logger;
@@ -66,38 +63,19 @@ public class ApiController extends BaseController {
         if (_apiService.isValidCallback(oauthVerifier, denied)) {
 
             RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
+            User user = _userService.findByMail(this.getConnectedUserMail());
 
-            if (requestToken != null) {
-                AccessToken accessToken;
-                try {
-                    accessToken = _apiService.getTwitter().getOAuthAccessToken(requestToken, oauthVerifier);
-                }
-                catch (TwitterException e) { 
-                    _logger.error("Error while trying to retrieve the twitter access token", e);
-                    return new ModelAndView("error").addObject("error", e);
+            if (requestToken != null && user != null) {
+                if (_apiService.createSocialNetwork(user, requestToken, oauthVerifier)) {
+                    _userService.update(user);
+
+                    return new ModelAndView("redirect:/");
                 }
 
-                User user = _userService.findByMail(this.getConnectedUserMail());
-
-                if (user != null) {
-                    SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.TWITTER, 
-                        accessToken.getToken(),
-                        accessToken.getTokenSecret());
-
-                    if (!_apiService.userHasSocialNetwork(user, SocialNetworkType.TWITTER)) {
-                        user.getSocialNetworks().put(socialNetwork.getSocialNetworkType(), socialNetwork);
-                        socialNetwork.setUser(user);
-
-                        _userService.update(user);
-
-                        return new ModelAndView("redirect:/");
-                    }
-
-                    _logger.error("User " + user.getUserName() + "already had a social network for this type, which should not be possible");
-                }
-
-                _logger.error("User is null, which should not be possible");
+                _logger.error("Error while creating a social network for user {}", user.getMail());
             }
+
+            _logger.error("Cached token or user is null");
         }
 
         _logger.info("User refused Twitter");
