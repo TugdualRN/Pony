@@ -1,7 +1,7 @@
 package com.pony.spring.security;
 
-import com.pony.models.Role;
-import com.pony.models.User;
+import com.pony.entities.models.Role;
+import com.pony.entities.models.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

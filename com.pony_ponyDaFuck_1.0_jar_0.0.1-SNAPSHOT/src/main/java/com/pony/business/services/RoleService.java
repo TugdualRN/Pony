@@ -2,7 +2,7 @@ package com.pony.business.services;
 
 import java.util.List;
 
-import com.pony.models.Role;
+import com.pony.entities.models.Role;
 
 public interface RoleService {
 

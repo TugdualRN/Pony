@@ -1,4 +1,4 @@
-package com.pony.models;
+package com.pony.entities.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

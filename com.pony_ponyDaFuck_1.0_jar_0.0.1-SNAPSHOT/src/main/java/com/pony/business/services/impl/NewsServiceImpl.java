@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.slugify.Slugify;
-import com.pony.models.News;
-import com.pony.models.User;
+import com.pony.entities.models.News;
+import com.pony.entities.models.User;
 import com.pony.data.repositories.NewsRepository;
 import com.pony.business.services.NewsService;
 

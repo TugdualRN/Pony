@@ -2,8 +2,8 @@ package com.pony.business.utils.mailing;
 
 import java.util.List;
 
-import com.pony.models.User;
-import com.pony.models.Token;
+import com.pony.entities.models.User;
+import com.pony.entities.models.Token;
 
 public interface MailService {
     

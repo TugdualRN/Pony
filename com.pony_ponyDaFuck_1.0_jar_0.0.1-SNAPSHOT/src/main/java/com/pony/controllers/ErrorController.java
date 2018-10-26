@@ -23,7 +23,8 @@ public class ErrorController {
 
         _logger.error("Caught an unhandled Exception: ", throwable);
 
-        return new ModelAndView("error").addObject("exception", throwable);
+        return new ModelAndView("error")
+            .addObject("exception", throwable);
     }
 
     // @ExceptionHandler(NoHandlerFoundException.class)

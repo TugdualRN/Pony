@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pony.models.Role;
+import com.pony.entities.models.Role;
 import com.pony.business.services.RoleService;
 
 @Controller
@@ -37,10 +37,8 @@ public class RoleController {
     @GetMapping(value = {"/role/add"})
     public ModelAndView addRole(@RequestParam String roleName) {
 
-        if (roleName != null && !roleName.isEmpty())
-        {
-            Role role = new Role(roleName.toUpperCase());
-            _roleService.insert(role);
+        if (roleName != null && !roleName.isEmpty()) {
+            _roleService.addRole(new Role(roleName.toUpperCase()));
         }
 
         return new ModelAndView("redirect:/managment/roles");
@@ -50,7 +48,7 @@ public class RoleController {
     public ModelAndView deleteRole(@PathVariable long id) {
         
         Role role = _roleService.findById(id);
-        _roleService.delete(role.getId());
+        _roleService.deleteRole(role);
 
         return new ModelAndView("redirect:/managment/roles");
     }

@@ -1,4 +1,4 @@
-package com.pony.models;
+package com.pony.entities.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.pony.entities.models.User;
 
 @Entity
 @Table(name = "T_UserCurrencies")

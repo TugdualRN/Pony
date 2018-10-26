@@ -3,8 +3,8 @@ package com.pony.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import com.pony.enumerations.SocialNetworkType;
-import com.pony.models.SocialNetwork;
-import com.pony.models.User;
+import com.pony.entities.models.SocialNetwork;
+import com.pony.entities.models.User;
 import com.pony.business.services.ApiService;
 import com.pony.business.services.UserService;
 

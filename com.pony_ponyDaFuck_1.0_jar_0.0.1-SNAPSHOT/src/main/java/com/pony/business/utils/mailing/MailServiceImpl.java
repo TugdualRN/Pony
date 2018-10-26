@@ -3,8 +3,8 @@ package com.pony.business.utils.mailing;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pony.models.User;
-import com.pony.models.Token;
+import com.pony.entities.models.User;
+import com.pony.entities.models.Token;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
