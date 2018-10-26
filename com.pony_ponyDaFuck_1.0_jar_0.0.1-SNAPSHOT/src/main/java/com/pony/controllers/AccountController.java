@@ -3,14 +3,14 @@ package com.pony.controllers;
 import javax.validation.Valid;
 
 import com.pony.enumerations.TokenType;
-import com.pony.models.Token;
-import com.pony.models.User;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
 import com.pony.business.services.TokenService;
 import com.pony.business.services.UserService;
 import com.pony.business.utils.RegisterResult;
-import com.pony.viewmodels.ForgotPasswordViewModel;
-import com.pony.viewmodels.RegisterViewModel;
-import com.pony.viewmodels.ResetPasswordViewModel;
+import com.pony.views.viewmodels.ForgotPasswordViewModel;
+import com.pony.views.viewmodels.RegisterViewModel;
+import com.pony.views.viewmodels.ResetPasswordViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -44,7 +44,6 @@ public class AccountController {
     // <editor-fold desc="Register">
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(Model model) {
-    
         return new ModelAndView("authentication/register")
             .addObject("registerViewModel", new RegisterViewModel())
             .addObject("errors", new RegisterResult());
@@ -71,7 +70,7 @@ public class AccountController {
         // Mailing
         if (registerResult.isValid()) {
             try {
-                _userService.generateToken(registerResult.getUser(), TokenType.ACTIVATE_ACCOUNT);
+                _userService.linkTokenToUser(registerResult.getUser(), TokenType.ACTIVATE_ACCOUNT);
             } catch (MailException e) {
                 _logger.error("Mailing connection timeout");
 
@@ -91,13 +90,11 @@ public class AccountController {
     // <editor-fold desc="Login">
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
-
         return new ModelAndView("authentication/login");
     }
 
     @RequestMapping(value = "/login/fail", method = RequestMethod.GET)
     public ModelAndView loginFailure() {
-
         return new ModelAndView("authentication/login-failure");
     }
 
@@ -119,8 +116,7 @@ public class AccountController {
             // Check if token didn't expire
             if (_tokenService.isValidToken(token)) {
                 _tokenService.consumeToken(token);
-                user.setIsActive(true);
-                _userService.update(user);
+                _userService.activateUser(user);
                 
                 return new ModelAndView("authentication/confirm-success");
             }
@@ -147,7 +143,7 @@ public class AccountController {
         User user = _userService.findByNormalizedMail(viewModel.getMail().toUpperCase());
         
         if (user != null) {
-            _userService.generateToken(user, TokenType.RESET_PASSWORD);
+            _userService.linkTokenToUser(user, TokenType.RESET_PASSWORD);
 
             return new ModelAndView("authentication/reset-password-success");
         }
@@ -158,8 +154,7 @@ public class AccountController {
     @RequestMapping(value = "/change-password", method = RequestMethod.GET)
     public ModelAndView changePassword(@RequestParam long userId, @RequestParam String tokenValue) {
         return new ModelAndView("authentication/change-password")
-            .addObject("userId", userId)
-            .addObject("token", tokenValue);
+            .addObject("viewModel", new ResetPasswordViewModel(userId, tokenValue));
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
@@ -174,6 +169,7 @@ public class AccountController {
             Token token = _tokenService.findToken(viewModel.getToken(), user.getTokens(), TokenType.RESET_PASSWORD);
 
             if (_tokenService.isValidToken(token)) {
+                _tokenService.consumeToken(token);
                 _userService.updatePassword(user, viewModel.getPassword());
 
                 return new ModelAndView("authentication/change-password-success");

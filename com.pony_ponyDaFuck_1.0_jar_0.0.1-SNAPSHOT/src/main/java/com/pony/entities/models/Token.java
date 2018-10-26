@@ -1,4 +1,4 @@
-package com.pony.models;
+package com.pony.entities.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

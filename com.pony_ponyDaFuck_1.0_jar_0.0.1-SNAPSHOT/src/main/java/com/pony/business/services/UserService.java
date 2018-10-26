@@ -3,8 +3,8 @@ package com.pony.business.services;
 import java.util.List;
 
 import com.pony.enumerations.TokenType;
-import com.pony.models.Role;
-import com.pony.models.User;
+import com.pony.entities.models.Role;
+import com.pony.entities.models.User;
 import com.pony.business.utils.RegisterResult;
 
 import org.springframework.mail.MailException;
@@ -39,5 +39,7 @@ public interface UserService {
 
     User updatePassword(User user, String password);
 
-    User generateToken(User user, TokenType tokenType) throws MailException;
+    User linkTokenToUser(User user, TokenType tokenType) throws MailException;
+
+    User activateUser(User user);
 }

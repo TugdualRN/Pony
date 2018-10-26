@@ -21,6 +21,7 @@ public class HomeController {
     @RequestMapping(value = {"", "/", "/home"})
     public ModelAndView home(Model model) {
     	
-        return new ModelAndView("home").addObject("newsList", _newsService.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
+		return new ModelAndView("home")
+			.addObject("newsList", _newsService.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
     }
 }

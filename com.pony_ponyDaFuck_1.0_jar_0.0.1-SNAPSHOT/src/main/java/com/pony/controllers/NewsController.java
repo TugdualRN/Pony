@@ -8,13 +8,13 @@ import java.io.OutputStream;
 
 import javax.validation.Valid;
 
-import com.pony.models.News;
+import com.pony.entities.models.News;
 
-import com.pony.models.User;
+import com.pony.entities.models.User;
 import com.pony.spring.security.ConnectedUserDetails;
 import com.pony.business.services.NewsService;
 import com.pony.business.services.UserService;
-import com.pony.viewmodels.NewsViewModel;
+import com.pony.views.viewmodels.NewsViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;

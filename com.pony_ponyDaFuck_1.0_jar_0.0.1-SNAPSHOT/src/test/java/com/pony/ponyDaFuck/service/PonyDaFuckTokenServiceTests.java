@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pony.enumerations.TokenType;
-import com.pony.models.User;
+import com.pony.entities.models.User;
 import com.pony.business.services.TokenService;
 import com.pony.business.services.UserService;
 

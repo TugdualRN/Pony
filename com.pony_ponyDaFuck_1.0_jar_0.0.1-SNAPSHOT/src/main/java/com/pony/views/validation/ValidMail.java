@@ -1,4 +1,4 @@
-package com.pony.business.utils.validation;
+package com.pony.views.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

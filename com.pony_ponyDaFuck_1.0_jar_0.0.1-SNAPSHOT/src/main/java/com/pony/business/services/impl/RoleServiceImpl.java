@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pony.models.Role;
+import com.pony.entities.models.Role;
 import com.pony.business.services.RoleService;
 import com.pony.data.repositories.RoleRepository;
 

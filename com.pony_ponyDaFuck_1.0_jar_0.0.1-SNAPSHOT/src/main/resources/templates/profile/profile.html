@@ -18,12 +18,12 @@
             <div class="col-1">
             </div>
             <div class="col-3">
-                <th:block th:if="${infos != null}">
+                <th:block th:if="${data.user != null}">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" th:src="${infos.get400x400ProfileImageURL()}" alt="Twitter image"></img>
+                        <img class="card-img-top" th:src="${data.user.get400x400ProfileImageURL()}" alt="Twitter image"></img>
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${infos.getScreenName()}"></h5>
-                            <p class="card-text" th:text="${infos.getDescription()}"></p>
+                            <h5 class="card-title" th:text="${data.user.getScreenName()}"></h5>
+                            <p class="card-text" th:text="${data.user.getDescription()}"></p>
                             <a href="#" class="btn btn-primary">Jump to my profile</a>
                         </div>
                     </div>
@@ -38,8 +38,8 @@
                     <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
                 </th:block>
 
-                <th:block th:if="${tweets != null}">
-                    <th:block th:each="tweet : ${tweets}">
+                <th:block th:if="${data.tweets != null}">
+                    <th:block th:each="tweet : ${data.tweets}">
                         <div class="card">
                             <div class="card-header" th:text="${tweet.id}"></div>
                             <div class="card-body">

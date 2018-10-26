@@ -1,6 +1,6 @@
 package com.pony.data.repositories;
 
-import com.pony.models.User;
+import com.pony.entities.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

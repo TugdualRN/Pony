@@ -1,4 +1,4 @@
-package com.pony.models;
+package com.pony.entities.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;

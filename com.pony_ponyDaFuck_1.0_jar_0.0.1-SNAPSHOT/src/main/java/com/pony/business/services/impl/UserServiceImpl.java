@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pony.enumerations.TokenType;
-import com.pony.models.Role;
-import com.pony.models.Token;
-import com.pony.models.User;
+import com.pony.entities.models.Role;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
 import com.pony.data.repositories.UserRepository;
 import com.pony.business.services.RoleService;
 import com.pony.business.services.TokenService;
@@ -217,8 +217,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Create and link the given token to the user and send a confirmation mail
      */
-    public User generateToken(User user, TokenType tokenType) throws MailException {
-
+    public User linkTokenToUser(User user, TokenType tokenType) throws MailException {
         Token token = _tokenService.generateToken(tokenType, user);
         user.getTokens().add(token);
         User savedUser = _userRepository.save(user);
@@ -232,5 +231,19 @@ public class UserServiceImpl implements UserService {
         }
 
         return savedUser;
+    }
+
+    @Override
+    public User activateUser(User user) {
+        if (user.getIsActive() != false) {
+            user.setIsActive(true);
+            User savedUser = _userRepository.save(user);
+
+            return savedUser;
+        }
+
+        _logger.info("User {} to activate was already active", user.getMail());
+
+        return user;
     }
 }

@@ -1,7 +1,7 @@
 package com.pony.business.services;
 
-import com.pony.models.Token;
-import com.pony.models.User;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
 
 import java.util.List;
 

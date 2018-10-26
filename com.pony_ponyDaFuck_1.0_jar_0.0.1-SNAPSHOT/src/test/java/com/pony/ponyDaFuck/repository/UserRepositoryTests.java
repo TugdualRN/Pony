@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pony.models.User;
+import com.pony.entities.models.User;
 import com.pony.data.repositories.UserRepository;
 
 @RunWith(SpringRunner.class)

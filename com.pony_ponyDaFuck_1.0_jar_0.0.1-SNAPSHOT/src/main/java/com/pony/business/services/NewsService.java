@@ -2,8 +2,8 @@ package com.pony.business.services;
 
 import java.util.List;
 
-import com.pony.models.News;
-import com.pony.models.User;
+import com.pony.entities.models.News;
+import com.pony.entities.models.User;
 
 
 public interface NewsService {

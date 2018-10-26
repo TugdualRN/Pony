@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pony.models.ChargeRequest;
+import com.pony.entities.models.ChargeRequest;
 import com.pony.data.repositories.ChargeRequestRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.*;

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.pony.models.User;
+import com.pony.entities.models.User;
 import com.pony.data.repositories.UserRepository;
 
 @Service

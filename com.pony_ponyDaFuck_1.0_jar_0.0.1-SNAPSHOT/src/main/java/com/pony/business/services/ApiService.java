@@ -1,7 +1,7 @@
 package com.pony.business.services;
 
 import com.pony.enumerations.SocialNetworkType;
-import com.pony.models.User;
+import com.pony.entities.models.User;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;

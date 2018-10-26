@@ -1,6 +1,6 @@
 package com.pony.business.utils;
 
-import com.pony.models.User;
+import com.pony.entities.models.User;
 
 public class RegisterResult {
     

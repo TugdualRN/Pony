@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pony.models.ChargeRequest;
+import com.pony.entities.models.ChargeRequest;
 import com.pony.business.services.StripeService;
 
 @Controller

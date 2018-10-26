@@ -1,15 +1,16 @@
-package com.pony.viewmodels;
+package com.pony.views.viewmodels;
 
 import javax.validation.constraints.Size;
 
-import com.pony.business.utils.validation.PasswordsMatch;
-import com.pony.business.utils.validation.ValidMail;
+import com.pony.views.validation.IPasswordMatch;
+import com.pony.views.validation.PasswordsMatch;
+import com.pony.views.validation.ValidMail;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 //@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 @PasswordsMatch
-public class RegisterViewModel {
+public class RegisterViewModel implements IPasswordMatch {
 
 	@NotBlank(message = "Username cant be blank")
     @Size(min = 3, max = 15, message = "Username must be between 3 and 15 characters")

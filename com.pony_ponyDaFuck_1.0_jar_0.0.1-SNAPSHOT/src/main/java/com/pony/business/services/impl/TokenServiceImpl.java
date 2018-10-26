@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pony.enumerations.TokenType;
-import com.pony.models.Token;
-import com.pony.models.User;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
 import com.pony.business.services.TokenService;
 
 @Service

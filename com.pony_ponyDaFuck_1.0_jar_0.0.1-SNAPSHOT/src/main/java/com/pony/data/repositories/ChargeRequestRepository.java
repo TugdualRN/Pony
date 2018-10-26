@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pony.models.ChargeRequest;
+import com.pony.entities.models.ChargeRequest;
 
 public interface ChargeRequestRepository extends JpaRepository<ChargeRequest, Long> {
 

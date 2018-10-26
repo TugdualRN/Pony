@@ -15,8 +15,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pony.models.News;
-import com.pony.models.User;
+import com.pony.entities.models.News;
+import com.pony.entities.models.User;
 import com.pony.business.services.NewsService;
 import com.pony.business.services.UserService;
 
