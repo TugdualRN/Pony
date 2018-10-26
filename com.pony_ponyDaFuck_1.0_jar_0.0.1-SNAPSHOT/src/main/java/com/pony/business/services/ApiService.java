@@ -20,5 +20,7 @@ public interface ApiService {
 
     public Twitter getTwitter(String token, String tokenSecret);
 
+    public boolean createSocialNetwork(User user, RequestToken requestToken, String oauthVerifier);
+
     public boolean userHasSocialNetwork(User user, SocialNetworkType socialNetworkType);
 }
