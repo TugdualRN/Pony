@@ -16,7 +16,6 @@ import com.pony.data.repositories.UserRepository;
 import com.pony.business.services.RoleService;
 import com.pony.business.services.TokenService;
 import com.pony.business.services.UserService;
-import com.pony.business.utils.mailing.MailService;
 import com.pony.business.utils.RegisterResult;
 
 import org.slf4j.Logger;
@@ -31,7 +30,6 @@ public class UserServiceImpl implements UserService {
 
     private final TokenService _tokenService;
     private final RoleService _roleService;
-    private final MailService _mailService;
 
     private final BCryptPasswordEncoder _passwordEncoder;
 
@@ -40,13 +38,11 @@ public class UserServiceImpl implements UserService {
         UserRepository userRepository, 
         TokenService tokenService,
         RoleService roleService,
-        MailService mailService,
         BCryptPasswordEncoder passwordEncoder) {
         _userRepository = userRepository;
         _tokenService = tokenService;
         _roleService = roleService;
         _passwordEncoder = passwordEncoder;
-        _mailService = mailService;
     }
 
     @Override
@@ -103,31 +99,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RegisterResult createUser(User user, String password) {
-
         user.setNormalizedUserName(user.getUserName().toUpperCase());
         user.setNormalizedMail(user.getMail().toUpperCase());
+        user.setPasswordHash(_passwordEncoder.encode(password));
+        user.getRoles().add(_roleService.findByName("USER"));
 
         RegisterResult registerResult = new RegisterResult();
         if (!this.exists(user, registerResult)) {
-            String hashedPassword = _passwordEncoder.encode(password);
-            user.setPasswordHash(hashedPassword);
-
-            // Add USER role as the default role
-            Role role = _roleService.findByName("USER");
-
-            // Maybe the DB was wiped and there are no roles, we create them and retry
-            if (role == null) {
-                _roleService.insetDefaultRoles();
-                role = _roleService.findByName("USER");
-            }
-
-            user.getRoles().add(role);
-
             User savedUser = _userRepository.save(user);
-            if (savedUser != null) {
-    
-                registerResult.setUser(savedUser); 
 
+            if (savedUser != null) {
+                registerResult.setUser(savedUser); 
                 _logger.info("Created User " + user.getUserName() + " with Mail " + user.getMail());
 
                 return registerResult;
@@ -176,6 +158,13 @@ public class UserServiceImpl implements UserService {
 
     public User addRoleToUser(User user, Role role) {
         if (!hasRole(user, role)) {
+
+            // Maybe the DB was wiped and there are no roles, we create them and retry {TO REMOVE IN PRODUCTION}
+            if (role == null) {
+                _roleService.insetDefaultRoles();
+                role = _roleService.findByName("USER");
+            }
+
             user.getRoles().add(role);
             User savedUser = _userRepository.save(user);
             
@@ -224,11 +213,6 @@ public class UserServiceImpl implements UserService {
 
         _logger.info("Created token {} for user {}", token.getType(), user.getMail());
 
-        if (tokenType == TokenType.ACTIVATE_ACCOUNT) {
-            _mailService.SendRegisterMail(user, token);
-        } else {
-            _mailService.SendResetPassword(user, token);
-        }
 
         return savedUser;
     }

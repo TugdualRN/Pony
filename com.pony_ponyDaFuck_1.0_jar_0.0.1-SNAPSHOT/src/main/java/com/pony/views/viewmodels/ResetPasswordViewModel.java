@@ -6,23 +6,21 @@ import javax.validation.constraints.Size;
 import com.pony.views.validation.IPasswordMatch;
 import com.pony.views.validation.PasswordsMatch;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @PasswordsMatch
 public class ResetPasswordViewModel implements IPasswordMatch {
 
-    @NotBlank
+    @NotNull
     @Size(min = 8, max = 15, message = "Password must be between 8 and 15 characters")
     private String password;
 
-	@NotBlank
+    @NotNull
     @Size(min = 8, max = 15, message = "Password must be between 8 and 15 characters")
     private String confirmPassword;
 
-	@NotNull
+    @NotNull
     private long userId;
 
-	@NotBlank
+    @NotNull
 	private String token;
 	
 	public ResetPasswordViewModel() { }

@@ -43,21 +43,22 @@ public class ApiController extends BaseController {
 
         try {
             RequestToken requestToken = _apiService.getTwitterRequestToken();		
-        
-            //put the token in the session because we'll need it later
             request.getSession().setAttribute("requestToken", requestToken);
             
             return new RedirectView(requestToken.getAuthorizationURL());
         }
         catch (TwitterException e) {
+            _logger.error("An exception occured while trying to create Twitter redirect url");
+
+            // TO DO => Try to return the user to the general error page with a message (don't know how to do it with a RedirectView)
             return new RedirectView("http://localhost:8000/error");
         }
     }
 
     @RequestMapping("/callback/twitter")
     public ModelAndView twitterCallBack(
-        @RequestParam(value="oauth_verifier", required=false) String oauthVerifier,
-        @RequestParam(value="denied", required=false) String denied,
+        @RequestParam(value = "oauth_verifier", required = false) String oauthVerifier,
+        @RequestParam(value = "denied",         required = false) String denied,
         HttpServletRequest request) {
         
         if (_apiService.isValidCallback(oauthVerifier, denied)) {
@@ -69,17 +70,19 @@ public class ApiController extends BaseController {
                 if (_apiService.createSocialNetwork(user, requestToken, oauthVerifier)) {
                     _userService.update(user);
 
-                    return new ModelAndView("redirect:/");
+                    return new ModelAndView("redirect:/profile");
                 }
 
                 _logger.error("Error while creating a social network for user {}", user.getMail());
             }
 
             _logger.error("Cached token or user is null");
+
+            return this.returnToErrorPage("An error occured while linking your social network to your account");
         }
 
         _logger.info("User refused Twitter");
-        
-        return new ModelAndView("error");
+
+        return this.returnToErrorPage("Your refused to link your account");
     }
 }
