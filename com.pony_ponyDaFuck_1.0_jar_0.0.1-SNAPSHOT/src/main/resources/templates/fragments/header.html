@@ -35,8 +35,17 @@
                         aria-haspopup="true" aria-expanded="false" th:text="#{lang}">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="?lang=en" th:text="#{lang.en}"></a>
-                        <a class="dropdown-item" href="?lang=fr" th:text="#{lang.fr}"></a>
+                        <!-- th:text="#{lang.en}"  th:text="#{lang.fr}" -->
+                        <a class="dropdown-item" href="?lang=en">
+                            <p th:text="#{lang.en}">
+                                <span class="flag-icon flag-icon-gb"></span>
+                            </p>
+                        </a>
+                        <a class="dropdown-item" href="?lang=fr">
+                            <p th:text="#{lang.fr}">
+                                <span class="flag-icon flag-icon-fr"></span>
+                            </p>
+                        </a>
                     </div>
                 </li>
                 <th:block sec:authorize="isAuthenticated()">

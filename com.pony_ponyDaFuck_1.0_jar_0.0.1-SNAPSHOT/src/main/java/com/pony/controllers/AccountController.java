@@ -8,7 +8,7 @@ import com.pony.entities.models.User;
 import com.pony.business.services.TokenService;
 import com.pony.business.services.UserService;
 import com.pony.business.utils.RegisterResult;
-import com.pony.business.utils.mailing.MailService;
+import com.pony.business.mailing.MailService;
 import com.pony.views.viewmodels.ForgotPasswordViewModel;
 import com.pony.views.viewmodels.RegisterViewModel;
 import com.pony.views.viewmodels.ResetPasswordViewModel;

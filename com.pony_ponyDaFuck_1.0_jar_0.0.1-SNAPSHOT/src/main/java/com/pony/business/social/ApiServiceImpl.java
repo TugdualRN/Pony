@@ -1,9 +1,9 @@
-package com.pony.business.services.impl;
+package com.pony.business.social;
 
 import com.pony.enumerations.SocialNetworkType;
 import com.pony.entities.models.SocialNetwork;
 import com.pony.entities.models.User;
-import com.pony.business.services.ApiService;
+import com.pony.business.social.ApiService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,25 +11,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
+/**
+ * Class used to manipulate "low level" API interactions
+ */
 @Service
 public class ApiServiceImpl implements ApiService {
 
     private static final Logger _logger = LoggerFactory.getLogger(ApiServiceImpl.class);
 
-    private TwitterFactory _twitterFactory;
+    private TwitterFactory  _twitterFactory;
+    private FacebookFactory _facebookFactory;
 
     @Value("${twitter.callback}")
     private String _twitterCallback;
 
     @Autowired
-    public ApiServiceImpl(TwitterFactory twitterFactory) {
+    public ApiServiceImpl(TwitterFactory twitterFactory, FacebookFactory facebookFactory) {
         _twitterFactory = twitterFactory;
+        _facebookFactory = facebookFactory;
     }
 
     public boolean isValidCallback(String oauthVerifier, String denied) {
@@ -39,6 +46,10 @@ public class ApiServiceImpl implements ApiService {
     public RequestToken getTwitterRequestToken() throws TwitterException, IllegalStateException {
         return _twitterFactory.getInstance().getOAuthRequestToken(_twitterCallback);	
     }
+
+    // public RequestToken getFacebookRequestToken() {
+    //     _facebookFactory.getInstance().getOAuthAuthorizationURL(callbackURL)
+    // }
 
     public Twitter getTwitter() {
         return _twitterFactory.getInstance();

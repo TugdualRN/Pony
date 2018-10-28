@@ -3,7 +3,7 @@ package com.pony.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import com.pony.entities.models.User;
-import com.pony.business.services.ApiService;
+import com.pony.business.social.ApiService;
 import com.pony.business.services.UserService;
 
 import org.springframework.beans.factory.annotation.Value;
