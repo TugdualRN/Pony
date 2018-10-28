@@ -3,15 +3,13 @@ package com.pony.views.viewmodels;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 public class LoginViewModel {
 
-    @NotBlank
+    @NotNull
     @Size(min = 3, max = 20)
     private String mail;
 
-    @NotBlank
+    @NotNull
     @Size(min = 8, max = 15)
     private String password;
 

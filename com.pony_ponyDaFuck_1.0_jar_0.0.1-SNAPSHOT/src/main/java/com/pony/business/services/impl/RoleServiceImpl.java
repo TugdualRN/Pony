@@ -40,20 +40,17 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role insert(Role role) {
-
         return _roleRepository.save(role);
     }
 
     @Override
     public Role update(Role role) {
-
         return _roleRepository.save(role);
     }
 
     @Override
     @Transactional
     public void delete(Long roleId) {
-
         _roleRepository.delete(roleId);
     }
 
@@ -62,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
             return _roleRepository.save(role);
         }
 
-      return null;
+        return null;
     }
 
     public boolean deleteRole(Role role) {
