@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
+import facebook4j.FacebookFactory;
 
 @Configuration
 public class SocialConfig {
@@ -27,12 +27,22 @@ public class SocialConfig {
     @Bean
     public TwitterFactory twitterFactory() {
         // Build the configuration
-        twitter4j.conf.Configuration configuration = new ConfigurationBuilder()
+        twitter4j.conf.Configuration configuration = new twitter4j.conf.ConfigurationBuilder()
             .setOAuthConsumerKey(_twitterConsumerKey)
             .setOAuthConsumerSecret(_twitterConsumerSecret)
             .build();
 
         // Instantiate the Twitter object with the configuration
         return new TwitterFactory(configuration);
+    }
+
+    @Bean
+    public FacebookFactory facebookFactory() {
+        facebook4j.conf.Configuration configuration = new facebook4j.conf.ConfigurationBuilder()
+            .setOAuthAppId(_facebookAppId)
+            .setOAuthAppSecret(_facebookAppSecret)
+            .build();
+
+        return new FacebookFactory(configuration);
     }
 }

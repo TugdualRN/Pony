@@ -1,8 +1,8 @@
-package com.pony.business.utils.social;
+package com.pony.business.social;
 
 import java.util.List;
 
-import com.pony.business.services.ApiService;
+import com.pony.business.social.ApiService;
 import com.pony.entities.dto.ProfileSocialNetworkData;
 import com.pony.entities.models.SocialNetwork;
 import com.pony.entities.models.User;
@@ -15,6 +15,9 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 
+/**
+ * Interface used to manipulate "high level" API interactions
+ */
 @Service
 public class SocialNetworkService {
     
