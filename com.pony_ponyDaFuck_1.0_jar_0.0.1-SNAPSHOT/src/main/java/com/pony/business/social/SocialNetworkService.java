@@ -2,12 +2,6 @@ package com.pony.business.social;
 
 import java.util.List;
 
-import com.pony.business.social.ApiService;
-import com.pony.entities.dto.ProfileSocialNetworkData;
-import com.pony.entities.models.SocialNetwork;
-import com.pony.entities.models.User;
-import com.pony.enumerations.SocialNetworkType;
-
 import org.springframework.stereotype.Service;
 
 import twitter4j.Status;
@@ -15,8 +9,14 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 
+import com.pony.business.social.ApiService;
+import com.pony.entities.dto.ProfileSocialNetworkData;
+import com.pony.entities.models.SocialNetwork;
+import com.pony.entities.models.User;
+import com.pony.enumerations.SocialNetworkType;
+
 /**
- * Interface used to manipulate "high level" API interactions
+ * Class used to manipulate "high level" API interactions (Business oriented)
  */
 @Service
 public class SocialNetworkService {

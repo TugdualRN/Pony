@@ -1,23 +1,23 @@
 package com.pony.business.social;
 
-import com.pony.enumerations.SocialNetworkType;
-import com.pony.entities.models.SocialNetwork;
-import com.pony.entities.models.User;
-import com.pony.business.social.ApiService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import facebook4j.Facebook;
-import facebook4j.FacebookFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+import facebook4j.Facebook;
+import facebook4j.FacebookFactory;
+
+import com.pony.enumerations.SocialNetworkType;
+import com.pony.entities.models.SocialNetwork;
+import com.pony.entities.models.User;
+import com.pony.business.social.ApiService;
 
 /**
  * Class used to manipulate "low level" API interactions
@@ -33,6 +33,9 @@ public class ApiServiceImpl implements ApiService {
     @Value("${twitter.callback}")
     private String _twitterCallback;
 
+    @Value("${facebook.callback}")
+    private String _facebookCallback;
+
     @Autowired
     public ApiServiceImpl(TwitterFactory twitterFactory, FacebookFactory facebookFactory) {
         _twitterFactory = twitterFactory;
@@ -43,16 +46,22 @@ public class ApiServiceImpl implements ApiService {
         return oauthVerifier != null && !oauthVerifier.isEmpty() && denied == null;
     }
 
-    public RequestToken getTwitterRequestToken() throws TwitterException, IllegalStateException {
+    // Tweeter use a Request Token
+    public RequestToken getTwitterRequestToken() throws TwitterException {
         return _twitterFactory.getInstance().getOAuthRequestToken(_twitterCallback);	
     }
 
-    // public RequestToken getFacebookRequestToken() {
-    //     _facebookFactory.getInstance().getOAuthAuthorizationURL(callbackURL)
-    // }
+    // Facebook only use the Redirect Url
+    public String getFacebookRedirectUrl() {
+        return _facebookFactory.getInstance().getOAuthAuthorizationURL(_facebookCallback);
+    }
 
     public Twitter getTwitter() {
         return _twitterFactory.getInstance();
+    }
+
+    public Facebook getFacebook() {
+        return _facebookFactory.getInstance();
     }
 
     public Twitter getTwitter(AccessToken accessToken) {
