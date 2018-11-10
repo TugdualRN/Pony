@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pony.models.News;
-import com.pony.repositories.NewsRepository;
+import com.pony.entities.models.News;
+import com.pony.data.repositories.NewsRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

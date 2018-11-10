@@ -1,4 +1,5 @@
 package com.pony.ponyDaFuck.service;
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -14,11 +15,11 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pony.models.Role;
-import com.pony.models.User;
-import com.pony.services.RoleService;
-import com.pony.services.UserService;
-import com.pony.utils.RegisterResult;
+import com.pony.entities.models.Role;
+import com.pony.entities.models.User;
+import com.pony.business.services.RoleService;
+import com.pony.business.services.UserService;
+import com.pony.business.utils.RegisterResult;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

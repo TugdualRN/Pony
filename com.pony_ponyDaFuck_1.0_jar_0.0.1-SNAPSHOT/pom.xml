@@ -176,6 +176,14 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+
+		<!-- Needed to prevent some maven m2 repository issues blabla -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
         <!-- Social -->
         <dependency>
             <groupId>org.twitter4j</groupId>

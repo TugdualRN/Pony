@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pony.models.ChargeRequest;
-import com.pony.services.StripeService;
+import com.pony.entities.models.ChargeRequest;
+import com.pony.business.services.StripeService;
 
 @Controller
 public class ShopController {
@@ -23,8 +23,8 @@ public class ShopController {
 	@RequestMapping(value = { "/shop" })
 	public ModelAndView displayShop() {
 
-		ChargeRequest chargeRequest = new ChargeRequest();
-		// TODO get all chargeRequest
+		//ChargeRequest chargeRequest = new ChargeRequest();
+		// {TO DO} get all chargeRequest
 		List<ChargeRequest> toto = _stripeService.findAll();
 		
 		return new ModelAndView("shop/Shop").addObject("offerList", toto);

@@ -2,23 +2,21 @@ package com.pony.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.pony.services.ApiService;
-import com.pony.services.UserService;
+import com.pony.entities.models.User;
+import com.pony.business.social.ApiService;
+import com.pony.business.services.UserService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
 import twitter4j.TwitterException;
-import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 import org.slf4j.Logger;
@@ -26,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 @PreAuthorize("hasRole('USER')")
-public class ApiController {
+public class ApiController extends BaseController {
 
     private static Logger _logger = LoggerFactory.getLogger(AccountController.class);
 
@@ -42,73 +40,66 @@ public class ApiController {
     }
 
     @RequestMapping("/connect/twitter")
-    public RedirectView getTwitterToken(HttpServletRequest request, Model model) {
-        String twitterUrl = "";
-    	
-		try {
-			//get the Twitter object
-			Twitter twitter = _apiService.getTwitter();
-			
-			//get the callback url so they get back here
-			//go get the request token from Twitter
-			RequestToken requestToken = twitter.getOAuthRequestToken(_twitterCallback);			
-			//put the token in the session because we'll need it later
-			request.getSession().setAttribute("requestToken", requestToken);
-			//let's put Twitter in the session as well
-			//request.getSession().setAttribute("twitter", twitter);
-			
-			//now get the authorization URL from the token
-			twitterUrl = requestToken.getAuthorizationURL();
-			
-			System.out.println("Authorization url is " + twitterUrl);
-		} catch (Exception e) {
-			System.out.println("Problem login in with Twitter! " + e.getClass());
-		}
-    	
-		//redirect to the Twitter URL
-	    return new RedirectView(twitterUrl);
+    public RedirectView twitterLink(HttpServletRequest request) throws TwitterException {
+
+        try {
+            RequestToken requestToken = _apiService.getTwitterRequestToken();		
+            request.getSession().setAttribute("requestToken", requestToken);
+            
+            return new RedirectView(requestToken.getAuthorizationURL());
+        }
+        catch (TwitterException e) {
+            _logger.error("An exception occured while trying to create Twitter redirect url");
+
+            // TO DO => Try to return the user to the general error page with a message (don't know how to do it with a RedirectView)
+            return new RedirectView("http://localhost:8000/error");
+        }
     }
 
     @RequestMapping("/callback/twitter")
-    public ModelAndView twitterCallBack(
-        @RequestParam(value="oauth_verifier", required=false) String oauthVerifier,
-        @RequestParam(value="denied", required=false) String denied,
-        HttpServletRequest request
-    ) {
-
-        // Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
-        RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
+    public ModelAndView twitterCallback(HttpServletRequest request,
+        @RequestParam(value = "oauth_verifier", required = false) String oauthVerifier,
+        @RequestParam(value = "denied",         required = false) String denied) {
         
-        try {
+        if (_apiService.isValidCallback(oauthVerifier, denied)) {
 
-            Twitter twitter = _apiService.getTwitter();
-            //AccessToken token = twitter.getOAuthAccessToken(oauthVerifier);
-            AccessToken token = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
+            RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
+            User user = _userService.findByMail(this.getConnectedUserMail());
 
-            //System.out.println("REQUEST_TOKEN TOKEN : " + requestToken.getToken());
-            System.out.println("ACCESS_TOKEN : " + token.getToken());
-            System.out.println("ACCESS_TOKEN SECRET : " + token.getTokenSecret());
-            
-            System.out.println("Registered USER ID: " + token.getUserId());
-            System.out.println("Registered USER NAME: " + token.getScreenName());
-            System.out.println("Registered USER TOKEN: " + token.getToken());
-            System.out.println("Registered USER SECRET: " + token.getTokenSecret());
+            if (requestToken != null && user != null) {
+                if (_apiService.createSocialNetwork(user, requestToken, oauthVerifier)) {
+                    _userService.update(user);
 
-            ResponseList<Status> lastStatus = twitter.getUserTimeline();
+                    return new ModelAndView("redirect:/profile");
+                }
 
-            System.out.println("----");
-            System.out.println();
-
-            for (Status status : lastStatus)
-            {
-                System.out.println(status.getText());
-                System.out.println();
+                _logger.error("Error while creating a social network for user {}", user.getMail());
             }
 
-            return new ModelAndView("/profile/twitter.html").addObject("twitter", twitter);
+            _logger.error("Cached token or user is null");
+
+            return this.returnToErrorPage("An error occured while linking your social network to your account");
         }
-        catch (TwitterException e) {
-            System.out.println(e.toString());
+
+        _logger.info("User refused Twitter");
+
+        return this.returnToErrorPage("Your refused to link your account");
+    }
+
+    @RequestMapping("/connect/facebook")
+    public RedirectView facebookLink(HttpServletRequest request) {
+        return new RedirectView(_apiService.getFacebookRedirectUrl());
+    }
+
+    @RequestMapping("/callback/facebook")
+    protected ModelAndView facebookCallback(HttpServletRequest request, 
+        @RequestParam(value = "code", required = false) String oauthVerifier) {
+        
+        Facebook facebook = _apiService.getFacebook();
+        try {
+            facebook.getOAuthAccessToken(oauthVerifier);
+        } catch (FacebookException e) {
+            
         }
 
         return null;

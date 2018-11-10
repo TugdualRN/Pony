@@ -8,13 +8,13 @@ import java.io.OutputStream;
 
 import javax.validation.Valid;
 
-import com.pony.models.News;
+import com.pony.entities.models.News;
 
-import com.pony.models.User;
-import com.pony.security.ConnectedUserDetails;
-import com.pony.services.NewsService;
-import com.pony.services.UserService;
-import com.pony.viewmodels.NewsViewModel;
+import com.pony.entities.models.User;
+import com.pony.spring.security.ConnectedUserDetails;
+import com.pony.business.services.NewsService;
+import com.pony.business.services.UserService;
+import com.pony.views.viewmodels.NewsViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -58,8 +58,10 @@ public class NewsController {
 	}
 //	, consumes = {"application/x-www-form-urlencoded" }
 	@RequestMapping(value = "/create-news", method = RequestMethod.POST)
-	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, @RequestParam("img") MultipartFile myFile,
-			BindingResult bindingResult) {
+	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, 
+		@RequestParam("img") MultipartFile myFile,
+		BindingResult bindingResult) {
+		
 		System.out.println(myFile);
 		System.out.println(bindingResult);
 		if (bindingResult.hasErrors()){

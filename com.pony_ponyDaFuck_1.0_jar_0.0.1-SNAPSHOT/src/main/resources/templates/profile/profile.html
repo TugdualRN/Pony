@@ -12,16 +12,54 @@
     </head>
     <body>
         <th:block th:replace="fragments/header"></th:block>
+        <br/>
+        
         <div class="row">
-            <div class="col-2">
+            <div class="col-1">
+            </div>
+            <div class="col-3">
+                <th:block th:if="${data.user != null}">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" th:src="${data.user.get400x400ProfileImageURL()}" alt="Twitter image"></img>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${data.user.getScreenName()}"></h5>
+                            <p class="card-text" th:text="${data.user.getDescription()}"></p>
+                            <a href="#" class="btn btn-primary">Jump to my profile</a>
+                        </div>
+                    </div>
+                </th:block>
             </div>
             <div class="col">
-                <br/>
-                <h1>Profile Page</h1>
-                <h3>Connect to Twitter</h3>
-                <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
+
+                <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).TWITTER) == null}">
+                    <br/>
+                    <h1>Profile Page</h1>
+                    <h3>Connect to Twitter</h3>
+                    <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
+                </th:block>
+
+                <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).FACEBOOK) == null}">
+                    <br/>
+                    <h1>Profile Page</h1>
+                    <h3>Connect to Twitter</h3>
+                    <a th:href="@{/connect/facebook}"><button>Connect with Facebook</button></a>
+                </th:block>
+
+                <th:block th:if="${data.tweets != null}">
+                    <th:block th:each="tweet : ${data.tweets}">
+                        <div class="card">
+                            <div class="card-header" th:text="${tweet.id}"></div>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${tweet.inReplyToScreenName}"></h5>
+                                <p class="card-text" th:text="${tweet.text}"></p>
+                                <a href="#" class="btn btn-primary" th:text="${tweet.createdAt}"></a>
+                            </div>
+                        </div>
+                    </th:block>
+                </th:block>
+            
             </div>
-            <div class="col-2">
+            <div class="col-1">
             </div>
         </div>
         

@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pony.models.Role;
-import com.pony.repositories.RoleRepository;
+import com.pony.entities.models.Role;
+import com.pony.data.repositories.RoleRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

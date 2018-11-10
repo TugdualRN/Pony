@@ -3,17 +3,17 @@ package com.pony.controllers;
 import javax.validation.Valid;
 
 import com.pony.enumerations.TokenType;
-import com.pony.models.Token;
-import com.pony.models.User;
-import com.pony.services.TokenService;
-import com.pony.services.UserService;
-import com.pony.utils.RegisterResult;
-import com.pony.viewmodels.ForgotPasswordViewModel;
-import com.pony.viewmodels.RegisterViewModel;
-import com.pony.viewmodels.ResetPasswordViewModel;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
+import com.pony.business.services.TokenService;
+import com.pony.business.services.UserService;
+import com.pony.business.utils.RegisterResult;
+import com.pony.business.mailing.MailService;
+import com.pony.views.viewmodels.ForgotPasswordViewModel;
+import com.pony.views.viewmodels.RegisterViewModel;
+import com.pony.views.viewmodels.ResetPasswordViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,23 +28,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller
-public class AccountController {
+public class AccountController extends BaseController {
 
     private final Logger _logger = LoggerFactory.getLogger(AccountController.class);
 
     private UserService _userService;
     private TokenService _tokenService;
+    private MailService _mailService;
 
     @Autowired
-    public AccountController(UserService userService, TokenService tokenService) {
+    public AccountController(UserService userService, TokenService tokenService, MailService mailService) {
         _tokenService = tokenService;
         _userService = userService;
+        _mailService = mailService;
     }
 
     // <editor-fold desc="Register">
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(Model model) {
-    
         return new ModelAndView("authentication/register")
             .addObject("registerViewModel", new RegisterViewModel())
             .addObject("errors", new RegisterResult());
@@ -63,25 +64,19 @@ public class AccountController {
         }
 
         // Creation
-        RegisterResult registerResult = _userService.createUser(
-            new User(viewModel.getUserName(), viewModel.getMail()),
-            viewModel.getPassword()
-        );
+        User user = new User(viewModel.getUserName(), viewModel.getMail());
+        RegisterResult registerResult = _userService.createUser(user, viewModel.getPassword());
 
-        // Mailing
+        // Create Register Token and send mail
         if (registerResult.isValid()) {
-            try {
-                _userService.generateToken(registerResult.getUser(), TokenType.ACTIVATE_ACCOUNT);
-            } catch (MailException e) {
-                _logger.error("Mailing connection timeout");
+            _userService.linkTokenToUser(registerResult.getUser(), TokenType.ACTIVATE_ACCOUNT);
 
-                throw e;
+            if (_mailService.SendRegisterMail(user, user.getTokens().get(0))) {
+                return this.returnToSuccessPage("Your account was successfully created");
             }
-
-            return new ModelAndView("authentication/register-success");
         }
 
-        // return RegisterResult to display in view
+        // Mail or userName is taken, return to the form with the informations
         return new ModelAndView("authentication/register")
             .addObject("registerViewModel", viewModel)
             .addObject("errors", registerResult);
@@ -91,14 +86,12 @@ public class AccountController {
     // <editor-fold desc="Login">
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
-
         return new ModelAndView("authentication/login");
     }
 
     @RequestMapping(value = "/login/fail", method = RequestMethod.GET)
     public ModelAndView loginFailure() {
-
-        return new ModelAndView("authentication/login-failure");
+        return this.returnToErrorPage("Login failure");
     }
 
     /*
@@ -107,7 +100,7 @@ public class AccountController {
     // </editor-fold>
 
     // <editor-fold desc="Confirmation">
-    @RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirm-mail", method = RequestMethod.GET)
     public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
         
         User user = _userService.findById(userId);
@@ -118,10 +111,10 @@ public class AccountController {
             
             // Check if token didn't expire
             if (_tokenService.isValidToken(token)) {
-                user.setIsActive(true);
-                _userService.update(user);
+                _tokenService.consumeToken(token);
+                _userService.activateUser(user);
                 
-                return new ModelAndView("authentication/confirm-success");
+                return this.returnToSuccessPage("Your account has been successfully activated");
             }
         }
 
@@ -146,19 +139,22 @@ public class AccountController {
         User user = _userService.findByNormalizedMail(viewModel.getMail().toUpperCase());
         
         if (user != null) {
-            _userService.generateToken(user, TokenType.RESET_PASSWORD);
+            Token token = _tokenService.generateToken(TokenType.RESET_PASSWORD, user);
+            user.getTokens().add(token);
+            User savedUser = _userService.update(user);
 
-            return new ModelAndView("authentication/reset-password-success");
+            _mailService.SendResetPassword(savedUser, token);
+
+            return this.returnToSuccessPage("Check your e-mails to reset your password");
         }
 
-        return new ModelAndView("authentication/reset-password-failure");
+        return this.returnToErrorPage("An error occured while reseting your password");
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.GET)
     public ModelAndView changePassword(@RequestParam long userId, @RequestParam String tokenValue) {
         return new ModelAndView("authentication/change-password")
-            .addObject("userId", userId)
-            .addObject("token", tokenValue);
+            .addObject("viewModel", new ResetPasswordViewModel(userId, tokenValue));
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
@@ -173,13 +169,14 @@ public class AccountController {
             Token token = _tokenService.findToken(viewModel.getToken(), user.getTokens(), TokenType.RESET_PASSWORD);
 
             if (_tokenService.isValidToken(token)) {
+                _tokenService.consumeToken(token);
                 _userService.updatePassword(user, viewModel.getPassword());
 
-                return new ModelAndView("authentication/change-password-success");
+                return this.returnToSuccessPage("Your password was successfully changed");
             }
         }
 
-        return new ModelAndView("authentication/change-password-failure");
+        return this.returnToErrorPage("An error occured while resetting your password");
     }
     // </editor-fold>
 }

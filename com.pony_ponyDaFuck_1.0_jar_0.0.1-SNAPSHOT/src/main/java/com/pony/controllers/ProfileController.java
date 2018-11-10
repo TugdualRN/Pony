@@ -1,39 +1,42 @@
 package com.pony.controllers;
 
+import com.pony.entities.dto.ProfileSocialNetworkData;
+import com.pony.entities.models.User;
+import com.pony.business.services.UserService;
+import com.pony.business.social.SocialNetworkService;
 
-import com.pony.models.User;
-import com.pony.services.UserService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @PreAuthorize("hasRole('USER')")
-public class ProfileController {
+public class ProfileController extends BaseController {
 
     private UserService _userService;
+    private SocialNetworkService _socialNetworkService;
 
-    ProfileController(UserService userService) {
+    @Autowired
+    ProfileController(UserService userService, SocialNetworkService socialNetworkService) {
         _userService = userService;
+        _socialNetworkService = socialNetworkService;
     }
 
     @RequestMapping("/profile")
     public ModelAndView profile() {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String mail = authentication.getName();
-            User user = _userService.findByMail(mail);
+        User user = _userService.findByMail(this.getConnectedUserMail());
+
+        if (user != null) {
+            ProfileSocialNetworkData data =  _socialNetworkService.getSocialData(user);
 
             return new ModelAndView("profile/profile")
-                .addObject("user", user);
+                .addObject("user", user)
+                .addObject("data", data);
         }
 
-        return new ModelAndView("/");
+        return new ModelAndView("error");
     }
 }

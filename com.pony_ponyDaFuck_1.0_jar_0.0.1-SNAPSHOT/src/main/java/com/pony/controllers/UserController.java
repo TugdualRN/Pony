@@ -1,7 +1,6 @@
 package com.pony.controllers;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pony.models.Role;
-import com.pony.models.User;
-import com.pony.services.RoleService;
-import com.pony.services.UserService;
+import com.pony.entities.models.Role;
+import com.pony.entities.models.User;
+import com.pony.business.services.RoleService;
+import com.pony.business.services.UserService;
 
 @Controller
 @RequestMapping("/managment")
@@ -45,14 +44,9 @@ public class UserController {
     public ModelAndView addUserToRole(@RequestParam long userId, @RequestParam long roleId)
     {
         User user = _userService.findById(userId);
-        Set<Role> userRoles = user.getRoles();
         Role role = _roleService.findById(roleId);
 
-        if (!_userService.hasRole(user, role)) {
-            if (userRoles.add(role)) {
-                _userService.update(user);
-            }
-        }
+        _userService.addRoleToUser(user, role);
 
         return new ModelAndView("redirect:/managment/users");
     }
@@ -61,12 +55,9 @@ public class UserController {
     public ModelAndView removeUserFromRole(@PathVariable long userId, @PathVariable long roleId)
     {
         User user = _userService.findById(userId);
-        Set<Role> userRoles = user.getRoles();
         Role role = _roleService.findById(roleId);
 
-        if (userRoles.removeIf(x -> x.getId() == role.getId())) {
-            _userService.update(user);
-        }
+        _userService.removeRoleToUser(user, role);
 
         return new ModelAndView("redirect:/managment/users");
     }

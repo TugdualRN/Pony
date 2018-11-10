@@ -1,0 +1,39 @@
+package com.pony.business.social;
+
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
+
+import facebook4j.Facebook;
+
+import com.pony.enumerations.SocialNetworkType;
+import com.pony.entities.models.User;
+
+/**
+ * Interface used to manipulate "low level" API interactions
+ */
+public interface ApiService {
+
+    public boolean isValidCallback(String oauthVerifier, String denied);
+
+    public RequestToken getTwitterRequestToken() throws TwitterException;
+
+    public Twitter getTwitter();
+
+    public Twitter getTwitter(AccessToken accessToken);
+
+    public Twitter getTwitter(String token, String tokenSecret);
+
+    public String getFacebookRedirectUrl();
+
+    public Facebook getFacebook();
+
+    // public Facebook getFacebook(AccessToken accessToken);
+
+    // public Facebook getFacebook(String token, String tokenSecret);
+
+    public boolean createSocialNetwork(User user, RequestToken requestToken, String oauthVerifier);
+
+    public boolean userHasSocialNetwork(User user, SocialNetworkType socialNetworkType);
+}

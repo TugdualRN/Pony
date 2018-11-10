@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pony.services.NewsService;
+import com.pony.business.services.NewsService;
 
 @Controller
 public class HomeController {
@@ -21,6 +21,7 @@ public class HomeController {
     @RequestMapping(value = {"", "/", "/home"})
     public ModelAndView home(Model model) {
     	
-        return new ModelAndView("home").addObject("newsList", _newsService.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
+		return new ModelAndView("home")
+			.addObject("newsList", _newsService.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
     }
 }
