@@ -9,12 +9,13 @@ import com.pony.business.services.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
 
@@ -39,7 +40,7 @@ public class ApiController extends BaseController {
     }
 
     @RequestMapping("/connect/twitter")
-    public RedirectView getTwitterToken(HttpServletRequest request, Model model) throws TwitterException {
+    public RedirectView twitterLink(HttpServletRequest request) throws TwitterException {
 
         try {
             RequestToken requestToken = _apiService.getTwitterRequestToken();		
@@ -56,10 +57,9 @@ public class ApiController extends BaseController {
     }
 
     @RequestMapping("/callback/twitter")
-    public ModelAndView twitterCallBack(
+    public ModelAndView twitterCallback(HttpServletRequest request,
         @RequestParam(value = "oauth_verifier", required = false) String oauthVerifier,
-        @RequestParam(value = "denied",         required = false) String denied,
-        HttpServletRequest request) {
+        @RequestParam(value = "denied",         required = false) String denied) {
         
         if (_apiService.isValidCallback(oauthVerifier, denied)) {
 
@@ -84,5 +84,24 @@ public class ApiController extends BaseController {
         _logger.info("User refused Twitter");
 
         return this.returnToErrorPage("Your refused to link your account");
+    }
+
+    @RequestMapping("/connect/facebook")
+    public RedirectView facebookLink(HttpServletRequest request) {
+        return new RedirectView(_apiService.getFacebookRedirectUrl());
+    }
+
+    @RequestMapping("/callback/facebook")
+    protected ModelAndView facebookCallback(HttpServletRequest request, 
+        @RequestParam(value = "code", required = false) String oauthVerifier) {
+        
+        Facebook facebook = _apiService.getFacebook();
+        try {
+            facebook.getOAuthAccessToken(oauthVerifier);
+        } catch (FacebookException e) {
+            
+        }
+
+        return null;
     }
 }

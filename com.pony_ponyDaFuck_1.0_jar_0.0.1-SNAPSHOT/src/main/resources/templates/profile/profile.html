@@ -38,6 +38,13 @@
                     <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
                 </th:block>
 
+                <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).FACEBOOK) == null}">
+                    <br/>
+                    <h1>Profile Page</h1>
+                    <h3>Connect to Twitter</h3>
+                    <a th:href="@{/connect/facebook}"><button>Connect with Facebook</button></a>
+                </th:block>
+
                 <th:block th:if="${data.tweets != null}">
                     <th:block th:each="tweet : ${data.tweets}">
                         <div class="card">
