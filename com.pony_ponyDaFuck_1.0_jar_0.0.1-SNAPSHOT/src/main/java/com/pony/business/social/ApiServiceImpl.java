@@ -12,6 +12,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import facebook4j.Facebook;
+import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 
 import com.pony.enumerations.SocialNetworkType;
@@ -76,7 +77,7 @@ public class ApiServiceImpl implements ApiService {
         return new SocialNetwork(type, accesToken, tokenSecret);
     }
 
-    public boolean createSocialNetwork(User user, RequestToken requestToken, String oauthVerifier) {
+    public boolean createTwitterSocialNetwork(User user, RequestToken requestToken, String oauthVerifier) {
         try {
             AccessToken accessToken = this.getTwitter().getOAuthAccessToken(requestToken, oauthVerifier);
 
@@ -108,5 +109,36 @@ public class ApiServiceImpl implements ApiService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean createFacebookSocialNetwork(User user, String oauthVerifier) {
+        try {
+            Facebook facebook = this.getFacebook();
+
+            // Access Token given by facebook are short lived by default (hourly timed)
+            facebook4j.auth.AccessToken token = facebook.getOAuthAccessToken(oauthVerifier, _facebookCallback);
+            System.out.println(token.getToken());
+
+            // We can translate them to long lived tokens (60 days)
+            token = facebook.extendTokenExpiration(token.getToken());
+
+            SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.FACEBOOK, 
+                token.getToken(),
+                "");
+
+            if (!this.userHasSocialNetwork(user, SocialNetworkType.FACEBOOK)) {
+                user.getSocialNetworks().put(socialNetwork.getSocialNetworkType(), socialNetwork);
+                socialNetwork.setUser(user);
+
+                return true;
+            }
+
+            return true;
+        }
+        catch (FacebookException e) {
+            System.out.println(e.getErrorMessage());
+            return false;
+        }
     }
 }

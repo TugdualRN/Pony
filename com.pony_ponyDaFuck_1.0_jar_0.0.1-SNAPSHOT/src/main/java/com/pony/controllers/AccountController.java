@@ -72,6 +72,8 @@ public class AccountController extends BaseController {
             _userService.linkTokenToUser(registerResult.getUser(), TokenType.ACTIVATE_ACCOUNT);
 
             if (_mailService.SendRegisterMail(user, user.getTokens().get(0))) {
+                _logger.info("User {} registered to the site", user.getMail());
+
                 return this.returnToSuccessPage("Your account was successfully created");
             }
         }
@@ -113,6 +115,8 @@ public class AccountController extends BaseController {
             if (_tokenService.isValidToken(token)) {
                 _tokenService.consumeToken(token);
                 _userService.activateUser(user);
+
+                _logger.info("User {} confirmed his account", user.getMail());
                 
                 return this.returnToSuccessPage("Your account has been successfully activated");
             }

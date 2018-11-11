@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
 
@@ -67,7 +65,7 @@ public class ApiController extends BaseController {
             User user = _userService.findByMail(this.getConnectedUserMail());
 
             if (requestToken != null && user != null) {
-                if (_apiService.createSocialNetwork(user, requestToken, oauthVerifier)) {
+                if (_apiService.createTwitterSocialNetwork(user, requestToken, oauthVerifier)) {
                     _userService.update(user);
 
                     return new ModelAndView("redirect:/profile");
@@ -92,16 +90,35 @@ public class ApiController extends BaseController {
     }
 
     @RequestMapping("/callback/facebook")
-    protected ModelAndView facebookCallback(HttpServletRequest request, 
+    public ModelAndView facebookCallback(HttpServletRequest request, 
         @RequestParam(value = "code", required = false) String oauthVerifier) {
-        
-        Facebook facebook = _apiService.getFacebook();
-        try {
-            facebook.getOAuthAccessToken(oauthVerifier);
-        } catch (FacebookException e) {
+
+        if (_apiService.isValidCallback(oauthVerifier, null)) {
             
+            User user = _userService.findByMail(this.getConnectedUserMail());
+            if (oauthVerifier != null && user != null) {
+                if (_apiService.createFacebookSocialNetwork(user, oauthVerifier)) {
+                    _userService.update(user);
+
+                    return new ModelAndView("redirect:/profile");
+                }
+
+                _logger.error("Error while creating a social network for user {}", user.getMail());
+
+                return this.returnToSuccessPage("Callback was successful but it's still work in progress so :shrug:");
+            }
+
+            return this.returnToErrorPage("An error occured :(");
+
         }
 
+        return this.returnToErrorPage("Your refused to link your account");
+    }
+
+    @RequestMapping("/callback/facebook/extend_token")
+    public ModelAndView facebookExtendTokenCallback(HttpServletRequest request, 
+        @RequestParam(value = "code", required = false) String oauthVerifier) {
+        
         return null;
     }
 }
