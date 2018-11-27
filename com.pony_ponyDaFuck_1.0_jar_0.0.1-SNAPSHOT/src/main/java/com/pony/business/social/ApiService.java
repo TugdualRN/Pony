@@ -29,6 +29,8 @@ public interface ApiService {
 
     public Facebook getFacebook();
 
+    public Facebook getFacebook(facebook4j.auth.AccessToken token);
+
     // public Facebook getFacebook(AccessToken accessToken);
 
     // public Facebook getFacebook(String token, String tokenSecret);

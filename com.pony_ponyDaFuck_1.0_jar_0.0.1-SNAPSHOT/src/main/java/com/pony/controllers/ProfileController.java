@@ -32,6 +32,8 @@ public class ProfileController extends BaseController {
         if (user != null) {
             ProfileSocialNetworkData data =  _socialNetworkService.getSocialData(user);
 
+            _socialNetworkService.getFacebookTest(user);
+
             return new ModelAndView("profile/profile")
                 .addObject("user", user)
                 .addObject("data", data);

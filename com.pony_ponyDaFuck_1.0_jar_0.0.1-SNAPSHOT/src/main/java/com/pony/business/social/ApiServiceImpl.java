@@ -65,6 +65,10 @@ public class ApiServiceImpl implements ApiService {
         return _facebookFactory.getInstance();
     }
 
+    public Facebook getFacebook(facebook4j.auth.AccessToken accessToken) {
+        return _facebookFactory.getInstance(accessToken);
+    }
+
     public Twitter getTwitter(AccessToken accessToken) {
         return _twitterFactory.getInstance(accessToken);
     }
@@ -118,7 +122,6 @@ public class ApiServiceImpl implements ApiService {
 
             // Access Token given by facebook are short lived by default (hourly timed)
             facebook4j.auth.AccessToken token = facebook.getOAuthAccessToken(oauthVerifier, _facebookCallback);
-            System.out.println(token.getToken());
 
             // We can translate them to long lived tokens (60 days)
             token = facebook.extendTokenExpiration(token.getToken());
@@ -130,14 +133,16 @@ public class ApiServiceImpl implements ApiService {
             if (!this.userHasSocialNetwork(user, SocialNetworkType.FACEBOOK)) {
                 user.getSocialNetworks().put(socialNetwork.getSocialNetworkType(), socialNetwork);
                 socialNetwork.setUser(user);
-
                 return true;
             }
 
-            return true;
+            _logger.error("User {} already has a linked {} social network", user.getMail(), SocialNetworkType.TWITTER);
+
+            return false;
         }
         catch (FacebookException e) {
-            System.out.println(e.getErrorMessage());
+            _logger.error("Error while trying to retrieve the facebook access token", e);
+
             return false;
         }
     }
