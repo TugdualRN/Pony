@@ -15,4 +15,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 	public int findBySlugLike(String slug);
 	
 	public List<News> findByLangOrderByIdDesc(String lang);
+
+	//public News findOne(Long newsId);
 }

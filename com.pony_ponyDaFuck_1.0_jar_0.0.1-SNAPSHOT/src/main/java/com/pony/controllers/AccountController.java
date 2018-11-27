@@ -105,7 +105,7 @@ public class AccountController extends BaseController {
     @RequestMapping(value = "/confirm-mail", method = RequestMethod.GET)
     public ModelAndView confirmAccount(@RequestParam long userId, @RequestParam String tokenValue) {
         
-        User user = _userService.findById(userId);
+        User user = _userService.findById(userId).orElseGet(null);
 
         if (user != null) {
             // retrieve token matching the given one
@@ -167,7 +167,7 @@ public class AccountController extends BaseController {
         if (bindingResult.hasErrors())
             return new ModelAndView("home");
 
-        User user = _userService.findById(viewModel.getUserId());
+        User user = _userService.findById(viewModel.getUserId()).orElseGet(null);;
 
         if (user != null) {
             Token token = _tokenService.findToken(viewModel.getToken(), user.getTokens(), TokenType.RESET_PASSWORD);

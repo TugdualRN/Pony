@@ -19,7 +19,8 @@ import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+//import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.pony.spring.monitoring.LoggerMiddleware;

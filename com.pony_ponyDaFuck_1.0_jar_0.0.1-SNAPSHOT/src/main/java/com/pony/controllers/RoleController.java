@@ -47,7 +47,7 @@ public class RoleController {
     @GetMapping(value = {"/role/delete/{id}"})
     public ModelAndView deleteRole(@PathVariable long id) {
         
-        Role role = _roleService.findById(id);
+        Role role = _roleService.findById(id).orElseGet(null);;
         _roleService.deleteRole(role);
 
         return new ModelAndView("redirect:/managment/roles");

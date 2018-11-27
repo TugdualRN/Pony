@@ -2,6 +2,7 @@ package com.pony.business.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Role findById(Long roleId) {
-        return _roleRepository.findOne(roleId);
+    public Optional<Role> findById(Long roleId) {
+        return _roleRepository.findById(roleId);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public void delete(Long roleId) {
-        _roleRepository.delete(roleId);
+        _roleRepository.deleteById(roleId);
     }
 
     public Role addRole(Role role) {
@@ -90,6 +91,6 @@ public class RoleServiceImpl implements RoleService {
             }
         }
 
-        _roleRepository.save(roles);
+        _roleRepository.saveAll(roles);
     }
 }

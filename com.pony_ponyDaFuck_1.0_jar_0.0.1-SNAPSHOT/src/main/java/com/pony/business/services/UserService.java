@@ -1,6 +1,7 @@
 package com.pony.business.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.pony.enumerations.TokenType;
 import com.pony.entities.models.Role;
@@ -14,7 +15,7 @@ public interface UserService {
     // <editor-fold defaultstate="collapsed" desc="CRUD">
     List<User> findAll();
 
-    User findById(Long userId);
+    Optional<User> findById(Long userId);
 
     User findByUserName(String userName);
     

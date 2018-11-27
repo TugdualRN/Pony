@@ -14,8 +14,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.12.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>2.0.6.RELEASE</version>
+		<relativePath />
 	</parent>
 
 	<properties>
@@ -29,33 +29,30 @@
 	<!-- <repositories> <repository> <id>jcenter</id> <url>https://jcenter.bintray.com/</url> 
 		</repository> </repositories> -->
 
-    <dependencies>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency> -->
-        <!-- <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>3.0.6.RELEASE</version>
-        </dependency> -->
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<!-- Spring boot jdbc dependency -->
+
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter</artifactId> 
+			</dependency> -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-web</artifactId> 
+			<version>3.0.6.RELEASE</version> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/com.github.slugify/slugify -->
 		<dependency>
 			<groupId>com.github.slugify</groupId>
@@ -92,45 +89,37 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate-core</artifactId> -->
+<!-- 			<version>5.2.16.Final</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate-entitymanager</artifactId> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
-        <!-- Logging -->
-        <!-- <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency> -->
-        <!-- <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency> -->
-        
-        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
-        <!-- <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-            <scope>test</scope>
-        </dependency> -->
-        <dependency>
-            <groupId>com.internetitem</groupId>
-            <artifactId>logback-elasticsearch-appender</artifactId>
-            <version>1.6</version>
-        </dependency>
+		<!-- Logging -->
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+			<version>1.7.25</version> </dependency> -->
+		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
+			<version>1.2.17</version> </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
+		<!-- <dependency> <groupId>ch.qos.logback</groupId> <artifactId>logback-core</artifactId> 
+			<version>1.2.3</version> </dependency> <dependency> <groupId>ch.qos.logback</groupId> 
+			<artifactId>logback-classic</artifactId> <version>1.2.3</version> <scope>test</scope> 
+			</dependency> -->
+		<dependency>
+			<groupId>com.internetitem</groupId>
+			<artifactId>logback-elasticsearch-appender</artifactId>
+			<version>1.6</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -152,14 +141,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-			<version>1.4.3.RELEASE</version>
+			<!-- <version>1.4.3.RELEASE</version> -->
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-core -->
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-core</artifactId>
+			 <version>1.1.6.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>com.stripe</groupId>

@@ -2,6 +2,7 @@ package com.pony.business.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional(readOnly = true)
-    public News findById(Long newsId){
+    public Optional<News> findById(Long newsId){
 
-        News news = _newsRepository.findOne(newsId);
+        Optional<News> news = _newsRepository.findById(newsId);
         
         return news;
     }
@@ -52,7 +53,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional
     public void delete(Long newsId) {
-    	_newsRepository.delete(newsId);
+    	_newsRepository.deleteById(newsId);
     }
 
 	@Override
