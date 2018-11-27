@@ -1,6 +1,7 @@
 package com.pony.business.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -53,9 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User findById(Long userId) {
+    public Optional<User> findById(Long userId) {
 
-        return _userRepository.findOne(userId);
+        return _userRepository.findById(userId);
     }
 
     @Override
