@@ -1,7 +1,6 @@
 package com.pony.business.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.pony.entities.models.Role;
 
@@ -9,7 +8,7 @@ public interface RoleService {
 
     List<Role> findAll();
 
-    Optional<Role> findById(Long roleId);
+    Role findById(Long roleId);
 
     Role findByName(String roleName);
   

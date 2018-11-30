@@ -10,24 +10,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+//import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+//import org.thymeleaf.spring5.SpringTemplateEngine;
 //import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.ITemplateResolver;
+//import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.pony.spring.monitoring.LoggerMiddleware;
 
+@EnableWebMvc
 @Configuration
 @ComponentScan("com.pony")
-public class MvcConfig extends WebMvcConfigurerAdapter {
+public class MvcConfig extends WebMvcConfigurationSupport {
 
     private final ApplicationContext _applicationContext;
     private final DispatcherServlet _dispatcherServlet;
@@ -45,15 +48,15 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     /**
      * STEP 1 - Create SpringTemplateEngine
      */
-    @Bean
-    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
+    // @Bean
+    // public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
 
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
-        templateEngine.addDialect(sec);
+    //     SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+    //     templateEngine.setTemplateResolver(templateResolver);
+    //     templateEngine.addDialect(sec);
 
-        return templateEngine;
-    }
+    //     return templateEngine;
+    // }
 
     /**
      * STEP 2 - Internationalization 
@@ -66,6 +69,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         messageSource.setDefaultEncoding("UTF-8");
 
         return messageSource;
+    }
+
+    @Bean
+    DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
+        DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+        handler.setDefaultRolePrefix("");
+        return handler;
     }
 
     @Bean

@@ -116,15 +116,17 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public boolean createFacebookSocialNetwork(User user, String oauthVerifier) {
+    public boolean createFacebookSocialNetwork(User user, String oauthVerifier, Facebook facebook) {
         try {
-            Facebook facebook = this.getFacebook();
+            //Facebook facebook = this.getFacebook();
 
             // Access Token given by facebook are short lived by default (hourly timed)
-            facebook4j.auth.AccessToken token = facebook.getOAuthAccessToken(oauthVerifier, _facebookCallback);
+            // facebook4j.auth.AccessToken token = facebook.getOAuthAccessToken(oauthVerifier, _facebookCallback);
+            facebook4j.auth.AccessToken token = facebook.getOAuthAccessToken(oauthVerifier);
+
 
             // We can translate them to long lived tokens (60 days)
-            token = facebook.extendTokenExpiration(token.getToken());
+            //token = facebook.extendTokenExpiration(token.getToken());
 
             SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.FACEBOOK, 
                 token.getToken(),

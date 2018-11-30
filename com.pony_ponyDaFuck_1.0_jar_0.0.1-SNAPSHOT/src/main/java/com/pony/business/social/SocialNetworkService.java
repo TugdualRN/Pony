@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+//import facebook4j.Account;
 import facebook4j.Facebook;
-import facebook4j.Friend;
-import facebook4j.Post;
+//import facebook4j.Post;
+//import facebook4j.Reading;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -52,17 +53,27 @@ public class SocialNetworkService {
         if (facebookData != null) {
             Facebook fb = _apiServie.getFacebook(new facebook4j.auth.AccessToken(facebookData.getAccesstoken(), 3600L));
             
+
             try {
+                //facebook4j.auth.AccessToken test = fb.getOAuthAccessToken();
+                //fb = _apiServie.getFacebook(test);
+                fb.setOAuthAccessToken(new facebook4j.auth.AccessToken(facebookData.getAccesstoken(), 500L));
                 // String userId = fb.getId();
-                facebook4j.ResponseList<Friend> friends = fb.getFriends();
-                facebook4j.ResponseList<Post> posts = fb.getPosts();
+                //facebook4j.ResponseList<Friend> friends = fb.getFeed(new Reading().fields("from"));
+                // facebook4j.ResponseList<Post> posts = fb.getFeed(new Reading().fields("id", "message", "from"));
+                // facebook4j.ResponseList<Account> acc = fb.getAccounts();
+
+                // facebook4j.ResponseList<Account> accounts = fb.getAccounts();
+                // Account yourPageAccount = accounts.get(0);  // if index 0 is your page account.
+                // String pageAccessToken = yourPageAccount.getAccessToken();
                 
-                for (Friend friend : friends)
-                {
-                    System.out.println(friend.getName());
-                }
+                // for (Friend friend : friends)
+                // {
+                //     System.out.println(friend.getName());
+                // }
             }
             catch (Exception e) {
+                System.out.println(e);
                 // lol
             }
         }

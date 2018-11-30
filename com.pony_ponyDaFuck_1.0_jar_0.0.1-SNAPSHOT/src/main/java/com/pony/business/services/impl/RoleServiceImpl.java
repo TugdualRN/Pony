@@ -15,6 +15,8 @@ import com.pony.data.repositories.RoleRepository;
 @Service
 public class RoleServiceImpl implements RoleService {
 
+    private static final String PREFIX = "";
+
     private final RoleRepository _roleRepository;
 
     @Autowired
@@ -30,8 +32,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Role> findById(Long roleId) {
-        return _roleRepository.findById(roleId);
+    public Role findById(Long roleId) {
+        Optional<Role> role = _roleRepository.findById(roleId);
+        if (role.isPresent()) {
+            return role.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -41,11 +48,19 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role insert(Role role) {
+        if (!role.getName().startsWith(PREFIX)) {
+            role.setName(PREFIX + role.getName());
+        }
+
         return _roleRepository.save(role);
     }
 
     @Override
     public Role update(Role role) {
+        if (!role.getName().startsWith(PREFIX)) {
+            role.setName(PREFIX + role.getName());
+        }
+
         return _roleRepository.save(role);
     }
 
@@ -57,7 +72,7 @@ public class RoleServiceImpl implements RoleService {
 
     public Role addRole(Role role) {
         if (_roleRepository.findByName(role.getName()) == null) {
-            return _roleRepository.save(role);
+            return this.insert(role);
         }
 
         return null;
@@ -79,7 +94,15 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public void insetDefaultRoles() {
-        String[] names = {"USER", "WRITER", "MODERATOR", "DEVELOPER", "ADMIN", "SUPERADMIN"};
+        
+        String[] names = {
+            PREFIX + "USER",
+            PREFIX + "WRITER",
+            PREFIX + "MODERATOR",
+            PREFIX + "DEVELOPER",
+            PREFIX + "ADMIN",
+            PREFIX + "SUPERADMIN"
+        };
         
         List<Role> existingRoles = _roleRepository.findAll();
         List<Role> roles = new ArrayList<Role>();

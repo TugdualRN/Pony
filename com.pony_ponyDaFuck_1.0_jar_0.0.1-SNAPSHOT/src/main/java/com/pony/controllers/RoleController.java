@@ -47,8 +47,16 @@ public class RoleController {
     @GetMapping(value = {"/role/delete/{id}"})
     public ModelAndView deleteRole(@PathVariable long id) {
         
-        Role role = _roleService.findById(id).orElseGet(null);;
+        Role role = _roleService.findById(id);
         _roleService.deleteRole(role);
+
+        return new ModelAndView("redirect:/managment/roles");
+    }
+
+    @GetMapping(value = {"/role/generate"})
+    public ModelAndView generateDefaultRoles() {
+
+        _roleService.insetDefaultRoles();
 
         return new ModelAndView("redirect:/managment/roles");
     }

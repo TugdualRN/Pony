@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 import com.pony.enumerations.SocialNetworkType;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "T_Users")
