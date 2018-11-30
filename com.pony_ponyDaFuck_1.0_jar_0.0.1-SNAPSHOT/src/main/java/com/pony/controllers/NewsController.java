@@ -37,12 +37,13 @@ public class NewsController {
 	private NewsService _newsService;
 	private UserService _userService;
 	private final String imgfilePath = "/images/imported_files/";
+
 	@Autowired
 	public NewsController(NewsService newsService, UserService userService) {
 		_newsService = newsService;
 		_userService = userService;
 	}
-	
+
 	@PreAuthorize("hasRole('WRITER')")
 	@RequestMapping(value = { "/create-news" })
 	public ModelAndView createNews() {
@@ -56,42 +57,44 @@ public class NewsController {
 		News news = _newsService.findBySlug(slug);
 		return new ModelAndView("news/displayNews").addObject("news", news);
 	}
-//	, consumes = {"application/x-www-form-urlencoded" }
+
+	// , consumes = {"application/x-www-form-urlencoded" }
 	@RequestMapping(value = "/create-news", method = RequestMethod.POST)
-	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, 
-		@RequestParam("img") MultipartFile myFile,
-		BindingResult bindingResult) {
-		
-		System.out.println(myFile);
-		System.out.println(bindingResult);
-		if (bindingResult.hasErrors()){
+	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel,
+			@RequestParam("img") MultipartFile myFile, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
 			return new ModelAndView("redirect:create-news");
 		}
-		
-		
+
 		InputStream inputStream = null;
-	    OutputStream outputStream = null;
-	   
-	    String fileName = myFile.getOriginalFilename().replace(' ', '_');
-	    File newFile = new File("src/main/resources/static" + imgfilePath + fileName);
+		OutputStream outputStream = null;
 
-	    try {
-	        inputStream = myFile.getInputStream();
+		String fileName = myFile.getOriginalFilename().replace(' ', '_');
+		File newFile = new File(
+				System.getProperty("user.dir") + "\\..\\..\\..\\..\\resources\\static\\images\\imported_files\\",
+				fileName);
+		// File newFile = new File("resources\\static\\image\\imported_files\\",
+		// fileName);
+		// File newFile = new File('c:\\'' + fileName);
 
-	        if (!newFile.exists()) {
-	            newFile.createNewFile();
-	        }
-	        outputStream = new FileOutputStream(newFile);
-	        int read = 0;
-	        byte[] bytes = new byte[5096];
+		try {
+			inputStream = myFile.getInputStream();
 
-	        while ((read = inputStream.read(bytes)) != -1) {
-	            outputStream.write(bytes, 0, read);
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }	
-		
+			if (!newFile.exists()) {
+				newFile.createNewFile();
+			}
+			outputStream = new FileOutputStream(newFile);
+			int read = 0;
+			byte[] bytes = new byte[5096];
+
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		News news = new News();
 
 		news.setContent(_newsService.formatContent(viewModel.getContent()));
@@ -103,7 +106,7 @@ public class NewsController {
 		// get user in session
 		Object userConnected = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		// test if user
-		User user = _userService.findByMail(((ConnectedUserDetails) userConnected).getUsername());		
+		User user = _userService.findByMail(((ConnectedUserDetails) userConnected).getUsername());
 		_newsService.createNews(news, user);
 		return new ModelAndView("redirect:home");
 	}

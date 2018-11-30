@@ -17,61 +17,61 @@ import com.pony.business.services.NewsService;
 @Service
 public class NewsServiceImpl implements NewsService {
 
-	 private final NewsRepository _newsRepository;
+	private final NewsRepository _newsRepository;
 
-    @Autowired
-    public NewsServiceImpl(NewsRepository newsRepository) {
-        this._newsRepository = newsRepository;
-    }
-	
-    @Override
-    @Transactional(readOnly = true)
-    public List<News> findAll() {
-        return _newsRepository.findAll();
-    }
+	@Autowired
+	public NewsServiceImpl(NewsRepository newsRepository) {
+		this._newsRepository = newsRepository;
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<News> findById(Long newsId){
+	@Override
+	@Transactional(readOnly = true)
+	public List<News> findAll() {
+		return _newsRepository.findAll();
+	}
 
-        Optional<News> news = _newsRepository.findById(newsId);
-        
-        return news;
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<News> findById(Long newsId) {
 
-    @Override
-    public News insert(News news){
+		Optional<News> news = _newsRepository.findById(newsId);
 
-        return _newsRepository.save(news);
-    }
+		return news;
+	}
 
-    @Override
-    public News update(News news) {
-        return _newsRepository.save(news);
-    }
+	@Override
+	public News insert(News news) {
 
-    @Override
-    @Transactional
-    public void delete(Long newsId) {
-    	_newsRepository.deleteById(newsId);
-    }
+		return _newsRepository.save(news);
+	}
+
+	@Override
+	public News update(News news) {
+		return _newsRepository.save(news);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long newsId) {
+		_newsRepository.deleteById(newsId);
+	}
 
 	@Override
 	public News findBySlug(String slug) {
-	
+
 		return _newsRepository.findBySlug(slug);
 	}
 
 	@Override
 	public News createNews(News news, User user) {
-		
+
 		news.setCreationDate(LocalDateTime.now());
 		news.setSlug(this.Slugify(news.getTitle()));
 		news.setAuthor(user);
 
 		News savedNews = _newsRepository.save(news);
 
-		if (savedNews != null ) {
+		if (savedNews != null) {
 			// log
 			return savedNews;
 		}
@@ -82,47 +82,38 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public String formatContent(String content) {
 		// TO DO Auto-generated method stub
-		
-		content = content.substring(1, content.length()-1).replace("\\", "");
-		
-		if (content.indexOf("<img src=\"") > -1){
-			
-		}
+
+		// content = content.substring(1, content.length() - 1).replace("\\", "");
+
+		// if (content.indexOf("<img src=\"") > -1) {
+
+		// }
 		/*
-		try {
-			byte[] bytes = file.getBytes();
+		 * try { byte[] bytes = file.getBytes();
+		 * 
+		 * // Creating the directory to store file String rootPath =
+		 * System.getProperty("catalina.home"); File dir = new File(rootPath +
+		 * File.separator + "tmpFiles"); if (!dir.exists()) dir.mkdirs();
+		 * 
+		 * // Create the file on server File serverFile = new File(dir.getAbsolutePath()
+		 * + File.separator + name); BufferedOutputStream stream = new
+		 * BufferedOutputStream( new FileOutputStream(serverFile)); stream.write(bytes);
+		 * stream.close();
+		 * 
+		 * logger.info("Server File Location=" + serverFile.getAbsolutePath());
+		 * 
+		 * return "You successfully uploaded file=" + name; } catch (Exception e) {
+		 * return "You failed to upload " + name + " => " + e.getMessage(); }
+		 */
 
-			// Creating the directory to store file
-			String rootPath = System.getProperty("catalina.home");
-			File dir = new File(rootPath + File.separator + "tmpFiles");
-			if (!dir.exists())
-				dir.mkdirs();
-
-			// Create the file on server
-			File serverFile = new File(dir.getAbsolutePath()
-					+ File.separator + name);
-			BufferedOutputStream stream = new BufferedOutputStream(
-					new FileOutputStream(serverFile));
-			stream.write(bytes);
-			stream.close();
-
-			logger.info("Server File Location="
-					+ serverFile.getAbsolutePath());
-
-			return "You successfully uploaded file=" + name;
-		} catch (Exception e) {
-			return "You failed to upload " + name + " => " + e.getMessage();
-		}
-		*/
-		
 		return content;
 	}
 
-  @Override
-	public List<News> findByLangOrderByIdDesc(String lang){
-		
+	@Override
+	public List<News> findByLangOrderByIdDesc(String lang) {
+
 		return _newsRepository.findByLangOrderByIdDesc(lang);
-  }
+	}
 
 	private String Slugify(String title) {
 
@@ -130,8 +121,8 @@ public class NewsServiceImpl implements NewsService {
 		String slugedTitle = slg.slugify(title);
 
 		int count = _newsRepository.findBySlugLike(slugedTitle);
-		
-		if (count != 0){
+
+		if (count != 0) {
 			slugedTitle += "_" + count;
 		}
 
