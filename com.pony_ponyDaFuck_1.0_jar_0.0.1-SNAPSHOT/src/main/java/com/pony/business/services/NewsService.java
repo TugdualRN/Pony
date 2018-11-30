@@ -1,17 +1,15 @@
 package com.pony.business.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.pony.entities.models.News;
 import com.pony.entities.models.User;
-
 
 public interface NewsService {
 	
 	List<News> findAll();
 
-	Optional<News> findById(Long NewsId);
+	News findById(Long NewsId);
 
 	News findBySlug(String slug);
 	

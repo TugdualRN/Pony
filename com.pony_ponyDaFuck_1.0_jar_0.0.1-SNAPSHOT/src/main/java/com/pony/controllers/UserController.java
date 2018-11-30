@@ -43,8 +43,8 @@ public class UserController {
     @GetMapping(value = {"/user/addrole"})
     public ModelAndView addUserToRole(@RequestParam long userId, @RequestParam long roleId)
     {
-        User user = _userService.findById(userId).orElseGet(null);
-        Role role = _roleService.findById(roleId).orElseGet(null);
+        User user = _userService.findById(userId);
+        Role role = _roleService.findById(roleId);
 
         _userService.addRoleToUser(user, role);
 
@@ -54,8 +54,8 @@ public class UserController {
     @GetMapping(value = {"/user/removerole/{userId}/{roleId}"})
     public ModelAndView removeUserFromRole(@PathVariable long userId, @PathVariable long roleId)
     {
-        User user = _userService.findById(userId).orElseGet(null);
-        Role role = _roleService.findById(roleId).orElseGet(null);
+        User user = _userService.findById(userId);
+        Role role = _roleService.findById(roleId);
 
         _userService.removeRoleToUser(user, role);
 

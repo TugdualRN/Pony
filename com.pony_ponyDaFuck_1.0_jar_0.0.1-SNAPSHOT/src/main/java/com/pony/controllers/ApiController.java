@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import facebook4j.Facebook;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
 
@@ -86,7 +87,12 @@ public class ApiController extends BaseController {
 
     @RequestMapping("/connect/facebook")
     public RedirectView facebookLink(HttpServletRequest request) {
-        return new RedirectView(_apiService.getFacebookRedirectUrl());
+
+        Facebook fb = _apiService.getFacebook();
+        String redirectUrl = _apiService.getFacebookRedirectUrl();
+        request.getSession().setAttribute("facebook", fb);
+        
+        return new RedirectView(redirectUrl);
     }
 
     @RequestMapping("/callback/facebook")
@@ -97,7 +103,7 @@ public class ApiController extends BaseController {
             
             User user = _userService.findByMail(this.getConnectedUserMail());
             if (oauthVerifier != null && user != null) {
-                if (_apiService.createFacebookSocialNetwork(user, oauthVerifier)) {
+                if (_apiService.createFacebookSocialNetwork(user, oauthVerifier, (Facebook) request.getSession().getAttribute("facebook"))) {
                     _userService.update(user);
 
                     return new ModelAndView("redirect:/profile");

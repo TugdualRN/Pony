@@ -37,7 +37,7 @@ public interface ApiService {
 
     public boolean createTwitterSocialNetwork(User user, RequestToken requestToken, String oauthVerifier);
 
-    public boolean createFacebookSocialNetwork(User user, String oauthVerifier);
+    public boolean createFacebookSocialNetwork(User user, String oauthVerifier, Facebook facebook);
 
     public boolean userHasSocialNetwork(User user, SocialNetworkType socialNetworkType);
 }

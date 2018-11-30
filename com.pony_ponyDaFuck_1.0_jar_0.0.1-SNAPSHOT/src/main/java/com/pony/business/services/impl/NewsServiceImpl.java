@@ -19,42 +19,44 @@ public class NewsServiceImpl implements NewsService {
 
 	private final NewsRepository _newsRepository;
 
-	@Autowired
-	public NewsServiceImpl(NewsRepository newsRepository) {
-		this._newsRepository = newsRepository;
-	}
+    @Autowired
+    public NewsServiceImpl(NewsRepository newsRepository) {
+        this._newsRepository = newsRepository;
+    }
+	
+    @Override
+    @Transactional(readOnly = true)
+    public List<News> findAll() {
+        return _newsRepository.findAll();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<News> findAll() {
-		return _newsRepository.findAll();
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Optional<News> findById(Long newsId) {
-
+    @Override
+    @Transactional(readOnly = true)
+    public News findById(Long newsId){
 		Optional<News> news = _newsRepository.findById(newsId);
+        if (news.isPresent()) {
+            return news.get();
+        } else {
+            return null;
+        }
+    }
 
-		return news;
-	}
+    @Override
+    public News insert(News news){
 
-	@Override
-	public News insert(News news) {
+        return _newsRepository.save(news);
+    }
 
-		return _newsRepository.save(news);
-	}
+    @Override
+    public News update(News news) {
+        return _newsRepository.save(news);
+    }
 
-	@Override
-	public News update(News news) {
-		return _newsRepository.save(news);
-	}
-
-	@Override
-	@Transactional
-	public void delete(Long newsId) {
-		_newsRepository.deleteById(newsId);
-	}
+    @Override
+    @Transactional
+    public void delete(Long newsId) {
+    	_newsRepository.deleteById(newsId);
+    }
 
 	@Override
 	public News findBySlug(String slug) {
