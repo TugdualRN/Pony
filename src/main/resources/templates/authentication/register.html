@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>PonyDaFuck</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta http-equiv="Content-Type" content="text/html"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+        <th:block th:replace="fragments/style-common">...</th:block>
+    </head>
+    <body>
+        <th:block th:replace="fragments/header"></th:block>
+
+        <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="col">
+                <br/>
+                <form th:action="@{/register}" th:object="${registerViewModel}" th:method="POST" autocomplete="on">
+                    <div class="form-group">
+                        <label for="UserName">User Name</label>
+                        <input 
+                            th:field="*{userName}"
+                            th:value="${registerViewModel.userName}" 
+                            th:classappend="${errors.isUserNameAlreadyTaken || #fields.hasErrors('userName')} ? 'is-invalid' : ''" 
+                            class="form-control" id="UserName" aria-describedby="UserNameHelp" placeholder="User Name"
+                        />
+                        <div th:if="${errors.isUserNameAlreadyTaken}" class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+                        <div
+                            th:each="error : ${#fields.errors('userName')}"
+                            th:text="${error}"
+                            class="invalid-feedback">...
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email address</label>
+                        <input 
+                            th:field="*{mail}"
+                            th:value="${registerViewModel.mail}"
+                            th:classappend="${errors.isMailAlreadyTaken || #fields.hasErrors('mail')} ? 'is-invalid' : ''" 
+                            type="email" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Enter email"
+                        />
+                        <div th:if="${errors.isMailAlreadyTaken}" class="invalid-feedback">Sorry, that Email's taken. Try another?</div>
+                        <div 
+                            th:each="error : ${#fields.errors('mail')}"
+                            th:text="${error}" 
+                            class="invalid-feedback">...
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <input 
+                            th:field="*{password}"
+                            th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" 
+                            type="text" class="form-control" id="Password" placeholder="Password"/>
+                        <div 
+                            th:each="error : ${#fields.errors('password')}"
+                            th:text="${error}"
+                            class="invalid-feedback">...
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ConfirmPassword">Confirm Password</label>
+                        <input th:field="*{confirmPassword}" type="text" class="form-control" id="ConfirmPassword" placeholder="Confirm Password"/>
+                        <div 
+                            th:if="${#fields.hasErrors('global')}" 
+                            
+                            class="invalid-feedback">test
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+
+        <th:block th:replace="fragments/footer"></th:block>
+        <th:block th:replace="fragments/script-common">...</th:block>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/}">Pony Application v0.1</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                    Navigate
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Something Must go Here</a>
+                        <a class="dropdown-item" href="#">Here too</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isFullyAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Managment
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/managment/users}" th:text="#{users}"></a>
+                        <a class="dropdown-item" th:href="@{/managment/roles}" th:text="#{roles}"></a>
+                    </div>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_WRITER')">
+                    <a class="nav-link" th:href="@{/create-news}" th:text="#{news.create}"></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false" th:text="#{lang}">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <!-- th:text="#{lang.en}"  th:text="#{lang.fr}" -->
+                        <a class="dropdown-item" href="?lang=en">
+                            <p th:text="#{lang.en}">
+                                <span class="flag-icon flag-icon-gb"></span>
+                            </p>
+                        </a>
+                        <a class="dropdown-item" href="?lang=fr">
+                            <p th:text="#{lang.fr}">
+                                <span class="flag-icon flag-icon-fr"></span>
+                            </p>
+                        </a>
+                    </div>
+                </li>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item ml-1">
+                        <a th:href="@{/profile}">
+                            <input class="btn btn-outline-info my-2 my-sm-0" type="submit" th:value="#{profile}"/>
+                        </a>
+                    </li>
+                    <li class="nav-item ml-1">
+                        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
+                            <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" th:value="#{logout}"/>
+                        </form>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item ml-1">
+                        <a th:href="@{/register}">
+                            <input class="btn btn-outline-info my-2 my-sm-0" type="submit" th:value="#{register}"/>
+                        </a>
+                    </li>
+                    <li class="nav-item ml-1">
+                        <a th:href="@{/login}">
+                            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" th:value="#{login}"/>
+                        </a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </nav>
+</header>
