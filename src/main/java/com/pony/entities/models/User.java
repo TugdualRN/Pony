@@ -1,34 +1,14 @@
 package com.pony.entities.models;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
-import javax.persistence.Table;
-
 import com.pony.data.converters.LocalDateTimeConverter;
 import com.pony.enumerations.SocialNetworkType;
-
 import org.hibernate.validator.constraints.NotBlank;
 
-@SuppressWarnings("deprecation")
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.*;
+
+//@SuppressWarnings("deprecation")
 @Entity
 @Table(name = "T_Users")
 public class User {

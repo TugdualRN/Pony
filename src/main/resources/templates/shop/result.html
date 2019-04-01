@@ -14,7 +14,7 @@
 </head>
 <body>
 	<th:block th:replace="fragments/header"></th:block>
-	<h3 th:if='${error}' th:text='${error}' style='color: red;'></h3>
+	<h3 th:if='${error}' th:text='#{error}' style='color: red;'></h3>
 	<div th:unless='${error}'>
 		<h3 style='color: green;'>Success!</h3>
 		<div>

@@ -138,5 +138,6 @@
     <orderEntry type="library" name="Maven: com.sachinhandiekar:jInstagram:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" name="checkout" level="application" />
   </component>
 </module>

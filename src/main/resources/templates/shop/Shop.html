@@ -26,7 +26,7 @@
 					</div>
 					<div th:text="${offer.description}"></div>
 					<div>
-						<div th:text="${offer.amount}/100 + €"></div>
+						<div th:text="${offer.amount}/100"></div>
 						<script src="https://checkout.stripe.com/checkout.js"
 						class="stripe-button"
 						 th:attr='data-amount=${offer.amount}, 
