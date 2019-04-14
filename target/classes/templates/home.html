@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE>
+<!--<!DOCTYPE html PUBLIC "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+	<title>PonyDaFuck</title>
+	<meta charset="UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+	<meta http-equiv="Content-Type" content="text/html"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+	<th:block th:replace="fragments/style-common"/>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<th:block th:replace="fragments/header"/>
+<div class="container">
+	<div class="row">
+		<div class="col" style="text-align: center">
+			<h1 th:text="#{welcome.homepage}"></h1>
+		</div>
+	</div>
+	<div class="row">
+
+		<img alt="Pony Logo" class="align-items-center " height="80%"
+			 src="static/images/login-unicorn.jpg" style="background-color: #fff"
+			 th:attr="src=@{/images/login-unicorn.jpg}" width="80%">
+		<ul class="list-group" style="margin: auto;">
+<!--			<th:block th:each="news : ${newsList}">-->
+<!--				<li class="list-group-item col-sm-12" >-->
+<!--					<table style="width: 100%;">-->
+<!--						<tr>-->
+<!--							<td rowspan="2">-->
+<!--								<a th:href="@{/news/{slug}(slug=${news.slug})}" >-->
+<!--									<img alt="" th:src="${news.img}" height="150" width="150">-->
+<!--								</a>-->
+<!--							</td>-->
+<!--							<td colspan="3">-->
+<!--								<a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>-->
+<!--							</td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<td colspan="3">-->
+<!--								<div th:text="${#strings.substring(news.content,0,10)}"></div>-->
+<!--							</td>-->
+<!--						</tr>-->
+<!--					</table>-->
+<!--				</li>-->
+<!--			</th:block>-->
+		</ul>
+	</div>
+</div>
+<th:block th:replace="fragments/script-common"/>
+<th:block th:replace="fragments/footer"/>
+</body>
+</html>

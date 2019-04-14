@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE>
+<!--<!DOCTYPE html PUBLIC "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>PonyDaFuck</title>
+    <meta charset="UTF-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <style>
+        table td{
+            vertical-align:top;
+            border:solid 1px #888;
+            padding:10px;
+        }
+
+    </style>
+    <th:block th:replace="fragments/style-common"/>
+</head>
+<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+
+<h1>Thymeleaf Error Page</h1>
+
+<h1>Error!</h1>
+<div class="errorPage">
+    <br />
+    <p>
+<!--        There seems to be a problem with the page you requested-->
+<!--        (-->
+<!--        <span th:text="${path}"></span>-->
+<!--        ).-->
+    </p>
+<!--    <p data-th-text="${'Details: ' + message}"></p>-->
+<!--    <p data-th-text="${'Status: ' + status}"></p>-->
+
+
+    <h1 data-th-text='|${httpStatus.reasonPhrase}|'>404</h1>
+    <p th:utext="${#execInfo}">Error java.lang.NullPointerException</p>
+    <a href="home.html" th:href="@{/home.html}">Back to Home Page</a>
+<!--        <h1>${errorMsg}</h1>-->
+
+    <ul>
+            <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
+    </ul>
+    <ul>
+<!--        <li th:errors="*{id}" ></li>-->
+<!--        <li th:errors="*{name}" ></li>-->
+    </ul>
+    <table>
+        <tr>
+            <td>Date</td>
+<!--            <td th:text="${timestamp}"></td>-->
+        </tr>
+        <tr>
+            <td>Path</td>
+<!--            <td th:text="${path}"></td>-->
+        </tr>
+        <tr>
+            <td>Error</td>
+<!--            <td th:text="${error}"></td>-->
+        </tr>
+        <tr>
+            <td>Status</td>
+<!--            <td th:text="${status}"></td>-->
+        </tr>
+        <tr>
+            <td>Message</td>
+<!--            <td th:text="${message}"></td>-->
+        </tr>
+        <tr>
+            <td>Exception</td>
+<!--            <td th:text="${exception}"></td>-->
+        </tr>
+        <tr>
+            <td>Trace</td>
+<!--            <td th:text="${trace}"></td>-->
+        </tr>
+    </table>
+    <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <br/>
+            <h1 th:text="#{error.generic}"></h1>
+
+            <p th:text="#{error.cause}"></p>
+<!--            <p th:text="${exception.cause}"></p>-->
+
+            <p th:text="#{error.message}"></p>
+<!--            <p data-th-text="${exception.localizedMessage}"></p>-->
+
+            <p data-th-text="#{error.raw-message}"></p>
+<!--            <p data-th-text="${exception.message}"></p>-->
+
+            <p data-th-text="#{error.stack-trace}"></p>
+<!--            <p data-th-text="${exception.stackTrace}"></p>-->
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+    </div>
+
+
+</body>
+<th:block th:replace="fragments/footer"/>
+<th:block th:replace="fragments/script-common"/>
+
+</html>

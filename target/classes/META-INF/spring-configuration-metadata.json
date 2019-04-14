@@ -1,0 +1,11 @@
+{
+  "hints": [],
+  "groups": [],
+  "properties": [
+    {
+      "name": "org.springframework.boot.autoconfigure.EnableAutoConfiguration",
+      "description": "Description for org.springframework.boot.autoconfigure.EnableAutoConfiguration.",
+      "type": "java.lang.String"
+    }
+  ]
+}
