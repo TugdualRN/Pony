@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
+        web.ignoring().antMatchers("/webjars/**");
 //        web.ignoring().antMatchers("/css/**");
 //        web.ignoring().antMatchers("/scss/**");
 //        web.ignoring().antMatchers("/fonts/**");
@@ -88,6 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/").permitAll()
             .antMatchers("/home").permitAll()
             .antMatchers("/shop").permitAll()
+            .antMatchers("/webjars/**").permitAll()
             .antMatchers("/login*").anonymous()
             .antMatchers("/register").anonymous()
             .antMatchers("/reset-password").anonymous()

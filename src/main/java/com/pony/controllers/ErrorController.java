@@ -16,7 +16,8 @@ public class ErrorController {
 
     private static Logger _logger = LoggerFactory.getLogger(ErrorController.class);
 
-        @ExceptionHandler(Throwable.class)
+
+    @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(final Throwable throwable, final Model model) {
         _logger.error("Exception during execution of SpringSecurity application", throwable);
@@ -24,42 +25,14 @@ public class ErrorController {
         model.addAttribute("errorMessage", errorMessage);
         return "error";
     }
+
     @RequestMapping(value = "500Error", method = RequestMethod.GET)
     public void throwRuntimeException() {
         throw new NullPointerException("Throwing a null pointer exception");
     }
-    @RequestMapping(value = "errors", method = RequestMethod.GET)
-    public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
-
-        ModelAndView errorPage = new ModelAndView("errorPage");
-        String errorMsg = "";
-        int httpErrorCode = getErrorCode(httpRequest);
-
-        switch (httpErrorCode) {
-            case 400: {
-                errorMsg = "Http Error Code: 400. Bad Request";
-                break;
-            }
-            case 401: {
-                errorMsg = "Http Error Code: 401. Unauthorized";
-                break;
-            }
-            case 404: {
-                errorMsg = "Http Error Code: 404. Resource not found";
-                break;
-            }
-            case 500: {
-                errorMsg = "Http Error Code: 500. Internal Server Error";
-                break;
-            }
-        }
-        errorPage.addObject("errorMsg", errorMsg);
-        return errorPage;
-    }
 
     private int getErrorCode(HttpServletRequest httpRequest) {
-        return (Integer) httpRequest
-                .getAttribute("javax.servlet.error.status_code");
+        return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
     }
 
     @ExceptionHandler(Throwable.class)
@@ -80,6 +53,35 @@ public class ErrorController {
         return new ModelAndView("error").addObject("exception", e);
     }
 
+
+//    @RequestMapping(value = "errors", method = RequestMethod.GET)
+//    public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
+//
+//        ModelAndView errorPage = new ModelAndView("errorPage");
+//        String errorMsg = "";
+//        int httpErrorCode = getErrorCode(httpRequest);
+//
+//        switch (httpErrorCode) {
+//            case 400: {
+//                errorMsg = "Http Error Code: 400. Bad Request";
+//                break;
+//            }
+//            case 401: {
+//                errorMsg = "Http Error Code: 401. Unauthorized";
+//                break;
+//            }
+//            case 404: {
+//                errorMsg = "Http Error Code: 404. Resource not found";
+//                break;
+//            }
+//            case 500: {
+//                errorMsg = "Http Error Code: 500. Internal Server Error";
+//                break;
+//            }
+//        }
+//        errorPage.addObject("errorMsg", errorMsg);
+//        return errorPage;
+//    }
 
 
 

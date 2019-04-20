@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<ul class="list-group" style="margin: auto;">
+    <th:block th:each="news : ${newsList}">
+        <li class="list-group-item col-sm-12" >
+            <table style="width: 100%;">
+                <tr>
+                    <td rowspan="2">
+                        <a th:href="@{/news/{slug}(slug=${news.slug})}" >
+                            <img alt="" th:src="${news.img}" height="150" width="150">
+                        </a>
+                    </td>
+                    <td colspan="3">
+                        <a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+<!--                        								if (searchPhrase != null && searchPhrase.length() > 0 && mots.get(j).startsWith(searchPhrase.substring(0, 1))) {-->
+
+<!--                        								<div th:text="${#strings.substring(news.content,0,10)}"></div>-->
+                        <div th:text="${news.content}"></div>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </th:block>
+</ul></body>
+</html>
