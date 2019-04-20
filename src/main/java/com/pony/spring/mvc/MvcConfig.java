@@ -6,6 +6,7 @@ import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cglib.core.Local;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -117,30 +118,25 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     /**
      * STEP 2 - Internationalization
      */
-    @Bean
+    @Bean(name = "messageSource")
     public MessageSource messageSource() {
 
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8");
-
+        messageSource.setDefaultEncoding(CharEncoding.UTF_8);
+        //        messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
 
 
-//    @Bean(name = "messageSource")
-//    public ReloadableResourceBundleMessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-//        messageSource.setBasename("classpath:messages/messages");
-////        messageSource.setBasename("messages/messages");
-////        messageSource.setDefaultEncoding("UTF-8");
-//        messageSource.setDefaultEncoding(CharEncoding.UTF_8);
-//        messageSource.setUseCodeAsDefaultMessage(true);
-//
-//        return messageSource;
-//    }
+    @Override
+    public Validator getValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setValidationMessageSource( messageSource() );
+        return validator;
+    }
 
-//    @Bean
+    //    @Bean(name="localeResolver")
 //    public CookieLocaleResolver localeResolver() {
 //
 //        CookieLocaleResolver resolver = new CookieLocaleResolver();
@@ -150,26 +146,25 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 //
 //        return resolver;
 //    }
-
+//
     @Bean(name="localeResolver")
     public LocaleResolver localeResolver(){
         SessionLocaleResolver resolver = new SessionLocaleResolver();
-        resolver.setDefaultLocale(new Locale("fr"));
+        resolver.setDefaultLocale(Locale.FRENCH);
         return resolver;
     }
-    @Override
-    public Validator getValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setValidationMessageSource( messageSource() );
-        return validator;
-    }
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
 
+    @Bean(name="LocaleChangeInterceptor")
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
-
         return localeChangeInterceptor;
+    }
+
+    //    @Bean(name="addInterceptors")
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
     }
     //    @Bean
 //    DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
@@ -179,6 +174,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 //        handler.setDefaultRolePrefix("ADMIN");
 //        return handler;
 //    }
+
+    //Time gestion
 
     @Bean
     public Java8TimeDialect java8TimeDialect() {

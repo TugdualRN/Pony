@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pony.business.services.NewsService;
@@ -25,6 +27,17 @@ public class HomeController {
 
 		return "home";
 //		return new ModelAndView("home")
-//				.addObject("newsList", _newsService.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
+//				.addObject("newsList", _newsSer vice.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
 	}
+//
+//	@GetMapping("/international")
+//	public String getInternationalPage() {
+//		return "international";
+//	}
+//
+//
+//	@RequestMapping(value = "/locale", method = RequestMethod.GET)
+//	public String getLocalePage() {
+//		return "locale";
+//	}
 }
