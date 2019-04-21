@@ -12,7 +12,7 @@
                 <tr>
                     <td rowspan="2">
                         <a th:href="@{/news/{slug}(slug=${news.slug})}" >
-                            <img alt="" th:src="${news.img}" height="150" width="150">
+                            <img src="" alt="" th:src="${news.img}" height="150" width="150">
                         </a>
                     </td>
                     <td colspan="3">
@@ -21,9 +21,8 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-<!--                        								if (searchPhrase != null && searchPhrase.length() > 0 && mots.get(j).startsWith(searchPhrase.substring(0, 1))) {-->
-
-<!--                        								<div th:text="${#strings.substring(news.content,0,10)}"></div>-->
+<!--                 if (searchPhrase != null && searchPhrase.length() > 0 && mots.get(j).startsWith(searchPhrase.substring(0, 1))) {-->
+<!--                <div th:text="${#strings.substring(news.content,0,10)}"></div>-->
                         <div th:text="${news.content}"></div>
                     </td>
                 </tr>

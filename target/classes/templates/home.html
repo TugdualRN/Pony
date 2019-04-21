@@ -5,10 +5,10 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<title>PonyDaFuck</title>
-	<meta charset="UTF-8"/>
-	<meta name="description" content=""/>
-	<meta name="keywords" content=""/>
-	<meta http-equiv="Content-Type" content="text/html"/>
+	<!--	<meta charset="UTF-8"/>-->
+	<!--	<meta name="description" content="text/html; charset=utf-8"/>-->
+	<!--	<meta name="keywords" content="text/html; charset=utf-8"/>-->
+	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
 	<th:block th:replace="fragments/style-common"/>
@@ -19,9 +19,8 @@
 	<div class="row">
 		<div class="col" style="text-align: center">
 			<h1 th:text="#{welcome.homepage}"></h1>
-		<h1>Time is: <strong th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015 15:00</strong></h1>
-		<h1>Time is: <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')} ">31/12/2015 15:00</strong></h1>
-
+			<h1><strong th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015 15:00</strong></h1>
+			<!--		<h1>Time is: <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')} ">31/12/2015 15:00</strong></h1>-->
 		</div>
 	</div>
 	<img alt="Pony Logo" class="align-items-center"  style="background-color: #fff; height: 50%; width:50%" th:src="@{/images/login-unicorn.jpg}" >

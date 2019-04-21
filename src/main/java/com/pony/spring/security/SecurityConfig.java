@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -52,16 +53,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return tokenRepositoryImpl;
     }
 
+
+    @Bean
+    DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
+        DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+        handler.setDefaultRolePrefix("MASTER");
+        handler.setDefaultRolePrefix("ADMIN");
+        handler.setDefaultRolePrefix("USER");
+        return handler;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
         auth.inMemoryAuthentication()
                 .withUser("USER@USER.COM").password("123").roles("USER").and()
                 .withUser("ADMIN@ADMIN.COM").password("123").roles("USER", "ADMIN").and()
-                .withUser("MASTER@MASTER.COM").password("123").roles("USER", "ADMIN","MASTER");
+                .withUser("MASTER@MASTER.COM").password("123").roles("USER", "ADMIN", "MASTER");
     }
-
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
@@ -75,12 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        web.ignoring().antMatchers("/vendors/**");
     }
 
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        // Static ressources from both WEB-INF and webjars
-//        registry
-//                .addResourceHandler("/resources/**")
-//                .addResourceLocations("/resources/");
-//       }
 
         @Override
      protected void configure(final HttpSecurity http) throws Exception {

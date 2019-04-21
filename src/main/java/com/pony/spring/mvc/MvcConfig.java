@@ -6,6 +6,8 @@ import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.HttpEncodingProperties;
+import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
 import org.springframework.cglib.core.Local;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
@@ -13,12 +15,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.handler.MappedInterceptor;
@@ -29,17 +35,18 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.ISpringTemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Locale;
-
 
 @Configuration
 @EnableWebMvc
-@SpringBootApplication(scanBasePackages={"com.pony"})
 @ComponentScan("com.pony")
 
-
+@SpringBootApplication(scanBasePackages={"com.pony"})
 //public class MvcConfig extends WebMvcConfigurationSupport {
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
@@ -49,16 +56,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     public MvcConfig(ApplicationContext applicationContext, DispatcherServlet dispatcherServlet) {
         super();
-
         _dispatcherServlet = dispatcherServlet;
-
         System.out.println(applicationContext.getDisplayName());
     }
 
     /**
      * STEP 1 - Create SpringTemplateEngine
      */
-
     @Bean
     @Autowired
     public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
@@ -71,13 +75,57 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         templateEngine.setTemplateResolver(templateResolver);
         return templateEngine;
     }
-    // Baeldung model
-//    private ISpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
-//        SpringTemplateEngine engine = new SpringTemplateEngine();
-//        engine.addDialect(new Java8TimeDialect());
-//        engine.setTemplateResolver(templateResolver);
-//        return engine;
-//    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
+        converters.add(stringHttpMessageConverter);
+    }
+
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.favorPathExtension(false);
+    }
+
+    /**
+     * STEP 2 - Internationalization
+     */
+
+    @Bean(name = "messageSource")
+    public MessageSource messageSource() {
+
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:messages");
+        messageSource.setDefaultEncoding(CharEncoding.UTF_8);
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
+    }
+
+    @Override
+    public Validator getValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setValidationMessageSource( messageSource() );
+        return validator;
+    }
+
+    @Bean(name="localeResolver")
+    public LocaleResolver localeResolver(){
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
+        resolver.setDefaultLocale(Locale.FRENCH);
+        return resolver;
+    }
+
+    @Bean(name="LocaleChangeInterceptor")
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        return localeChangeInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
 
     public void configure(WebSecurity web) throws Exception {
         web
@@ -114,75 +162,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 //                        "classpath:/static/vendors/");
     }
 
-
-    /**
-     * STEP 2 - Internationalization
-     */
-    @Bean(name = "messageSource")
-    public MessageSource messageSource() {
-
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding(CharEncoding.UTF_8);
-        //        messageSource.setUseCodeAsDefaultMessage(true);
-        return messageSource;
-    }
-
-
-    @Override
-    public Validator getValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setValidationMessageSource( messageSource() );
-        return validator;
-    }
-
-    //    @Bean(name="localeResolver")
-//    public CookieLocaleResolver localeResolver() {
-//
-//        CookieLocaleResolver resolver = new CookieLocaleResolver();
-//        resolver.setDefaultLocale(Locale.FRENCH);
-//        resolver.setCookieName("lang");
-////        resolver.setCookieMaxAge(-1);
-//
-//        return resolver;
-//    }
-//
-    @Bean(name="localeResolver")
-    public LocaleResolver localeResolver(){
-        SessionLocaleResolver resolver = new SessionLocaleResolver();
-        resolver.setDefaultLocale(Locale.FRENCH);
-        return resolver;
-    }
-
-    @Bean(name="LocaleChangeInterceptor")
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");
-        return localeChangeInterceptor;
-    }
-
-    //    @Bean(name="addInterceptors")
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-    }
-    //    @Bean
-//    DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
-//        DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
-//        handler.setDefaultRolePrefix("MASTER");
-//        handler.setDefaultRolePrefix("USER");
-//        handler.setDefaultRolePrefix("ADMIN");
-//        return handler;
-//    }
-
-    //Time gestion
-
-    @Bean
-    public Java8TimeDialect java8TimeDialect() {
-        return new Java8TimeDialect();
-    }
-
-
     @Bean
     public CommandLineRunner getCommandLineRunner() {
         _dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
@@ -197,4 +176,5 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return new MappedInterceptor(new String[0], loggerMiddleware);
     }
 }
+
 
