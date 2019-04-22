@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
 	<title>PonyDaFuck</title>
 	<!--	<meta charset="UTF-8"/>-->
@@ -13,24 +15,12 @@
 
 	<th:block th:replace="fragments/style-common"/>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<!--<body class="hold-transition skin-blue sidebar-mini">-->
 <th:block th:replace="fragments/header"/>
-<div class="container">
-	<div class="row">
-		<div class="col" style="text-align: center">
-			<h1 th:text="#{welcome.homepage}"></h1>
-			<h1><strong th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015 15:00</strong></h1>
-			<!--		<h1>Time is: <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')} ">31/12/2015 15:00</strong></h1>-->
-		</div>
-	</div>
-	<img alt="Pony Logo" class="align-items-center"  style="background-color: #fff; height: 50%; width:50%" th:src="@{/images/login-unicorn.jpg}" >
 
-	<div class="row">
-
+		<th:block th:insert="fragments/welcome"/>
 		<th:block th:replace="news/news"/>
 
-	</div>
-</div>
 <th:block th:replace="fragments/script-common"/>
 <th:block th:replace="fragments/footer"/>
 </body>

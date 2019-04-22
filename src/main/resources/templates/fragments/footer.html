@@ -1,22 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<!--<footer class="footer navbar-fixed-bottom position-static" xmlns:th="http://www.w3.org/1999/xhtml">-->
-<!--    -->
-<!--</footer>-->
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<footer class="navbar navbar-horizontal navbar-expand navbar fixed-bottom bg-default">
-     <div class="container align-content-center">
-<!--          <a class="navbar-brand" href="..../home.html" th:href="../home.html">-->
-               <div class="text-center">
-                    <strong>Copyright <b>PonyDaTeam</b> <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2018</span>.</strong>
-                    <span th:text="#{rights}"></span>
-               </div>
+<footer class="navbar fixed-bottom navbar-horizontal bg-default justify-content-center">
+        <div class="">
+            <strong class="text-justify text-center copyright">Copyright <b>PonyDaTeam</b> <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2018</span>.</strong>
+            <span th:text="#{rights}"></span>
+    </div>
+<!--               <div class="text-justify text-center">-->
+<!--               </div>-->
 <!--          <div class="collapse navbar-collapse" id="navbar-default">-->
 <!--               <div class="navbar-collapse-header">-->
 <!--                    <div class="row">-->
 <!--                         <div class="col-6 collapse-brand">-->
-<!--&lt;!&ndash;                              <a href="../home.html" th:href="/home.html">&ndash;&gt;-->
+<!--                              <a href="../home.html" th:href="/home.html"> -->
 <!--                                   <img alt="zombies-unicorns" src="../../static/images/zombies-unicorns.jpg" th:src="@{images/zombies-unicorns.jpg}"/>-->
 <!--                              </a>-->
 <!--                         </div>-->
@@ -29,5 +29,4 @@
 <!--                    </div>-->
 <!--               </div>-->
 <!--          </div>-->
-     </div>
 </footer>
