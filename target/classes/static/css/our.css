@@ -1,6 +1,32 @@
+body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 .navbar-top{
     height: 4rem !important;
+    /*display: block !important;*/
+    margin: auto !important;
+    /*position: relative;*/
+    padding: 0.5rem;
 }
 .welcome{
-    margin-top: 4rem !important;
- }
+    margin-left: 15.5rem !important;
+    margin-top: 10rem !important;
+    display: block;
+}
+.navbar-brand-logo{
+    margin-top: 0.4rem;
+}
+.main-content{
+/    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.nav-cut{
+    margin-left: 15.5rem !important;
+}

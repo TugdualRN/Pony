@@ -7,21 +7,39 @@
 
 <head>
 	<title>PonyDaFuck</title>
-	<!--	<meta charset="UTF-8"/>-->
-	<!--	<meta name="description" content="text/html; charset=utf-8"/>-->
-	<!--	<meta name="keywords" content="text/html; charset=utf-8"/>-->
+	<meta name="description" content="text/html;"/>
+	<meta name="keywords" content="text/html;"/>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
 	<th:block th:replace="fragments/style-common"/>
 </head>
-<!--<body class="hold-transition skin-blue sidebar-mini">-->
-<th:block th:replace="fragments/header"/>
+<body class="">
+<aside class="">
+	<th:block th:insert="fragments/aside"/>
+</aside>
+<!--<section class="main-content">-->
+<div class="main-content">
+		<header class="" th:insert="fragments/header">
+		</header>
+<!--	</section>-->
+<!--	<section class="">-->
 
-		<th:block th:insert="fragments/welcome"/>
-		<th:block th:replace="news/news"/>
-
-<th:block th:replace="fragments/script-common"/>
-<th:block th:replace="fragments/footer"/>
+		<article class="">
+			<th:block th:replace="fragments/welcome"/>
+		</article>
+		<article sec:authorize="isFullyAuthenticated()">
+			<th:block th:replace="news/news"/>
+		</article>
+<!--	</section>-->
+<!--	<section>-->
+	</div>
+<th:block th:replace="fragments/footer"  sec:authorize="isFullyAuthenticated()"/>
 </body>
+<th:block th:replace="fragments/script-common"/>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+	/*<![CDATA[*/
+	// Some javascript...
+	/*]]>*/
+</script>
 </html>

@@ -1,107 +1,102 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<header>
-    <nav class="navbar navbar-top navbar-horizontal navbar-expand-lg navbar-dark bg-default fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/" th:href="@{/}">
-                <img alt="brand-logo" src="../../static/images/logo.png" th:src="@{images/logo.png}" width="35" height="35" class="rounded d-inline-block align-top mr-3 img-fluid">
-                <p class="d-inline-block align-top ">Pony Application v0.1</p></a>
-            <!--            <a class="navbar-brand" href="/" th:href="@{/}"></a>-->
-            <!--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">-->
-            <!--                <span class="navbar-toggler-icon"></span>-->
-            <!--            </button>-->
-            <!--            <div class="collapse navbar-collapse" id="navbar-default">-->
-            <!--                <div class="navbar-collapse-header">-->
-            <!--                <div class="row">-->
-            <!--                    <div class="col-6 collapse-brand">-->
-            <!--                        <a href="/" th:href="@{/}">-->
-            <!--                            <img alt="brand-logo" src="../../static/images/logo.png" th:src="@{images/logo.png}"/>-->
-            <!--                        </a>-->
-            <!--                    </div>-->
-            <!--                    <div class="col-6 collapse-close">-->
-            <!--                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">-->
-            <!--                            <span></span>-->
-            <!--                            <span></span>-->
-            <!--                        </button>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <ul class="navbar-nav navbar-collapse justify-content-center">
-                <!--                    <li class="nav-item dropdown">-->
-                <!--                        <a class="nav-link dropdown-toggle"  id="navbarDropdown0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-                <!--                           th:text="#{navigate}">Navigate-->
-                <!--                        </a>-->
-                <!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown0">-->
-                <!--                            <a class="dropdown-item" href="#">Something Must go Here</a>-->
-                <!--                            <a class="dropdown-item" href="#">Here too</a>-->
-                <!--                        </div>-->
-                <!--                    </li>-->
-                <li class="nav-item dropdown " sec:authorize="isFullyAuthenticated()">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  th:text="#{users.managment}"></a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <a class="dropdown-item" th:href="@{/managment/users}" th:text="#{users}"></a>
-                        <a class="dropdown-item" th:href="@{/managment/roles}" th:text="#{roles}"></a>
-                    </div>
-                </li>
-                <li class="nav-item " sec:authorize="hasAnyRole('MASTER','ADMIN' )">
-                    <a class="nav-link" th:href="@{/create-news}" th:text="#{news.create}"></a>
-                </li>
-                <li class="nav-item pull-left" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/shop}" th:text="shop"></a>
-                </li>
-            </ul>
-            <ul class="navbar-nav justify-content-center">
-                <!--                <th:block sec:authorize="isAnonymous()">-->
+<nav class="navbar snavbar-horizontal navbar-expand-lg navbar-dark bg-default fixed-top nav-cut">
+    <div class="container-fluid">
+        <a class="navbar-brand"></a>
+        <!--            <a class="navbar-brand" href="/" th:href="@{/}"></a>-->
+        <!--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--                <span class="navbar-toggler-icon"></span>-->
+        <!--            </button>-->
+        <!--            <div class="collapse navbar-collapse" id="navbar-default">-->
+        <!--                <div class="navbar-collapse-header">-->
+        <!--                <div class="row">-->
+        <!--                    <div class="col-6 collapse-brand">-->
+        <!--                        <a href="/" th:href="@{/}">-->
+        <!--                            <img alt="brand-logo" src="../../static/images/logo.png" th:src="@{images/logo.png}"/>-->
+        <!--                        </a>-->
+        <!--                    </div>-->
+        <!--                    <div class="col-6 collapse-close">-->
+        <!--                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--                            <span></span>-->
+        <!--                            <span></span>-->
+        <!--                        </button>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+<!--        <ul class="navbar-nav navbar-collapse justify-content-center">-->
+<!--            &lt;!&ndash;                    <li class="nav-item dropdown">&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <a class="nav-link dropdown-toggle"  id="navbarDropdown0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&ndash;&gt;-->
+<!--            &lt;!&ndash;                           th:text="#{navigate}">Navigate&ndash;&gt;-->
+<!--            &lt;!&ndash;                        </a>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <div class="dropdown-menu" aria-labelledby="navbarDropdown0">&ndash;&gt;-->
+<!--            &lt;!&ndash;                            <a class="dropdown-item" href="#">Something Must go Here</a>&ndash;&gt;-->
+<!--            &lt;!&ndash;                            <a class="dropdown-item" href="#">Here too</a>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </li>&ndash;&gt;-->
+<!--            <li class="nav-item dropdown " sec:authorize="isFullyAuthenticated()">-->
+<!--                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  th:text="#{users.managment}"></a>-->
+<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">-->
+<!--                    <a class="dropdown-item" th:href="@{/managment/users}" th:text="#{users}"></a>-->
+<!--                    <a class="dropdown-item" th:href="@{/managment/roles}" th:text="#{roles}"></a>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li class="nav-item " sec:authorize="hasAnyRole('MASTER','ADMIN' )">-->
+<!--                <a class="nav-link" th:href="@{/create-news}" th:text="#{news.create}"></a>-->
+<!--            </li>-->
+<!--            <li class="nav-item pull-left" sec:authorize="isAuthenticated()">-->
+<!--                <a class="nav-link" th:href="@{/shop}" th:text="shop"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+        <ul class="navbar-nav justify-content-center">
+            <!--                <th:block sec:authorize="isAnonymous()">-->
+            <li class="nav-item ml-1">
+                <a type="button" class="m-1" href="?lang=fr">
+                    <!-- <p th:text="#{lang.fr}"></p>-->
+                    <img alt="fr-logo" class="bg-default img-fluid" src="../../static/images/icon_France-flag.png" th:src="@{images/icon_France-flag.png}" width="40" height="25"/>
+                </a>
+            </li>
+            <li class="nav-item ml-1">
+                <a type="button"  class="m-1" href="?lang=en">
+                    <!-- <p th:text="#{lang.fr}"></p>-->
+                    <img alt="en-logo" class="bg-default img-fluid" src="../../static/images/icon_United-Kingdom-flag.png" th:src="@{images/icon_United-Kingdom-flag.png}" width="40" height="25"/>
+                </a>
+            </li>
+            <!--                </th:block>-->
+            <th:block sec:authorize="isAuthenticated()">
                 <li class="nav-item ml-1">
-                    <a type="button" class="m-1" href="?lang=fr">
-                        <!-- <p th:text="#{lang.fr}"></p>-->
-                        <img alt="fr-logo" class="bg-default img-fluid" src="../../static/images/icon_France-flag.png" th:src="@{images/icon_France-flag.png}" width="40" height="25"/>
+                    <a th:href="@{/profile}">
+                        <input class="btn btn-outline-info my-2 my-sm-0" type="submit" th:value="#{profile}"/>
                     </a>
                 </li>
                 <li class="nav-item ml-1">
-                    <a type="button"  class="m-1" href="?lang=en">
-                        <!-- <p th:text="#{lang.fr}"></p>-->
-                        <img alt="en-logo" class="bg-default img-fluid" src="../../static/images/icon_United-Kingdom-flag.png" th:src="@{images/icon_United-Kingdom-flag.png}" width="40" height="25"/>
-                    </a>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
+                        <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" th:value="#{logout}"/>
+                    </form>
                 </li>
-                <!--                </th:block>-->
-                <th:block sec:authorize="isAuthenticated()">
-                    <li class="nav-item ml-1">
-                        <a th:href="@{/profile}">
-                            <input class="btn btn-outline-info my-2 my-sm-0" type="submit" th:value="#{profile}"/>
-                        </a>
-                    </li>
-                    <li class="nav-item ml-1">
-                        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
-                            <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" th:value="#{logout}"/>
-                        </form>
-                    </li>
-                </th:block>
+            </th:block>
 
-                <th:block sec:authorize="isAnonymous()">
-                    <li class="nav-item ml-1">
-                        <a th:href="@{/register}">
-                            <input class="btn btn-outline-info my-2 my-sm-0 pull-right" type="submit" th:value="#{register}"/>
-                        </a>
-                    </li>
-                    <li class="nav-item ml-1">
-                        <a th:href="@{/login}">
-                            <input class="btn btn-outline-success my-2 my-sm-0 pull-right" type="submit" th:value="#{login}"/>
-                        </a>
-                    </li>
-                </th:block>
-                <!--      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-                         <a class="dropdown-item" href="#">Action</a>
-                         <a class="dropdown-item" href="#">Another action</a>
-                         <div class="dropdown-divider"></div>
-                         <a class="dropdown-item" href="#">Something else here</a>
-                     </div> -->
-            </ul>
-        </div>
-    </nav>
-</header>
+<!--            <th:block sec:authorize="isAnonymous()">-->
+<!--                <li class="nav-item ml-1">-->
+<!--                    <a th:href="@{/register}">-->
+<!--                        <input class="btn btn-outline-info my-2 my-sm-0 pull-right" type="submit" th:value="#{register}"/>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="nav-item ml-1">-->
+<!--                    <a th:href="@{/login}">-->
+<!--                        <input class="btn btn-outline-success my-2 my-sm-0 pull-right" type="submit" th:value="#{login}"/>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </th:block>-->
+            <!--      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                     <a class="dropdown-item" href="#">Action</a>
+                     <a class="dropdown-item" href="#">Another action</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="#">Something else here</a>
+                 </div> -->
+        </ul>
+    </div>
+</nav>

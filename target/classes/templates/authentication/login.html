@@ -1,51 +1,136 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>PonyDaFuck</title>
-        <meta charset="UTF-8"/>
-        <meta name="description" content=""/>
-        <meta name="keywords" content=""/>
-        <meta http-equiv="Content-Type" content="text/html"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-        <th:block th:replace="fragments/style-common">...</th:block>
-    </head>
-    <body>
-        <th:block th:replace="fragments/header"></th:block>
+<head>
+    <title>PonyDaFuck</title>
+    <meta charset="UTF-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <th:block th:replace="fragments/style-common"/>
 
-        <div class="row">
-            <div class="col-2">
-            </div>
-            <div class="col">
-                <br/>
-                <form th:action="@{/login}" th:method="POST" autocomplete="on">
-                    <div class="form-group">
-                        <label for="login">Email address</label>
-                        <input type="email" class="form-control" id="login" aria-describedby="EmailHelp" placeholder="Enter email" name="login" />
-                        <small id="EmailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+</head>
+<header class="" th:insert="fragments/header-login"></header>
+<body class="bg-default">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="main-content">
+    <div class="header bg-gradient-primary py-7 py-lg-8">
+        <div class="container">
+            <div class="header-body text-center mb-7">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-md-6">
+                        <h1 class="text-white" th:value="#{welcome}"></h1>
+                        <p class="text-lead text-light" th:value="#{mail.protect}">
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"/>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me"/>Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <p><a th:href="@{/reset-password}">Forgot Password ?</a></p>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-            <div class="col-2">
+                </div>
             </div>
         </div>
+        <div class="separator separator-bottom separator-skew zindex-100">
+            <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="card bg-secondary shadow border-0">
+                    <div class="card-header bg-transparent pb-5">
+                        <div class="text-muted text-center mt-2 mb-3" th:value="#{signin.with}"><small></small></div>
+                        <div class="btn-wrapper text-center">
+                            <a href="#" class="btn btn-neutral btn-icon">
+                                <span class="btn-inner--icon"><img alt="" src="../../img/icons/common/logo-fb.svg" th:src="@{/img/icons/common/logo-fb.svg}"></span>
+                                <span class="btn-inner--text">Facebook</span>
+                            </a>
+                            <a href="#" class="btn btn-neutral btn-icon">
+                                <span class="btn-inner--icon"><img alt="" src="../../img/icons/common/google.svg" th:src="@{/img/icons/common/google.svg}"></span>
+                                <span class="btn-inner--text">Google</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-5">
+                        <div class="text-center text-muted mb-4">
+                            <small th:value="#{signin}"></small>
+                        </div>
+                        <form th:action="@{/login}" th:method="POST" role="form" autocomplete="on">
+                            <div class="form-group mb-3">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                    </div>
+                                    <label for="login" th:value="#{mail}"></label>
+                                    <input type="email" class="form-control" id="login" aria-describedby="EmailHelp" th:placeholder="#{mail}" placeholder="Email" name="login" />
+                                    <small id="EmailHelp" class="form-text text-muted" th:value="#{mail.protect}"></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                    </div>
+                                    <label for="password" th:value="#{password}"></label>
+                                    <input class="form-control" id="password"  th:placeholder="#{password}" placeholder="Password" type="password" name="password" >
+                                </div>
+                            </div>
+                            <div class="custom-control custom-control-alternative custom-checkbox">
+                                <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+                                <label class="custom-control-label" for=" customCheckLogin">
+                                    <span class="text-muted" th:value="#{remember}"></span>
+                                </label>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary my-4" th:value="#{submit}"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <a th:href="@{/reset-password}" class="text-light" th:value="#{password.forgot}"><small></small></a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a th:href="@{/register}" class="text-light" th:value="#{account.create}"><small></small></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<footer class="py-5">
+    <div class="container">
+        <div class="row align-items-center justify-content-xl-between">
+            <div class="col-xl-6">
+                <div class="copyright text-center text-xl-left text-muted">
+                    <strong class="text-justify text-center copyright">Copyright <b>PonyDaTeam</b> <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2018</span>.</strong>
+                    <span th:text="#{rights}"></span>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+                    <li class="nav-item">
+                        <a href="" class="nav-link" target="_blank">About Us</a>
+                    </li>
+                    <!--                            <li class="nav-item">-->
+                    <!--                                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>-->
+                    <!--                            </li>-->
+                    <!--                            <li class="nav-item">-->
+                    <!--                                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>-->
+                    <!--                            </li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
-        <th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>
-    </body>
+</body>
+<th:block th:replace="fragments/script-common"/>
 </html>

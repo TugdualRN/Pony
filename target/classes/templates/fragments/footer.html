@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<footer class="navbar fixed-bottom navbar-horizontal bg-default justify-content-center">
+<footer class="navbar navbar-horizontal bg-default justify-content-center fixed-bottom nav-cut">
         <div class="">
             <strong class="text-justify text-center copyright">Copyright <b>PonyDaTeam</b> <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2018</span>.</strong>
             <span th:text="#{rights}"></span>
