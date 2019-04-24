@@ -144,9 +144,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
                 "/webjars/**",
                 "/webjars/",
                 "/js/**",
-                "/fonts/nucleo/**",
-                "/plugins/**")
-//                "/vendors/**")
+                "/vendors/nucleo/fonts/**",
+                "/plugins/**",
+                "/vendors/**")
 //                "/scss/**")
                 .addResourceLocations(
                         "classpath:/static/css/",
@@ -156,10 +156,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
                         "classpath:/static/webjars/",
                         "classpath:/static/img/",
                         "classpath:/static/js/",
-                        "classpath:/fonts/nucleo/**",
-                        "classpath:/static/plugins/");
+                        "/vendors/nucleo/fonts/**",
+                        "classpath:/static/plugins/",
+                        "classpath:/static/vendors/");
 //                        "classpath:/static/scss/",
-//                        "classpath:/static/vendors/");
     }
 
     @Bean

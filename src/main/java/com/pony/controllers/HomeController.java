@@ -35,9 +35,9 @@ public class HomeController {
 //		return "international";
 //	}
 //
-//
-//	@RequestMapping(value = "/locale", method = RequestMethod.GET)
-//	public String getLocalePage() {
-//		return "locale";
-//	}
+
+	@RequestMapping(value = "/locale", method = RequestMethod.GET)
+	public String getLocalePage() {
+		return "locale";
+	}
 }

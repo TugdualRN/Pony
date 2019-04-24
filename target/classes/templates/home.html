@@ -39,7 +39,16 @@
 <th:block th:replace="fragments/script-common"/>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
 	/*<![CDATA[*/
-	// Some javascript...
+
+			$(document).ready(function () {
+				$("#locales").change(function () {
+					var selectedOption = $('#locales').val();
+					if (selectedOption !== '') {
+						window.location.replace('?lang=' + selectedOption);
+					}
+				});
+			});
+
 	/*]]>*/
 </script>
 </html>

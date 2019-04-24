@@ -89,6 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
             // Authorizations
+            .antMatchers("/favicon.ico").permitAll()
             .antMatchers("/").permitAll()
             .antMatchers("/home").permitAll()
             .antMatchers("/shop").permitAll()
