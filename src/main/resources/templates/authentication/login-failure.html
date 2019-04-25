@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
     <head>
         <title>PonyDaFuck</title>
         <meta charset="UTF-8"/>
@@ -22,9 +27,9 @@
 
                 <div class="col">
                     <br/>
-                    <h1 th:text="#{error.generic}"></h1>
+<!--                    <h1 th:text="#{error.generic}"></h1>-->
 
-                    <p th:text="#{error.cause}"></p>
+<!--                    <p th:text="#{error.cause}"></p>-->
 <!--                    <p th:text="${exception.cause}"></p>-->
 
                     <div class="col">

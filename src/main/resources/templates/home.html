@@ -1,53 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<title>PonyDaFuck</title>
 	<meta name="description" content="text/html;"/>
 	<meta name="keywords" content="text/html;"/>
-	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+	<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-	<th:block th:replace="fragments/style-common"/>
+	<th:block th:insert="fragments/style-common"/>
 </head>
 <body class="">
-<aside class="">
-	<th:block th:insert="fragments/aside"/>
+<aside class="left-nav">
+	<th:block th:insert="fragments/aside" sec:authorize="isFullyAuthenticated()"/>
 </aside>
-<!--<section class="main-content">-->
-<div class="main-content">
-		<header class="" th:insert="fragments/header">
-		</header>
-<!--	</section>-->
-<!--	<section class="">-->
+<div class="page-content">
+	<header class="" th:insert="fragments/header">
+	</header>
+	<section class="main-content home-content">
+		<!--	</section>-->
+		<!--	<section class="">-->
 
 		<article class="">
 			<th:block th:replace="fragments/welcome"/>
+			<!--		<th:block th:insert="welcome"/>-->
 		</article>
 		<article sec:authorize="isFullyAuthenticated()">
 			<th:block th:replace="news/news"/>
+
+			<!--		<th:block th:insert="news"/>-->
 		</article>
-<!--	</section>-->
-<!--	<section>-->
-	</div>
-<th:block th:replace="fragments/footer"  sec:authorize="isFullyAuthenticated()"/>
+		<!--	</section>-->
+		<!--	<section>-->
+		<footer th:insert="fragments/footer"></footer>
+	</section>
+</div>
+
+<!--<th:block th:replace="fragments/footer"/>-->
+
 </body>
+<!--<th:block th:insert="footer"/>-->
 <th:block th:replace="fragments/script-common"/>
+
+<!--<th:block th:insert="script-common"/>-->
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
 	/*<![CDATA[*/
 
-			$(document).ready(function () {
-				$("#locales").change(function () {
-					var selectedOption = $('#locales').val();
-					if (selectedOption !== '') {
-						window.location.replace('?lang=' + selectedOption);
-					}
-				});
-			});
 
 	/*]]>*/
 </script>

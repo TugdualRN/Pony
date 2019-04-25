@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"-->
 <head>
     <title>PonyDaFuck</title>
     <meta charset="UTF-8"/>
@@ -15,52 +16,53 @@
     <th:block th:replace="fragments/style-common"/>
 </head>
 <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+<div class="page-content">
+    <section class="pt-5">
+        <div class="container p-10 m-10 ">
 
-<section class="pt-5">
-    <div class="container p-10 m-10 ">
-
-        <div class="jumbotron vertical-center bg-gradient-warning">
-            <div class="row">
-                <div class="col">
-                    <h1 class=" display-4">Thymeleaf Error Page</h1>
-                    <p class="lead">
-                        <div class="errorPage">
-                            <h1 th:text="#{error.generic}"></h1>
-                                <h1 data-th-text="${errorMsg}"></h1>
-                    <p th:text="#{error.cause}"></p>
-                    <!--/*@thymesVar id="exception" type="java"*/-->
-                    <!--/*@thymesVar id="cause" type="error"*/-->
-                    <!--                        <p th:text="${exception.cause}"></p>-->
-                    <p th:text="#{error.message}"></p>
-                    <h1 data-th-text='|${httpStatus.reasonPhrase}|'>404</h1>
-                    <p th:text="${exception}"></p>
-                    <p> Requested Page ( <!--/*@thymesVar id="path" type="java"*/--><span th:text="${path}"></span> ).</p>
-                    <p data-th-text="${'Details: ' + message}"></p>
-                    <p data-th-text="${'Status: ' + status}"></p>
-                    <p th:utext="${#execInfo}">Error java.lang.NullPointerException</p>
-                    <hr class="my-4">
-                    <p>
-                    <ul>
-                            <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
-                    </ul>
+            <div class="jumbotron vertical-center bg-gradient-warning">
+                <div class="row">
+                    <div class="col">
+                        <h1 class=" display-4">Thymeleaf Error Page</h1>
+                        <p class="lead">
+                            <div class="errorPage">
+                                <h1 th:text="#{error.generic}"></h1>
+                                    <h1 data-th-text="${errorMsg}"></h1>
+                        <p th:text="#{error.cause}"></p>
+                        <!--/*@thymesVar id="exception" type="java"*/-->
+                        <!--/*@thymesVar id="cause" type="error"*/-->
+                        <!--                        <p th:text="${exception.cause}"></p>-->
+                        <p th:text="#{error.message}"></p>
+                        <h1 data-th-text='|${httpStatus.reasonPhrase}|'>404</h1>
+                        <p th:text="${exception}"></p>
+                        <p> Requested Page ( <!--/*@thymesVar id="path" type="java"*/--><span th:text="${path}"></span> ).</p>
+                        <p data-th-text="${'Details: ' + message}"></p>
+                        <p data-th-text="${'Status: ' + status}"></p>
+                        <p th:utext="${#execInfo}">Error java.lang.NullPointerException</p>
+                        <hr class="my-4">
+                        <p>
+                        <ul>
+                                <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                    <!--                <p th:text="#{error.raw-message}"></p>-->
+                    <!--            <p th:text="${exception.message}"></p>-->
+                    <!--                <p th:text="#{error.stack-trace}"></p>-->
+                    <!--            <p th:text="${exception.stackTrace}"></p>-->
                 </div>
-                <!--                <p th:text="#{error.raw-message}"></p>-->
-                <!--            <p th:text="${exception.message}"></p>-->
-                <!--                <p th:text="#{error.stack-trace}"></p>-->
-                <!--            <p th:text="${exception.stackTrace}"></p>-->
-            </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <a class="btn btn-default" href="home.html" th:href="@{/home.html}" role="button">Back to Home Page</a>
+                </div>
         </div>
-<!--        <div class="row">-->
-            <a class="btn btn-primary btn-lg center" href="home.html" th:href="@{/home.html}" role="button">Back to Home Page</a>
-<!--        </div>-->
-    </div>
-</section>
 
+    </section>
 
+    <th:block th:replace="fragments/footer"/>
+</div>
 </body>
 <th:block th:replace="fragments/script-common"/>
-<th:block th:replace="fragments/footer" th:class="fixed-bottom"/>
-
 </html>
 
 

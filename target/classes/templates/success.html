@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout "-->
+<head>
+        <title>PonyDaFuck</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta http-equiv="Content-Type" content="text/html"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+        <th:block th:replace="fragments/style-common"/>
+    </head>
+    <body>
+        <th:block th:replace="fragments/header"/>
+
+        <div class="row">
+            <div class="col offset-md-3">
+                <br/>
+                <div class="alert alert-success" role="alert">
+                    <p th:text="#{message}"></p>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    <th:block th:replace="fragments/footer"/>
+    <th:block th:replace="fragments/script-common"/>
+</html>

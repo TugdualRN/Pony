@@ -8783,7 +8783,7 @@
             }
         }
 
-        return {state: "success", data: response};
+        return {state: "templates.success", data: response};
     }
 
     jQuery.extend({
@@ -9275,7 +9275,7 @@
                     // Extract error from statusText and normalize for non-aborts
                     error = statusText;
                     if (status || !statusText) {
-                        statusText = "error";
+                        statusText = "templates.error.error.error";
                         if (status < 0) {
                             status = 0;
                         }
@@ -9514,13 +9514,13 @@
 
                                 if (type === "abort") {
                                     xhr.abort();
-                                } else if (type === "error") {
+                                } else if (type === "templates.error.error.error") {
 
                                     // Support: IE <=9 only
                                     // On a manual native abort, IE9 throws
                                     // errors on any property access that is not readyState
                                     if (typeof xhr.status !== "number") {
-                                        complete(0, "error");
+                                        complete(0, "templates.error.error.error");
                                     } else {
                                         complete(
                                             // File: protocol always yields status 0; see #8605, #14207
@@ -9549,7 +9549,7 @@
 
                     // Listen to events
                     xhr.onload = callback();
-                    errorCallback = xhr.onerror = xhr.ontimeout = callback("error");
+                    errorCallback = xhr.onerror = xhr.ontimeout = callback("templates.error.error.error");
 
                     // Support: IE 9 only
                     // Use onreadystatechange to replace onabort
@@ -9652,7 +9652,7 @@
                             script.remove();
                             callback = null;
                             if (evt) {
-                                complete(evt.type === "error" ? 404 : 200, evt.type);
+                                complete(evt.type === "templates.error.error.error" ? 404 : 200, evt.type);
                             }
                         }
                     );

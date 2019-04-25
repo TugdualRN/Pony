@@ -22,12 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,49 +52,27 @@ public class NewsController {
 		return new ModelAndView("news/displayNews").addObject("news", news);
 	}
 	//	, consumes = {"application/x-www-form-urlencoded" }
-	@RequestMapping(value = "/create-news", method = RequestMethod.POST)
+	//@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {"multipart/form-data" })
+	@PostMapping(value = "/create-news", consumes = {"multipart/form-data" })
 	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel,
-								@RequestParam("img") MultipartFile myFile,
+
 								BindingResult bindingResult) {
 
-		System.out.println(myFile);
+
+		System.out.println("*********************************");
+		System.out.println(viewModel);
 		System.out.println(bindingResult);
+		System.out.println("*********************************");
 		if (bindingResult.hasErrors()){
 			return new ModelAndView("redirect:create-news");
 		}
-
-
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-
-		String fileName = myFile.getOriginalFilename().replace(' ', '_');
-		String imgfilePath = "/images/imported_files/";
-		File newFile = new File("src/main/resources/static" + imgfilePath + fileName);
-
-		try {
-			inputStream = myFile.getInputStream();
-
-			if (!newFile.exists()) {
-				newFile.createNewFile();
-			}
-			outputStream = new FileOutputStream(newFile);
-			int read = 0;
-			byte[] bytes = new byte[5096];
-
-			while ((read = inputStream.read(bytes)) != -1) {
-				outputStream.write(bytes, 0, read);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		//return new ModelAndView("redirect:create-news");
 		News news = new News();
-
 		news.setContent(_newsService.formatContent(viewModel.getContent()));
 		String title = viewModel.getTitle();
 		news.setTitle(title);
 		news.setDescription(viewModel.getDescription());
-		news.setImg(imgfilePath + fileName);
+		news.setImg(viewModel.getImg());
 		news.setLang(LocaleContextHolder.getLocale().toLanguageTag());
 		// get user in session
 		Object userConnected = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

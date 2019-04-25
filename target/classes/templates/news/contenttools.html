@@ -1,65 +1,59 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 		<title>PonyDaFuck</title>
-		<link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
-		<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-		<link href="//cdn.quilljs.com/1.0.0/quill.core.css" rel="stylesheet" />
-		<link href="../static/css/news.css" th:href="@{/css/news.css}" rel="stylesheet" />
-<!-- 		<link href="css/news.css" rel="stylesheet" /> -->
-		<th:block th:replace="fragments/style-common">...</th:block>
+		<th:block th:replace="fragments/style-common"/>
 	</head>
 	<body>
-	  	<th:block th:replace="fragments/header"></th:block>
-		<!-- Create the toolbar container -->
-		 <div class="row">
-            <div class="col col-sm-8 offset-2">
-            	<h1 th="#{news.title}"></h1>
-				<form th:action="@{/create-news}" th:object="${newsViewModel}" enctype="multipart/form-data"
-					th:method="POST" id="createNewsForm">
-					<div class="form-group">
-						<label for="title" th:text="#{news.create.title}"></label>
-            <input th:field="*{title}"
-							class="form-control" id="title" aria-describedby="titleHelp"
-							placeholder="Title of the news"></input> 
-<!-- 				 th:field="{img}"		 th:field="*{img}"	<small id="titleHelp" class="form-text text-muted">Title of the news</small> -->
-					</div>
-					<div class="form-group">
-						<label for="img">Image :</label> 
-						<input type="file" class="form-control" id="img" name="img"></input>
-					</div>
-					<div class="form-group">
-						<label for="title">Description : </label> 
-						<input class="form-control" th:field="*{description}" id="description" placeholder="Description of the news"></input> 
-					</div>
-					<div class="form-group row">
-						<div class="col">
-							<label for="editor" th:text="#{news.create.content}"></label> 
-							<input type="hidden" id="content" name="editor" th:field="*{content}" />
-							<div id="editor">
-								<p>A robot who has developed sentience, and is the only robot of
-									his kind shown to be still functioning on Earth.</p>
-				
-							</div>
+	<th:block th:replace="fragments/header"/>
+	<!-- Create the toolbar container -->
+	<div class="row">
+		<div class="col col-sm-8 offset-2">
+			<h1 th="#{news.title}"></h1>
+			<form th:action="@{/create-news}" th:object="${newsViewModel}" enctype="multipart/form-data"
+				  th:method="POST" id="createNewsForm">
+				<div class="form-group">
+					<label for="title" th:text="#{news.create.title}"></label>
+					<input th:field="*{title}" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Title of the news"/>
+					<!-- 				 th:field="{img}"		 	<small id="titleHelp" class="form-text text-muted">Title of the news</small> -->
+				</div>
+				<div class="form-group">
+					<label for="img">Image :</label>
+					<input type="file" th:field="*{img}" class="form-control" id="img" name="img"/>
+				</div>
+				<div class="form-group">
+					<label for="title">Description : </label>
+					<input class="form-control" th:field="*{description}" id="description" placeholder="Description of the news"/>
+				</div>
+				<div class="form-group row">
+					<div class="col">
+						<label for="editor" th:text="#{news.create.content}"></label>
+						<input type="hidden" id="content" name="editor" th:field="*{content}" />
+						<div id="editor">
+							<p>A robot who has developed sentience, and is the only robot of
+								his kind shown to be still functioning on Earth.</p>
+
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary" th:text="#{submit}"></button>
-				</form>
-			</div>
+				</div>
+				<button type="submit" class="btn btn-primary" th:text="#{submit}"></button>
+			</form>
 		</div>
+	</div>
 	</body>
-	<th:block th:replace="fragments/footer"></th:block>
-    <th:block th:replace="fragments/script-common">...</th:block>
-	<footer>
+	<th:block th:replace="fragments/footer"/>
+	<th:block th:replace="fragments/script-common">...</th:block>
 		<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 		<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			crossorigin="anonymous"></script>
 		<!-- Initialize Quill editor -->
 		<script>
 			var quill = new Quill('#editor', {
@@ -67,24 +61,36 @@
 					toolbar : [ [ {
 						header : [ 1, 2, false ]
 					} ], [ 'bold', 'italic', 'underline' ],
-							[ 'image', 'code-block', 'video', 'formula' ],
-							 [{ 'size': ['small', false, 'large', 'huge'] }],
-	
+						[ 'image', 'code-block', 'video', 'formula' ],
+						[{ 'size': ['small', false, 'large', 'huge'] }],
+
 					]
 				},
 				placeholder : 'Compose an epic...',
 				theme : 'snow' // or 'bubble'
 			});
-// 			quill.enable(false);
+			// 			quill.enable(false);
 			var form = document.querySelector('form');
-	
-			form.onsubmit = function(e) {
-				//console.log();
+			$(".btn-primary").on('click', function () {
+				console.log('click');
+			});
+			$("form").submit(function (e) {
+				console.log("ok");
+				console.log(JSON.stringify(quill.container.firstChild.innerHTML));
 				$('#content').val(
 						JSON.stringify(quill.container.firstChild.innerHTML));
-	
+
 				return true;
+			});
+			form.onsubmit = function(e) {
+				e.preventDefault();
+				console.log("ok");
+				console.log(JSON.stringify(quill.container.firstChild.innerHTML));
+				$('#content').val(
+						JSON.stringify(quill.container.firstChild.innerHTML));
+
+				return false;
 			};
 		</script>
-	</footer>
+
 </html>

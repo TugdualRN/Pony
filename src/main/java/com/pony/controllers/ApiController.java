@@ -50,7 +50,7 @@ public class ApiController extends BaseController {
             _logger.error("An exception occured while trying to create Twitter redirect url");
 
             // TO DO => Try to return the user to the general error page with a message (don't know how to do it with a RedirectView)
-            return new RedirectView("http://localhost:8000/error");
+            return new RedirectView("http://localhost:8000/error.html");
         }
     }
 

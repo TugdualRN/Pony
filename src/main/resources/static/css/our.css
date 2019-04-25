@@ -1,32 +1,72 @@
+html{
+    /*height: -webkit-fill-available;*/
+    height: 100% !important;
+    width: 100% !important;
+}
 body{
-    position: absolute;
+    /*height: -webkit-fill-available;*/
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+}
+footer{
+    position: relative !important;
+    bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+header{
+    position: relative !important;
+    top: 0 !important;
+    margin-top: 0 !important;
+}
+.navbar-vertical.navbar-expand-md {
+    position: fixed !important;
     top: 0;
-    left: 0;
+    bottom: 0;
+    display: block;
     width: 100%;
-    height: 100%;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
 }
 .navbar-top{
     height: 4rem !important;
-    /*display: block !important;*/
     margin: auto !important;
-    /*position: relative;*/
     padding: 0.5rem;
 }
-.welcome{
-    margin-left: 15.5rem !important;
-    margin-top: 10rem !important;
-    display: block;
+.login-content{
+    width: inherit !important;
 }
-.navbar-brand-logo{
+.welcome{
+    position: relative !important;
+    margin-top: 10rem !important;
+}
+.navbar-brand-logo {
     margin-top: 0.4rem;
 }
-.main-content{
-/    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .nav-cut{
     margin-left: 15.5rem !important;
 }
+.page-content{
+    width: 100%;
+}
+.left-nav{
+
+}
+.home-content{
+
+}
+.main-content{
+
+}
+
+/*width: inherit;*/
+/*display: inline-block;*/
+/*float: right;*/
+/*position: absolute;*/
+/*top: 0;*/
+/*right: 0;*/
+/*display: inline-block;*/
+/*float: left;*/
+/*position: absolute;*/
+/*top: 0;*/
+/*left: 0;*/

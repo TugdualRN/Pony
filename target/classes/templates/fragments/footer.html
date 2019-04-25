@@ -1,31 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"-->
 
-<footer class="navbar navbar-horizontal bg-default justify-content-center fixed-bottom nav-cut">
+<nav class="navbar navbar-horizontal bg-default justify-content-center fixed-bottom bt-nav">
         <div class="">
             <strong class="text-justify text-center copyright">Copyright <b>PonyDaTeam</b> <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2018</span>.</strong>
             <span th:text="#{rights}"></span>
     </div>
-<!--               <div class="text-justify text-center">-->
-<!--               </div>-->
-<!--          <div class="collapse navbar-collapse" id="navbar-default">-->
-<!--               <div class="navbar-collapse-header">-->
-<!--                    <div class="row">-->
-<!--                         <div class="col-6 collapse-brand">-->
-<!--                              <a href="../home.html" th:href="/home.html"> -->
-<!--                                   <img alt="zombies-unicorns" src="../../static/images/zombies-unicorns.jpg" th:src="@{images/zombies-unicorns.jpg}"/>-->
-<!--                              </a>-->
-<!--                         </div>-->
-<!--                         <div class="col-6 collapse-close">-->
-<!--                              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--                                   <span></span>-->
-<!--                                   <span></span>-->
-<!--                              </button>-->
-<!--                         </div>-->
-<!--                    </div>-->
-<!--               </div>-->
-<!--          </div>-->
-</footer>
+</nav>

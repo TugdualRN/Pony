@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">-->
 
 <head>
     <title>PonyDaFuck</title>
@@ -14,12 +16,12 @@
     <th:block th:replace="fragments/style-common"/>
 
 </head>
-<header class="" th:insert="fragments/header-login"></header>
 <body class="bg-default">
+<header class="" th:insert="fragments/header-login"></header>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<div class="main-content">
+<div class="main-content login-content">
     <div class="header bg-gradient-primary py-5 py-lg-5">
         <div class="container">
             <div class="header-body text-center mb-7 mt-4">
@@ -137,18 +139,4 @@
 
 </body>
 <th:block th:replace="fragments/script-common"/>
-<script th:inline="javascript" layout:fragment="script" type="text/javascript">
-    /*<![CDATA[*/
-
-    $(document).ready(function () {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption !== '') {
-                window.location.replace('?lang=' + selectedOption);
-            }
-        });
-    });
-
-    /*]]>*/
-</script>
 </html>

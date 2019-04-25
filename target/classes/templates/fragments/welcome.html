@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+      xmlns:th="http://www.thymeleaf.org">
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
 <section class="welcome">
     <div class="container">
         <div class="row">
             <div class="col text-justify text-center">
                 <h1 th:text="#{welcome.homepage}"></h1>
-                <h1><strong th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015 15:00</strong></h1>
+                <h1><strong
+                        th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015
+                    15:00</strong></h1>
                 <!--		<h1>Time is: <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')} ">31/12/2015 15:00</strong></h1>-->
             </div>
         </div>
-        <img alt="Pony Logo" class="text-center rounded mx-auto d-block"  height=50%; width=50% src="../../images/login-unicorn.jpg" th:src="@{/images/login-unicorn.jpg}" >
+        <img alt="Pony Logo" class="text-center rounded mx-auto d-block" height=50%; width=50%
+             src="../../images/login-unicorn.jpg" th:src="@{/images/login-unicorn.jpg}">
     </div>
 </section>
+</html>

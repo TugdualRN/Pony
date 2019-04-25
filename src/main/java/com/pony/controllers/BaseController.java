@@ -25,7 +25,7 @@ public abstract class BaseController {
     public ModelAndView returnToErrorPage(String errorMessage) {
         Assert.notNull(errorMessage, "successMessage");
 
-        return new ModelAndView("general/error")
+        return new ModelAndView("error")
             .addObject("message", errorMessage);
     }
 

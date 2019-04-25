@@ -77,7 +77,7 @@ var CopyIcon = (function() {
 
 		var clipboard = new ClipboardJS($element);
 
-		clipboard.on('success', function(e) {
+		clipboard.on('templates.success', function(e) {
 			$(e.trigger)
 				.attr('title', 'Copied!')
 				.tooltip('_fixTitle')
