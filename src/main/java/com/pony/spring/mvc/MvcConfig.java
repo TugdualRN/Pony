@@ -139,26 +139,24 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
                 "/css/**",
                 "/fonts/**",
+                "/fontawesome-free/**",
                 "/images/**",
                 "/img/**",
                 "/webjars/**",
                 "/webjars/",
                 "/js/**",
-                "/vendors/nucleo/fonts/**",
-                "/plugins/**",
-                "/vendors/**")
+                "/plugins/**")
 //                "/scss/**")
                 .addResourceLocations(
                         "classpath:/static/css/",
+                        "classpath:/static/fontawesome-free/",
                         "classpath:/static/fonts/",
                         "classpath:/static/images/",
                         "classpath:/static/webjars/**",
                         "classpath:/static/webjars/",
                         "classpath:/static/img/",
                         "classpath:/static/js/",
-                        "/vendors/nucleo/fonts/**",
-                        "classpath:/static/plugins/",
-                        "classpath:/static/vendors/");
+                        "classpath:/static/plugins/");
 //                        "classpath:/static/scss/",
     }
 

@@ -92,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/favicon.ico").permitAll()
             .antMatchers("/").permitAll()
             .antMatchers("/home").permitAll()
+            .antMatchers("/profile").permitAll()
             .antMatchers("/shop").permitAll()
             .antMatchers("/webjars/**").permitAll()
             .antMatchers("/login*").anonymous()

@@ -7,18 +7,18 @@ body{
     /*height: -webkit-fill-available;*/
     height: 100% !important;
     width: 100% !important;
-    display: flex !important;
+    /*display: flex !important;*/
 }
-footer{
-    position: relative !important;
-    bottom: 0 !important;
-    margin-bottom: 0 !important;
-}
-header{
-    position: relative !important;
-    top: 0 !important;
-    margin-top: 0 !important;
-}
+/*footer{*/
+/*    position: relative !important;*/
+/*    bottom: 0 !important;*/
+/*    margin-bottom: 0 !important;*/
+/*}*/
+/*header{*/
+/*    position: relative !important;*/
+/*    top: 0 !important;*/
+/*    margin-top: 0 !important;*/
+/*}*/
 .navbar-vertical.navbar-expand-md {
     position: fixed !important;
     top: 0;
@@ -30,7 +30,7 @@ header{
 }
 .navbar-top{
     height: 4rem !important;
-    margin: auto !important;
+    /*margin: auto !important;*/
     padding: 0.5rem;
 }
 .login-content{
@@ -44,10 +44,10 @@ header{
     margin-top: 0.4rem;
 }
 .nav-cut{
-    margin-left: 15.5rem !important;
+    margin-left: 15.7rem !important;
 }
 .page-content{
-    width: 100%;
+    /*width: 100%;*/
 }
 .left-nav{
 
@@ -58,15 +58,3 @@ header{
 .main-content{
 
 }
-
-/*width: inherit;*/
-/*display: inline-block;*/
-/*float: right;*/
-/*position: absolute;*/
-/*top: 0;*/
-/*right: 0;*/
-/*display: inline-block;*/
-/*float: left;*/
-/*position: absolute;*/
-/*top: 0;*/
-/*left: 0;*/
