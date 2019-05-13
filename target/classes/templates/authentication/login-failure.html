@@ -1,67 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
-    <head>
-        <title>PonyDaFuck</title>
-        <meta charset="UTF-8"/>
-        <meta name="description" content=""/>
-        <meta name="keywords" content=""/>
-        <meta http-equiv="Content-Type" content="text/html"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>PonyDaFuck</title>
+    <meta name="description" content="text/html;"/>
+    <meta name="keywords" content="text/html;"/>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <th:block th:replace="fragments/style-common">...</th:block>
-    </head>
-    <body>
-        <th:block th:replace="fragments/header"></th:block>
+    <th:block th:insert="fragments/style-common"/>
+</head>
+<body class="hold-transition sidebar-mini">
 
-        <div class="row">
-            <div class="col-2">
-            </div>
-            <div class="col">
-                <p>Login Failure</p>
-
-
-                <div class="col">
-                    <br/>
-<!--                    <h1 th:text="#{error.generic}"></h1>-->
-
-<!--                    <p th:text="#{error.cause}"></p>-->
-<!--                    <p th:text="${exception.cause}"></p>-->
-
-                    <div class="col">
-                        <br/>
-                        <h1 th:text="#{error.generic}"></h1>
-
-                        <p th:text="#{error.cause}"></p>
-<!--                        <p th:text="${exception.cause}"></p>-->
-
-                        <p th:text="#{error.message}"></p>
-                        <p th-text="${exception.localizedMessage}"></p>
-
-                        <p th-text="#{error.raw-message}"></p>
-                        <p th-text="${exception.message}"></p>
-
-                        <p th-text="#{error.stack-trace}"></p>
-                        <p th-text="${exception.stackTrace}"></p>
-                    <p th:text="#{error.message}"></p>
-                    <p th-text="${exception.localizedMessage}"></p>
-
-                    <p th-text="#{error.raw-message}"></p>
-                    <p th-text="${exception.message}"></p>
-
-                    <p th-text="#{error.stack-trace}"></p>
-                    <p th-text="${exception.stackTrace}"></p>
-
-            </div>
-            <div class="col-2">
+<section class="content-header">
+    <th:block th:replace="fragments/header-login"/>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="mb-1">
+                <p th:text="#{login.fail}"></p>
             </div>
         </div>
-        
-        <th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>
-    </body>
+    </div><!-- /.container-fluid -->
+</section>
+<section>
+    <div class="row">
+        <div class="col">
+            <div class="col">
+                <br/>
+                <!--                                    <h1 th:text="#{error.generic}"></h1>-->
+                <!--                                    <p th:text="#{error.cause}"></p>-->
+                <!--                                    <p th:text="${exception.cause}"></p>-->
+                <div class="col">
+                    <br/>
+                    <h1 th:text="#{error.generic}"></h1>
+                    <p th:text="#{error.cause}"></p>
+                    <!--                        <p th:text="${exception.cause}"></p>-->
+
+                    <p th:text="#{error.message}"></p>
+                    <!--                    <p th:text="${exception.localizedMessage}"></p>-->
+
+                    <p th:text="#{error.raw-message}"></p>
+                    <!--                    <p th:text="${exception.message}"></p>-->
+
+                    <p th:text="#{error.stack-trace}"></p>
+                    <!--                    <p th:text="${exception.stackTrace}"></p>-->
+
+                    <p th:text="#{error.message}"></p>
+                    <!--                    <p th:text="${exception.localizedMessage}"></p>-->
+
+                    <p th:text="#{error.raw-message}"></p>
+                    <!--                    <p th:text="${exception.message}"></p>-->
+
+                    <p th:text="#{error.stack-trace}"></p>
+                    <!--                    <p th:text="${exception.stackTrace}"></p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer"></footer>
+<!--<th:block th:replace="fragments/footer"/>-->
+
+<!--<th:block th:insert="footer"/>-->
+<th:block th:replace="fragments/script-common"/>
+
+</body>
 </html>

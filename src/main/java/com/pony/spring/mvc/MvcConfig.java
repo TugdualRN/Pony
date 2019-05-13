@@ -2,45 +2,34 @@ package com.pony.spring.mvc;
 
 import com.pony.spring.monitoring.LoggerMiddleware;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
-import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.HttpEncodingProperties;
-import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.Ordered;
-import org.springframework.format.FormatterRegistry;
+import org.springframework.context.annotation.Description;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.handler.MappedInterceptor;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring4.ISpringTemplateEngine;
-import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.ISpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Configuration
 @EnableWebMvc
@@ -48,10 +37,10 @@ import java.util.Locale;
 
 @SpringBootApplication(scanBasePackages={"com.pony"})
 //public class MvcConfig extends WebMvcConfigurationSupport {
-public class MvcConfig extends WebMvcConfigurerAdapter {
+public class MvcConfig implements WebMvcConfigurer {
 
     private final DispatcherServlet _dispatcherServlet;
-    private ApplicationContext applicationContext;
+
 
     @Autowired
     public MvcConfig(ApplicationContext applicationContext, DispatcherServlet dispatcherServlet) {
@@ -60,22 +49,54 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         System.out.println(applicationContext.getDisplayName());
     }
 
-    /**
-     * STEP 1 - Create SpringTemplateEngine
-     */
     @Bean
-    @Autowired
-    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
+    @Description("Thymeleaf template resolver serving HTML 5")
+    public ClassLoaderTemplateResolver templateResolver() {
 
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.addDialect(new Java8TimeDialect());
-        templateEngine.addDialect(new LayoutDialect());
-        templateEngine.addDialect(sec);
-        templateEngine.setEnableSpringELCompiler(true);
-        templateEngine.setTemplateResolver(templateResolver);
-        return templateEngine;
+        var templateResolver = new ClassLoaderTemplateResolver();
+
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setCacheable(false);
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+        templateResolver.setCharacterEncoding("UTF-8");
+
+        return templateResolver;
     }
 
+    @Bean
+//    @Description("Thymeleaf template engine with Spring integration")
+    public  ISpringTemplateEngine templateEngine() {
+
+        var templateEngine = new SpringTemplateEngine();
+        templateEngine.addDialect(new Java8TimeDialect());
+        templateEngine.addDialect(new LayoutDialect());
+        templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.setTemplateResolver(templateResolver());
+
+        return templateEngine;
+    }
+//    private ISpringTemplateEngine templateEngine() {
+//        final SpringTemplateEngine engine = new SpringTemplateEngine();
+//        engine.setTemplateResolver(templateResolver());
+//        engine.addDialect(new Java8TimeDialect());
+//        engine.addDialect(new SpringSecurityDialect());
+//        engine.addDialect(new LayoutDialect());
+//        engine.setEnableSpringELCompiler(true);
+//        return engine;
+//    }
+
+    @Bean
+    @Description("Thymeleaf view resolver")
+    public ViewResolver viewResolver() {
+
+        var viewResolver = new ThymeleafViewResolver();
+
+        viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding("UTF-8");
+
+        return viewResolver;
+    }
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
@@ -84,42 +105,22 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.favorPathExtension(false);
+        configurer.favorPathExtension(true);
     }
 
-    /**
-     * STEP 2 - Internationalization
-     */
 
-    @Bean(name = "messageSource")
-    public MessageSource messageSource() {
-
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding(CharEncoding.UTF_8);
-        messageSource.setUseCodeAsDefaultMessage(true);
-        return messageSource;
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+        sessionLocaleResolver.setDefaultLocale(Locale.FRENCH);
+        return sessionLocaleResolver;
     }
 
-    @Override
-    public Validator getValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setValidationMessageSource( messageSource() );
-        return validator;
-    }
-
-    @Bean(name="localeResolver")
-    public LocaleResolver localeResolver(){
-        SessionLocaleResolver resolver = new SessionLocaleResolver();
-        resolver.setDefaultLocale(Locale.FRENCH);
-        return resolver;
-    }
-
-    @Bean(name="LocaleChangeInterceptor")
+    @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");
-        return localeChangeInterceptor;
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
     }
 
     @Override
@@ -139,34 +140,29 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
                 "/css/**",
                 "/fonts/**",
-                "/fontawesome-free/**",
                 "/images/**",
                 "/img/**",
-                "/webjars/**",
-                "/webjars/",
                 "/js/**",
-                "/plugins/**")
-//                "/scss/**")
+                "/plugins/**",
+                "/webjars/**",
+                "/build/**")
                 .addResourceLocations(
-                        "classpath:/static/css/",
-                        "classpath:/static/fontawesome-free/",
-                        "classpath:/static/fonts/",
-                        "classpath:/static/images/",
-                        "classpath:/static/webjars/**",
-                        "classpath:/static/webjars/",
-                        "classpath:/static/img/",
-                        "classpath:/static/js/",
-                        "classpath:/static/plugins/");
-//                        "classpath:/static/scss/",
+                        ("classpath:/static/css/"),
+                        ("classpath:/static/fonts/"),
+                        ("classpath:/static/images/"),
+                        ("classpath:/static/js/"),
+                        ("classpath:/static/plugins/"),
+                        ("classpath:/static/webjars/**"),
+                        "classpath:/static/build/");
     }
 
     @Bean
     public CommandLineRunner getCommandLineRunner() {
         _dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
 
-        return args -> {};
+        return args -> {
+        };
     }
-
     @Bean
     public MappedInterceptor myInterceptor() {
         HandlerInterceptorAdapter loggerMiddleware = new LoggerMiddleware();
@@ -174,5 +170,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return new MappedInterceptor(new String[0], loggerMiddleware);
     }
 }
+
 
 

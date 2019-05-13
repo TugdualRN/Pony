@@ -2,10 +2,9 @@ package com.pony.business.services;
 
 import com.pony.entities.models.Token;
 import com.pony.entities.models.User;
+import com.pony.enumerations.TokenType;
 
 import java.util.List;
-
-import com.pony.enumerations.TokenType;
 
 public interface TokenService {
 

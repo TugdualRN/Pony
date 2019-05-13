@@ -1,22 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<section class="welcome">
-    <div class="container">
-        <div class="row">
-            <div class="col text-justify text-center">
-                <h1 th:text="#{welcome.homepage}"></h1>
-                <h1><strong
-                        th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015
-                    15:00</strong></h1>
-                <!--		<h1>Time is: <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')} ">31/12/2015 15:00</strong></h1>-->
-            </div>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>PonyDaFuck</title>
+    <meta name="description" content="text/html;"/>
+    <meta name="keywords" content="text/html;"/>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <th:block th:insert="fragments/style-common"/>
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div id="wrapper">
+    <header class="content-header" th:replace="fragments/header-login"></header>
+    <div th:replace="fragments/loader"></div>
+    <div class="content-wrapper ml-0">
+
+        <div class="progress progress-sm active" id="progress-bar-container">
+            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
+                 class="progress-bar progress-bar-striped" id="loader-progress" role="progressbar"></div>
         </div>
-        <img alt="Pony Logo" class="text-center rounded mx-auto d-block" height=50%; width=50%
-             src="../../images/login-unicorn.jpg" th:src="@{/images/login-unicorn.jpg}">
+
+        <section class="main-content" id="main-content">
+            <article class="" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-justify text-center">
+                            <h1 th:text="#{welcome.homepage}"></h1>
+                            <h1><strong
+                                th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">31/12/2015
+                            15:00</strong></h1>
+                            <!--		<h1>Time is: <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')} ">31/12/2015 15:00</strong></h1>-->
+                        </div>
+                    </div>
+                    <img alt="Pony Logo" class="text-center rounded mx-auto d-block" height=50%; width=50%
+                         src="../../static/images/login-unicorn.jpg" th:src="@{/images/login-unicorn.jpg}">
+                </div>
+            </article>
+            <th:block  sec:authorize="isAnonymous()" th:replace="news/news"/>
+        </section>
     </div>
-</section>
+    <footer th:replace="fragments/footer"></footer>
+    <th:block th:replace="fragments/script-common"/>
+
+    <script th:inline="javascript" layout:fragment="script" type="text/javascript">
+        /*<![CDATA[*/
+        $(function () {
+
+            // Lang change
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption !== '') {
+                    window.location.replace('?lang=' + selectedOption);
+                }})
+        });
+
+        /*]]>*/
+    </script>
+</div>
+</body>
 </html>

@@ -1,11 +1,11 @@
 package com.pony.views.viewmodels;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.pony.views.validation.IPasswordMatch;
 import com.pony.views.validation.PasswordsMatch;
 import com.pony.views.validation.ValidMail;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @PasswordsMatch
 public class RegisterViewModel implements IPasswordMatch {

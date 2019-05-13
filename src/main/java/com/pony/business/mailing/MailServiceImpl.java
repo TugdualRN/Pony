@@ -1,18 +1,16 @@
 package com.pony.business.mailing;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import com.pony.entities.models.User;
 import com.pony.entities.models.Token;
-
+import com.pony.entities.models.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MailServiceImpl implements MailService {

@@ -1,31 +1,28 @@
 package com.pony.controllers;
 
-import javax.validation.Valid;
-
-import com.pony.enumerations.TokenType;
-import com.pony.entities.models.Token;
-import com.pony.entities.models.User;
+import com.pony.business.mailing.MailService;
 import com.pony.business.services.TokenService;
 import com.pony.business.services.UserService;
 import com.pony.business.utils.RegisterResult;
-import com.pony.business.mailing.MailService;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
+import com.pony.enumerations.TokenType;
 import com.pony.views.viewmodels.ForgotPasswordViewModel;
 import com.pony.views.viewmodels.RegisterViewModel;
 import com.pony.views.viewmodels.ResetPasswordViewModel;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.validation.Valid;
 
 @Controller
 public class AccountController extends BaseController {
@@ -55,8 +52,8 @@ public class AccountController extends BaseController {
     public ModelAndView register(@Valid @RequestBody @ModelAttribute RegisterViewModel viewModel, BindingResult bindingResult) {
         
         // Validation
-        boolean passworsMatch = viewModel.getPassword().equals(viewModel.getConfirmPassword());
-        if (bindingResult.hasErrors() || !passworsMatch)
+        boolean passwordsMatch = viewModel.getPassword().equals(viewModel.getConfirmPassword());
+        if (bindingResult.hasErrors() || !passwordsMatch)
         {   
             return new ModelAndView("authentication/register")
                 .addObject("registerViewModel", viewModel)
@@ -88,12 +85,19 @@ public class AccountController extends BaseController {
     // <editor-fold desc="Login">
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
-        return new ModelAndView("authentication/login");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            return new ModelAndView("authentication/login-failure");
+        }        return new ModelAndView("authentication/login");
     }
 
     @RequestMapping(value = "/login/fail", method = RequestMethod.GET)
     public ModelAndView loginFailure() {
-        return this.returnToErrorPage("Login failure");
+
+//        return this.returnToErrorPage("Login failure");
+        return new ModelAndView("authentication/login-failure");
+
     }
 
     /*

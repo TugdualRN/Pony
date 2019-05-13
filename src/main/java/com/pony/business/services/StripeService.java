@@ -1,19 +1,18 @@
 package com.pony.business.services;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.pony.data.repositories.ChargeRequestRepository;
+import com.pony.entities.models.ChargeRequest;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pony.entities.models.ChargeRequest;
-import com.pony.data.repositories.ChargeRequestRepository;
-import com.stripe.Stripe;
-import com.stripe.exception.*;
-import com.stripe.model.Charge;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class StripeService {
@@ -32,7 +31,8 @@ public class StripeService {
 		
 	public Charge charge(Long idProduct, String token) throws StripeException {
 		
-		ChargeRequest chargeRequest = _chargeRequestRepo.findOne(idProduct);
+		ChargeRequest chargeRequest = _chargeRequestRepo.findById(idProduct).orElse(null);
+//				.findOne(idProduct);
 	
 		Map<String, Object> chargeParams = new HashMap<>();
 		chargeParams.put("amount", chargeRequest.getAmount());

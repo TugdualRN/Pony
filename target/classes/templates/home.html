@@ -4,6 +4,7 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:data="http://www.w3.org/1999/xhtml"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
@@ -15,49 +16,58 @@
 
 	<th:block th:insert="fragments/style-common"/>
 </head>
-<body class="">
+<body class="hold-transition sidebar-mini">
+
 <div id="wrapper">
-	<!--<div class="left-sidebar left-nav">-->
-	<div>
-		<th:block th:insert="fragments/aside" sec:authorize="isFullyAuthenticated()"/>
-	</div>
-	<!--<div class="page-content">-->
-	<div class="page-content " id="content-wrapper">
+	<header class="content-header" th:replace="fragments/header"></header>
+	<header class="content-aside" th:replace="fragments/aside" sec:authorize="isFullyAuthenticated()"></header>
+	<div th:replace="fragments/loader"></div>
+	<div class="content-wrapper ">
 
-		<header class="content-header" th:insert="fragments/header">
-		</header>
-		<section class="main-content home-content">
-			<!--	</section>-->
-			<!--	<section class="">-->
+		<div class="progress progress-sm active" id="progress-bar-container">
+			<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
+				 class="progress-bar progress-bar-striped" id="loader-progress" role="progressbar"></div>
+		</div>
 
-			<article class="">
-				<th:block th:replace="fragments/welcome"/>
-				<!--		<th:block th:insert="welcome"/>-->
+		<section class="main-content" id="main-content">
+
+			<article class="" th:replace="fragments/welcome" sec:authorize="isAnonymous()">
 			</article>
-			<article sec:authorize="isFullyAuthenticated()">
-				<th:block th:replace="news/news"/>
-
-				<!--		<th:block th:insert="news"/>-->
-			</article>
-			<!--	</section>-->
-			<!--	<section>-->
-			<footer th:insert="fragments/footer"></footer>
+			<!--			<article sec:authorize="isFullyAuthenticated()" th:replace="news/news">-->
+			<!--			</article>-->
 		</section>
 	</div>
+	<footer th:replace="fragments/footer"></footer>
+	<!--<th:block th:replace="fragments/footer"/>-->
+
+	<!--<th:block th:insert="footer"/>-->
+	<th:block th:replace="fragments/script-common"/>
+
+	<!--<th:block th:insert="script-common"/>-->
+	<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+		/*<![CDATA[*/
+		$(function () {
+
+			// Lang change
+			// $(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption !== ''){
+					window.location.replace('locale?lang=' + selectedOption);
+				}
+			});
+
+			$('.collapse').collapse();
+
+			// Close the loader splash screen
+			setTimeout(function () {
+				$('body').addClass('loaded');
+			}, 10);
+
+		});
+
+		/*]]>*/
+	</script>
 </div>
-
-<!--<th:block th:replace="fragments/footer"/>-->
-
 </body>
-<!--<th:block th:insert="footer"/>-->
-<th:block th:replace="fragments/script-common"/>
-
-<!--<th:block th:insert="script-common"/>-->
-<script th:inline="javascript" type="text/javascript">
-	/*<![CDATA[*/
-	$(function () {
-
-	});
-	/*]]>*/
-</script>
 </html>

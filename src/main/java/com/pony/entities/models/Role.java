@@ -1,11 +1,6 @@
 package com.pony.entities.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "T_Roles")
@@ -36,4 +31,5 @@ public class Role {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     // </editor-fold>
+
 }

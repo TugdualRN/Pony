@@ -1,13 +1,18 @@
 package com.pony.controllers;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 //@ControllerAdvice
@@ -45,15 +50,26 @@ public class ErrorController {
                 .addObject("exception", throwable);
     }
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ModelAndView notfoundExceptionHandler(HttpServletRequest request, Exception e)   {
-        _logger.error("Request: " + request.getRequestURL() + "returned 404", e);
+//    @ExceptionHandler(NoHandlerFoundException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public ModelAndView notfoundExceptionHandler(HttpServletRequest request, Exception e)   {
+//        _logger.error("Request: " + request.getRequestURL() + "returned 404", e);
+//
+//        return new ModelAndView("error").addObject("exception", e);
+//    }
+//            _logger.error("Request: " + request.getRequestURL().getClass().getName() + " raised " + e);
 
-        return new ModelAndView("error").addObject("exception", e);
-    }
+        @ExceptionHandler(Exception.class)
+        public ModelAndView handleError(HttpServletRequest request, Exception e)   {
+            _logger.error("Request: " + request.getRequestURL().getClass().getName() + " raised " + e);
+            return new ModelAndView("error");
+        }
 
-
+        @ExceptionHandler(NoHandlerFoundException.class)
+        public ModelAndView handleError404(HttpServletRequest request, Exception e)   {
+            _logger.error("Request: " + request.getRequestURL().getClass().getName() + " raised " + e);
+            return new ModelAndView("404");
+        }
 //    @RequestMapping(value = "errors", method = RequestMethod.GET)
 //    public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
 //

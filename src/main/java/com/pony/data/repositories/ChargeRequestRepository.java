@@ -1,10 +1,9 @@
 package com.pony.data.repositories;
 
-import java.util.List;
-
+import com.pony.entities.models.ChargeRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pony.entities.models.ChargeRequest;
+import java.util.List;
 
 public interface ChargeRequestRepository extends JpaRepository<ChargeRequest, Long> {
 

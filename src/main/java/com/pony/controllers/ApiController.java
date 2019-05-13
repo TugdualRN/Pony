@@ -1,11 +1,10 @@
 package com.pony.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.pony.entities.models.User;
-import com.pony.business.social.ApiService;
 import com.pony.business.services.UserService;
-
+import com.pony.business.social.ApiService;
+import com.pony.entities.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @PreAuthorize("hasRole('USER')")
@@ -56,8 +53,8 @@ public class ApiController extends BaseController {
 
     @RequestMapping("/callback/twitter")
     public ModelAndView twitterCallback(HttpServletRequest request,
-        @RequestParam(value = "oauth_verifier", required = false) String oauthVerifier,
-        @RequestParam(value = "denied",         required = false) String denied) {
+                                        @RequestParam(value = "oauth_verifier", required = false) String oauthVerifier,
+                                        @RequestParam(value = "denied",         required = false) String denied) {
         
         if (_apiService.isValidCallback(oauthVerifier, denied)) {
 
@@ -90,8 +87,8 @@ public class ApiController extends BaseController {
     }
 
     @RequestMapping("/callback/facebook")
-    public ModelAndView facebookCallback(HttpServletRequest request, 
-        @RequestParam(value = "code", required = false) String oauthVerifier) {
+    public ModelAndView facebookCallback(HttpServletRequest request,
+                                         @RequestParam(value = "code", required = false) String oauthVerifier) {
 
         if (_apiService.isValidCallback(oauthVerifier, null)) {
             
@@ -116,8 +113,8 @@ public class ApiController extends BaseController {
     }
 
     @RequestMapping("/callback/facebook/extend_token")
-    public ModelAndView facebookExtendTokenCallback(HttpServletRequest request, 
-        @RequestParam(value = "code", required = false) String oauthVerifier) {
+    public ModelAndView facebookExtendTokenCallback(HttpServletRequest request,
+                                                    @RequestParam(value = "code", required = false) String oauthVerifier) {
         
         return null;
     }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="mb-1">
+                <h1 class=""><strong th:text="${google.success}"></strong></h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section xmlns:th="http://www.w3.org/1999/xhtml">
+    <th:block th:replace="fragments/header"/>
+    <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <h3 th:text="'Congratulations! You are logged in as Twitter user ' + #{google.username} + ' !'"></h3>
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+</section>
+</html>

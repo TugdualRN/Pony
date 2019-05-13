@@ -1,35 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
-<!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout "-->
-<section class="container">
-    <ul class="list-group" style="margin: auto;">
-        <th:block th:each="news : ${newsList}">
-            <li class="list-group-item col-sm-12" >
-                <table style="width: 100%;">
-                    <tr>
-                        <td rowspan="2">
-                            <a th:href="@{/news/{slug}(slug=${news.slug})}" >
-                                <img src="" alt="" th:src="${news.img}" height="150" width="150">
-                            </a>
-                        </td>
-                        <td colspan="3">
-                            <a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <!--                 if (searchPhrase != null && searchPhrase.length() > 0 && mots.get(j).startsWith(searchPhrase.substring(0, 1))) {-->
-<!--                                            <div th:text="${#strings.substring(news.content,0,10)}"></div>-->
-                            <div th:text="${news.content}"></div>
-                        </td>
-                    </tr>
-                </table>
-            </li>
-        </th:block>
-    </ul>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<section class="content-header container">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="mb-1">
+                <!--                <h1 class=""><strong><span th:text="${news.display}"></span></strong></h1>-->
+                <h1 class=""><strong><span>News</span></strong></h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section >
+    <div class="container">
+        <ul class="list-group" style="margin: auto;">
+            <th:block th:each="news : ${newsList}">
+                <li class="list-group-item col-sm-12" >
+                    <table style="width: 100%;">
+                        <tr>
+                            <td rowspan="2">
+                                <a th:href="@{/news/{slug}(slug=${news.slug})}" >
+                                    <img src="" alt="" th:src="${news.img}" height="150" width="150">
+                                </a>
+                            </td>
+                            <td colspan="3">
+                                <a th:text="${news.title}" th:href="@{/news/{slug}(slug=${news.slug})}"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <!--                 if (searchPhrase != null && searchPhrase.length() > 0 && mots.get(j).startsWith(searchPhrase.substring(0, 1))) {-->
+                                <!--                                            <div th:text="${#strings.substring(news.content,0,10)}"></div>-->
+                                <div th:text="${news.content}"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </th:block>
+        </ul>
+    </div>	<article>
+
+    <div class="container">
+        <div class="row">
+            <div class="col text-justify text-center">
+                <div sec:authorize="hasAuthority('MASTER')">Text visible to master.</div>
+                <div sec:authorize="hasAuthority('ADMIN')">Text visible to admin.</div>
+                <div sec:authorize="hasAuthority('USER')">Text visible to user.</div>
+                <div sec:authorize="isAuthenticated()">
+                    Text visible only to authenticated users.
+                </div>
+                <strong> Authenticated username: </strong>
+                <div sec:authentication="name"></div>
+                <strong> Authenticated user roles: </strong>
+                <!--                <div sec:authentication="principal.authorities">-->
+                    <div th:text="${#authentication.getPrincipal()}"></div>
+
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+</article>
 </section>
 </html>

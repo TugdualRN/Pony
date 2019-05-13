@@ -1,10 +1,9 @@
 package com.pony.views.validation;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MailValidator implements ConstraintValidator<ValidMail, String> {
      
@@ -17,7 +16,7 @@ public class MailValidator implements ConstraintValidator<ValidMail, String> {
     }
     
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext context){   
+    public boolean isValid(String email, ConstraintValidatorContext context){
         return (validateEmail(email));
     } 
     

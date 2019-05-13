@@ -39,7 +39,7 @@ public abstract class BaseController {
     public ModelAndView returnToSuccessPage(String successMessage) {
         Assert.notNull(successMessage, "successMessage");
 
-        return new ModelAndView("general/success")
+        return new ModelAndView("success")
             .addObject("message", successMessage);
     }
 }

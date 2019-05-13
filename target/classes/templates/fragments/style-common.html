@@ -7,52 +7,89 @@
 <!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"-->
 <section>
 
- <link rel="shortcut icon" type="image/x-icon" th:src="@{/favicon.ico}" href="../../favicon.ico" />
- <link rel="stylesheet" type="image/" th:src="@{/images/}"/>
-<!-- <link rel="stylesheet" type="application/json" th:href="@{/webjars/bootstrap/bootstrap.css}"/>-->
-<!-- <link rel="stylesheet" type="application/json" th:href="@{/webjars/bootstrap/bootstrap-reboot.css}"/>-->
-<!-- <link rel="stylesheet" type="application/json" th:href="@{/webjars/bootstrap/bootstrap-grid.css}"/>-->
-<!-- <link rel="stylesheet" type="application/json" th:href="@{/webjars/font-awesome/css/all.css}"/> <link rel="stylesheet" href="" />-->
-<!-- <link rel="stylesheet" type="application/json" th:href="@{/scss/bootstrap/}"/>-->
-<!-- <link rel="stylesheet" href="../../static/vendor/nucleo/css/nucleo.css">-->
+    <!--    GENERAL CSS    -->
+    <link rel="stylesheet" type="application/json" th:href="@{/webjars/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="application/json" th:href="@{/webjars/bootstrap/bootstrap.min.scss}"/>
 
- <!-- Fonts -->
- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
- <!-- Icons -->
-<!-- <link href="../../static/nucleo/css/nucleo.css" th:href="@{/nucleo/css/nucleo.css}">-->
- <link href="../../static/fontawesome-free/css/all.min.css" th:src="@{/fontawesome-free/css/all.min.css}">
- <link rel="stylesheet" type="application/json" th:href="@{/scss/bootstrap/argon.scss}"/>
-<!-- <link type="application/json" th:href="@{/nucleo/css/nucleo.css}" href="../../static/nucleo/css/nucleo.css"/>-->
-<!-- <link type="text/css" th:href="@{/nucleo/css/nucleo-svg.css}" href="../../static/nucleo/css/nucleo-svg.css"/>-->
- <link type="application/vnd.ms-fontobject" th:href="@{/fonts/nucleo-icons.eot}" href="../../static/fonts/nucleo-icons.eot"/>
- <link type="image/svg+xml" th:href="@{/fonts/nucleo-icons.svg}" href="../../static/fonts/nucleo-icons.svg"/>
- <link type="font/ttf" th:href="@{/fonts/nucleo-icons.ttf}" href="../../static/fonts/nucleo-icons.ttf"/>
- <link type="font/woff" th:href="@{/fonts/nucleo-icons.woff}" href="../../static/fonts/nucleo-icons.woff"/>
- <link  type="font/woff2" th:href="@{/fonts/nucleo-icons.woff2}" href="../../static/fonts/nucleo-icons.woff2"/>
- <link rel="stylesheet" type="image/svg+xml" th:href="@{/img/icons/common/google.svg}"/>
- <link rel="stylesheet" type="image/svg+xml" th:href="@{/img/icons/common/github.svg}"/>
- <link rel="icon" type="image/png" th:href="@{static/favicon.ico}"/>
-<!-- <link rel="stylesheet" type="application/json" th:href="@{/vendor/}"/>-->
- <link rel="stylesheet" type="application/json" th:href="@{/webjars/bootstrap/bootstrap.min.scss}"/>
- <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
- <link href="//cdn.quilljs.com/1.0.0/quill.core.css" rel="stylesheet" />
- <!-- <link rel="stylesheet" type="application/json" th:href="@{/css/argon.min.css}"/>-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" >
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
- <link rel="stylesheet" type="text/css" th:href="@{/css/argon.css}"/>
- <link rel="stylesheet" type="text/css" th:href="@{/css/nucleo.css}"/>
- <link rel="stylesheet" type="text/css" th:href="@{/css/nucleo-svg.css}"/>
- <link rel="stylesheet" type="text/css" th:href="@{/css/our.css}"/>
- <link rel="stylesheet" type="text/css" th:href="@{/css/shop.css}"/>
- <link rel="stylesheet" type="text/css" th:href="@{/css/news.css}"/>
- <!--<link rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=arial-black"/>-->
- <!--<link rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=ubuntu"/>-->
- <!--<link rel="stylesheet" href="http://fr.allfont.net/allfont.css?fonts=open-sans"/>-->
- <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css"/>-->
- <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" -->
- <!--    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" -->
- <!--    crossorigin="anonymous"/>-->
- <!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/bootstrap-slider/slider.css}"/>
 
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css}"/>
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>-->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/datatables/datatables.css}"/>
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/plugins/datatables/datatables.min.css}"/>-->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/iCheck/all.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/jquery-confirm/jquery-confirm.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/jvectormap/jquery-jvectormap-1.2.2.css}" media="screen"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/pace/pace.css}"/>
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/plugins/pace/pace.min.css}"/>-->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/select2/select2.css}"/>
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/plugins/select2/select2.min.css}"/>-->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/timepicker/bootstrap-timepicker.css}"/>
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/plugins/timepicker/bootstrap-timepicker.min.css}"/>-->
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/argon.css}"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/nucleo.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/nucleo-svg.css}"/>
+    <!--    PROJECT CSS    -->
+
+    <link rel="stylesheet" type="text/css" th:href="@{css/adminlte.css}"/>
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/adminlte.min.css}"/>-->
+    <link rel="stylesheet" type="application/json" th:href="@{css/adminlte.css.map}"/>
+
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/our.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/shop.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/news.css}"/>
+
+    <!--    PROJECT maybe useless    -->
+
+
+    <link rel="shortcut icon" type="image/x-icon" th:src="@{/images/favicon.ico}" href="../../static/images/favicon.ico" />
+<!--    <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;," />-->
+    <link rel="stylesheet" type="image/" th:src="@{/images/}"/>
+    <link rel="stylesheet" type="image/" th:src="@{/icons/}"/>
+
+    <link type="application/vnd.ms-fontobject" th:href="@{/fonts/nucleo/nucleo-icons.eot}" href="../../static/fonts/nucleo/nucleo-icons.eot"/>
+    <link type="image/svg+xml" th:href="@{/fonts/nucleo/nucleo-icons.svg}" href="../../static/fonts/nucleo/nucleo-icons.svg"/>
+    <link type="font/ttf" th:href="@{/fonts/nucleo/nucleo-icons.ttf}" href="../../static/fonts/nucleo/nucleo-icons.ttf"/>
+    <link type="font/woff" th:href="@{/fonts/nucleo/nucleo-icons.woff}" href="../../static/fonts/nucleo/nucleo-icons.woff"/>
+    <link  type="font/woff2" th:href="@{/fonts/nucleo/nucleo-icons.woff2}" href="../../static/fonts/nucleo/nucleo-icons.woff2"/>
+
+    <link type="application/vnd.ms-fontobject" th:href="@{/fonts/fontawesome/nucleo-icons.eot}" href="../../static/fonts/fontawesome/FontAwesome.otf"/>
+    <link type="application/vnd.ms-fontobject" th:href="@{/fonts/fontawesome/nucleo-icons.eot}" href="../../static/fonts/fontawesome/fontawesome-webfont.eot"/>
+    <link type="image/svg+xml" th:href="@{/fonts/fontawesome/fontawesome-icons.svg}" href="../../static/fonts/fontawesome/fontawesome-webfont.svg"/>
+    <link type="font/ttf" th:href="@{/fonts/fontawesome/fontawesome-icons.ttf}" href="../../static/fonts/fontawesome/fontawesome-webfont.ttf"/>
+    <link type="font/woff" th:href="@{/fonts/fontawesome/fontawesome-icons.woff}" href="../../static/fonts/fontawesome/fontawesome-webfont.woff"/>
+    <link  type="font/woff2" th:href="@{/fonts/fontawesome/fontawesome-icons.woff2}" href="../../static/fonts/fontawesome/fontawesome-webfont.woff2"/>
+
+
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qN67lqDY.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qNa7lqDY.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qNK7lqDY.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qNq7lqDY.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qO67lqDY.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7l.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xK3dSBYKcSV-LCoeQqfX1RYOo3qPK7lqDY.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwkxduz8A.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlBduz8A.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdu.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwmBduz8A.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwmhduz8A.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwmRduz8A.woff2"/>
+    <link  type="font/woff2" th:href="@{/fonts/sourcesanspro/sourcesanspro-icons.woff2}" href="../../static/fonts/sourcesanspro/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwmxduz8A.woff2"/>
+
+    <link rel="stylesheet" type="image/svg+xml" th:href="@{/images/icons/common/google.svg}"/>
+    <link rel="stylesheet" type="image/svg+xml" th:href="@{/images/icons/common/github.svg}"/>
+    <link rel="stylesheet" type="image/svg+xml" th:href="@{/images/icons/common/facebook.svg}"/>
+    <link rel="stylesheet" type="image/svg+xml" th:href="@{/images/icons/common/logo-fb.svg}"/>
 </section>
 

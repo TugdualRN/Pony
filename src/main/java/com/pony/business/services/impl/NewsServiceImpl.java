@@ -1,17 +1,16 @@
 package com.pony.business.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.github.slugify.Slugify;
+import com.pony.business.services.NewsService;
+import com.pony.data.repositories.NewsRepository;
+import com.pony.entities.models.News;
+import com.pony.entities.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.slugify.Slugify;
-import com.pony.entities.models.News;
-import com.pony.entities.models.User;
-import com.pony.data.repositories.NewsRepository;
-import com.pony.business.services.NewsService;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -33,7 +32,8 @@ public class NewsServiceImpl implements NewsService {
     @Transactional(readOnly = true)
     public News findById(Long newsId){
 
-        News news = _newsRepository.findOne(newsId);
+        News news = _newsRepository.findById(newsId).orElse(null);
+//				.findOne(newsId);
         
         return news;
     }
@@ -52,7 +52,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional
     public void delete(Long newsId) {
-    	_newsRepository.delete(newsId);
+    	_newsRepository.deleteById(newsId);
     }
 
 	@Override
@@ -84,7 +84,7 @@ public class NewsServiceImpl implements NewsService {
 		
 		content = content.substring(1, content.length()-1).replace("\\", "");
 		
-		if (content.indexOf("<img src=\"") > -1){
+		if (content.contains("<img src=\"")){
 			
 		}
 		/*

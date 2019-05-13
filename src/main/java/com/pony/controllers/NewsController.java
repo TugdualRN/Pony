@@ -1,30 +1,21 @@
 package com.pony.controllers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.validation.Valid;
-
-import com.pony.entities.models.News;
-
-import com.pony.entities.models.User;
-import com.pony.spring.security.ConnectedUserDetails;
 import com.pony.business.services.NewsService;
 import com.pony.business.services.UserService;
+import com.pony.entities.models.News;
+import com.pony.entities.models.User;
 import com.pony.views.viewmodels.NewsViewModel;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 public class NewsController {
@@ -38,8 +29,9 @@ public class NewsController {
 		_userService = userService;
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/create-news" })
+//	@GetMapping(value = { "/create-news" })
 	public ModelAndView createNews() {
 
 		return new ModelAndView("news/contenttools").addObject("newsViewModel", new NewsViewModel());
@@ -51,13 +43,16 @@ public class NewsController {
 		News news = _newsService.findBySlug(slug);
 		return new ModelAndView("news/displayNews").addObject("news", news);
 	}
+
+	@RequestMapping(value = { "/news" })
+	public ModelAndView news(Model model) {
+		model.addAttribute("newsList", _newsService.findByLangOrderByIdDesc(LocaleContextHolder.getLocale().toLanguageTag()));
+		return new ModelAndView("news/news").addObject("news");
+	}
 	//	, consumes = {"application/x-www-form-urlencoded" }
-	//@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {"multipart/form-data" })
-	@PostMapping(value = "/create-news", consumes = {"multipart/form-data" })
-	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel,
-
-								BindingResult bindingResult) {
-
+	@RequestMapping(value = "/create-news", method = RequestMethod.POST, consumes = {"multipart/form-data" })
+//	@PostMapping(value = "/create-news", consumes = {"multipart/form-data" })
+	public ModelAndView addNews(@Valid @RequestBody @ModelAttribute NewsViewModel viewModel, BindingResult bindingResult) {
 
 		System.out.println("*********************************");
 		System.out.println(viewModel);
@@ -76,8 +71,10 @@ public class NewsController {
 		news.setLang(LocaleContextHolder.getLocale().toLanguageTag());
 		// get user in session
 		Object userConnected = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(userConnected.toString());
 		// test if user
-		User user = _userService.findByMail(((ConnectedUserDetails) userConnected).getUsername());
+		User user = _userService.findByMail((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		_newsService.createNews(news, user);
 		return new ModelAndView("redirect:home");
 	}

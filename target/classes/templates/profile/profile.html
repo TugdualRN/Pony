@@ -5,69 +5,63 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
-    <head>
-        <title>Pony</title>
-        <meta charset="UTF-8"/>
-        <meta name="description" content=""/>
-        <meta name="keywords" content=""/>
-        <meta http-equiv="Content-Type" content="text/html"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-
-        <th:block th:replace="fragments/style-common"/>
-    <body>
-        <th:block th:replace="fragments/header"/>
-        <br/>
-        
-        <div class="row">
-            <div class="col-1">
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="mb-1">
+                <h1 class=""><strong>Profil</strong></h1>
             </div>
-            <div class="col-3">
-                <th:block th:if="${data.user != null}">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" th:src="${data.user.get400x400ProfileImageURL()}" alt="Twitter image">
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-3">
+            <th:block th:if="${data.user != null}">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" th:src="${data.user.get400x400ProfileImageURL()}" alt="Twitter image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${data.user.getScreenName()}"></h5>
+                        <p class="card-text" th:text="${data.user.getDescription()}"></p>
+                        <a href="#" class="btn btn-primary">Jump to my profile</a>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <div class="col">
+
+            <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).TWITTER) == null}">
+                <br/>
+                <h1>Profile Page</h1>
+                <h3>Connect to Twitter</h3>
+                <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
+            </th:block>
+
+            <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).FACEBOOK) == null}">
+                <br/>
+                <h1>Profile Page</h1>
+                <h3>Connect to Twitter</h3>
+                <a th:href="@{/connect/facebook}"><button>Connect with Facebook</button></a>
+            </th:block>
+
+            <th:block th:if="${data.tweets != null}">
+                <th:block th:each="tweet : ${data.tweets}">
+                    <div class="card">
+                        <div class="card-header" th:text="${tweet.id}"></div>
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${data.user.getScreenName()}"></h5>
-                            <p class="card-text" th:text="${data.user.getDescription()}"></p>
-                            <a href="#" class="btn btn-primary">Jump to my profile</a>
+                            <h5 class="card-title" th:text="${tweet.inReplyToScreenName}"></h5>
+                            <p class="card-text" th:text="${tweet.text}"></p>
+                            <a href="#" class="btn btn-primary" th:text="${tweet.createdAt}"></a>
                         </div>
                     </div>
                 </th:block>
-            </div>
-            <div class="col">
+            </th:block>
 
-                <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).TWITTER) == null}">
-                    <br/>
-                    <h1>Profile Page</h1>
-                    <h3>Connect to Twitter</h3>
-                    <a th:href="@{/connect/twitter}"><button>Connect with Twitter</button></a>
-                </th:block>
-
-                <th:block th:if="${user.socialNetworks.get(T(com.pony.enumerations.SocialNetworkType).FACEBOOK) == null}">
-                    <br/>
-                    <h1>Profile Page</h1>
-                    <h3>Connect to Twitter</h3>
-                    <a th:href="@{/connect/facebook}"><button>Connect with Facebook</button></a>
-                </th:block>
-
-                <th:block th:if="${data.tweets != null}">
-                    <th:block th:each="tweet : ${data.tweets}">
-                        <div class="card">
-                            <div class="card-header" th:text="${tweet.id}"></div>
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${tweet.inReplyToScreenName}"></h5>
-                                <p class="card-text" th:text="${tweet.text}"></p>
-                                <a href="#" class="btn btn-primary" th:text="${tweet.createdAt}"></a>
-                            </div>
-                        </div>
-                    </th:block>
-                </th:block>
-            
-            </div>
-            <div class="col-1">
-            </div>
         </div>
-        
-        <th:block th:replace="fragments/footer"/>
-        <th:block th:replace="fragments/script-common"/>
-    </body>
+        <div class="col-1">
+        </div>
+    </div>
+</section>
 </html>

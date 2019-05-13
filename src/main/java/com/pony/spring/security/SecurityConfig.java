@@ -1,60 +1,45 @@
 package com.pony.spring.security;
 
-import javax.sql.DataSource;
-
+import com.pony.spring.data.DataSourceConnect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsService userDetailsService;
-
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     @Autowired
-    DataSource dataSource;
+    private final DataSourceConnect dataSourceConnect;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, DataSourceConnect dataSourceConnect) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.dataSourceConnect = dataSourceConnect;
+    }
+
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //TEST
-    @Bean
-    public AuthenticationProvider userAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(new BCryptPasswordEncoder());
-        provider.setUserDetailsService(userDetailsService);
-        return provider;
-    }
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        tokenRepositoryImpl.setDataSource(dataSource);
-        return tokenRepositoryImpl;
-    }
-
-
-    @Bean
     DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
         DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
         handler.setDefaultRolePrefix("MASTER");
@@ -63,82 +48,79 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return handler;
     }
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(new BCryptPasswordEncoder());
         auth.inMemoryAuthentication()
-                .withUser("USER@USER.COM").password("123").roles("USER").and()
-                .withUser("ADMIN@ADMIN.COM").password("123").roles("USER", "ADMIN").and()
-                .withUser("MASTER@MASTER.COM").password("123").roles("USER", "ADMIN", "MASTER");
+                .withUser("USER@USER.COM").password(passwordEncoder().encode("123")).roles("USER")
+                .and()
+                .withUser("ADMIN@ADMIN.COM").password(passwordEncoder().encode("123")).roles("ADMIN")
+                .and()
+                .withUser("MASTER@MASTER.COM").password(passwordEncoder().encode("123")).roles("MASTER");
     }
+
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
-        web.ignoring().antMatchers("/webjars/**");
-//        web.ignoring().antMatchers("/css/**");
-//        web.ignoring().antMatchers("/scss/**");
-//        web.ignoring().antMatchers("/fonts/**");
-//        web.ignoring().antMatchers("/images/**");
-//        web.ignoring().antMatchers("/js/**");
-//        web.ignoring().antMatchers("/plugins/**");
-//        web.ignoring().antMatchers("/vendors/**");
-    }
-
-
-        @Override
-     protected void configure(final HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            // Authorizations
-            .antMatchers("/favicon.ico").permitAll()
-            .antMatchers("/").permitAll()
-            .antMatchers("/home").permitAll()
-            .antMatchers("/profile").permitAll()
-            .antMatchers("/shop").permitAll()
-            .antMatchers("/webjars/**").permitAll()
-            .antMatchers("/login*").anonymous()
-            .antMatchers("/register").anonymous()
-            .antMatchers("/reset-password").anonymous()
-            .antMatchers("/news/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/charge").permitAll()
-            .antMatchers("/logout").authenticated()
-            .antMatchers("/connect/**").authenticated()
-            .antMatchers("/create-news").hasRole("ADMIN")
-            .antMatchers("/admin/**").hasAnyRole("MASTER")
-            .antMatchers("/user/**").hasAnyRole("USER")
+                // Authorizations
+                .antMatchers("/").permitAll()
+                .antMatchers("/login*").anonymous()
+                .antMatchers("/register").anonymous()
+                .antMatchers("/reset-password").anonymous()
+                .antMatchers("/logout").authenticated()
+                .antMatchers("/connect/**").authenticated()
+                .antMatchers("/home").authenticated()
+                .antMatchers("/welcome").authenticated()
+                .antMatchers("/profile").authenticated()
+                .antMatchers("/shop").authenticated()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/news/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/charge").permitAll()
+//                .antMatchers("/create-news").hasRole("ADMIN")
+                .antMatchers("/create-news").permitAll()
+                .antMatchers("/admin/**").hasAnyRole("MASTER")
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER")
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+//                .anyRequest().authenticated()
 
-            // Login
-            .and()
+
+                // Login
+                .and()
                 .formLogin()
                 .usernameParameter("login")
                 .passwordParameter("password")
-                .loginPage("/login")
+                .loginPage("/")
                 .loginProcessingUrl("/login")
                 .permitAll()
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/home")
                 .failureUrl("/login/fail")
 
-            // Logout
-            .and()
+                // Logout
+                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
 
-            // RememberMe
-            // .and()
-            // .rememberMe()
-            // .rememberMeParameter("remember-me")
-            // .tokenRepository(persistentTokenRepository())
-            // .tokenValiditySeconds(86400)
+                // RememberMe
+                // .and()
+                // .rememberMe()
+                // .rememberMeParameter("remember-me")
+                // .tokenRepository(persistentTokenRepository())
+                // .tokenValiditySeconds(86400)
 
-            .and()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 //                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
-            // .and()
+        // .and()
 //             .and()
 //             .csrf().disable()
-            ;
+        ;
         http.csrf().disable();
     }
 }

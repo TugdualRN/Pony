@@ -1,9 +1,9 @@
 package com.pony.entities.dto;
 
-import java.util.List;
-
 import twitter4j.Status;
 import twitter4j.User;
+
+import java.util.List;
 
 public class ProfileSocialNetworkData {
 

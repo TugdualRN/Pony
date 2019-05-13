@@ -2,9 +2,9 @@ package com.pony.entities.models;
 
 import com.pony.data.converters.LocalDateTimeConverter;
 import com.pony.enumerations.SocialNetworkType;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class User {
     @Column(columnDefinition = "serial", name = "Id")
     private long id;
 
-    @NotBlank
+
     @Column(unique = true, nullable = false)
     private String userName;
 
@@ -30,7 +30,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String normalizedUserName;
 
-
+    @NotBlank
     @Column(nullable = false)
     private String passwordHash;
 

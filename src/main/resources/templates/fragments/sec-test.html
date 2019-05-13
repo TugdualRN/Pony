@@ -1,0 +1,21 @@
+        <section class="main-content" id="main-content">
+            <article class="" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-justify text-center">
+                            <div sec:authorize="hasAuthority('MASTER')">Text visible to master.</div>
+                            <div sec:authorize="hasAuthority('ADMIN')">Text visible to admin.</div>
+                            <div sec:authorize="hasAuthority('USER')">Text visible to user.</div>
+                                Text visible only to authenticated users.
+                            </div>
+                            Authenticated username:
+                            <div sec:authentication="name"></div>
+                            Authenticated user roles:
+<!--                            <div sec:authentication="principal.authorities"></div>-->
+                            <div  th:text="${#authentication.getPrincipal()}"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+</section>

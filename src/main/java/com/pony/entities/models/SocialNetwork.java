@@ -1,26 +1,16 @@
 package com.pony.entities.models;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.pony.data.converters.LocalDateTimeConverter;
 import com.pony.enumerations.SocialNetworkType;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "T_SocialNetworks")
 public class SocialNetwork {
     
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "serial", name = "Id")
     private long Id;

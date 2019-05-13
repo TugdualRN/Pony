@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"-->
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>PonyDaFuck</title>
     <meta charset="UTF-8"/>
@@ -16,95 +16,109 @@
     <th:block th:replace="fragments/style-common"/>
 </head>
 <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
-<div class="page-content">
+<div class="page-content justify-content-center">
     <section class="pt-5">
         <div class="container p-10 m-10 ">
-
-            <div class="jumbotron vertical-center bg-gradient-warning">
+            <div class="jumbotron vertical-center bg-warning-gradient">
                 <div class="row">
-                    <div class="col">
-                        <h1 class=" display-4">Thymeleaf Error Page</h1>
+                    <div class="col text-center">
                         <p class="lead">
-                            <div class="errorPage">
+                            <div class="errorPage overflow-visible text-wrap ">
                                 <h1 th:text="#{error.generic}"></h1>
-                                    <h1 data-th-text="${errorMsg}"></h1>
-                        <p th:text="#{error.cause}"></p>
-                        <!--/*@thymesVar id="exception" type="java"*/-->
-                        <!--/*@thymesVar id="cause" type="error"*/-->
-                        <!--                        <p th:text="${exception.cause}"></p>-->
-                        <p th:text="#{error.message}"></p>
-                        <h1 data-th-text='|${httpStatus.reasonPhrase}|'>404</h1>
-                        <p th:text="${exception}"></p>
-                        <p> Requested Page ( <!--/*@thymesVar id="path" type="java"*/--><span th:text="${path}"></span> ).</p>
-                        <p data-th-text="${'Details: ' + message}"></p>
-                        <p data-th-text="${'Status: ' + status}"></p>
+                                <h1 data-th-text="${errorMsg}"></h1>
+                                <h1 data-th-text='|${httpStatus.reasonPhrase}|'>404</h1>
+                        <p> Requested Page (
+                            <!--/*@thymesVar id="path" type="com"*/-->
+                            <span th:text="${path}"></span> ).</p>
                         <p th:utext="${#execInfo}">Error java.lang.NullPointerException</p>
-                        <hr class="my-4">
                         <p>
                         <ul>
                                 <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
                         </ul>
                     </div>
-                    <!--                <p th:text="#{error.raw-message}"></p>-->
-                    <!--            <p th:text="${exception.message}"></p>-->
-                    <!--                <p th:text="#{error.stack-trace}"></p>-->
-                    <!--            <p th:text="${exception.stackTrace}"></p>-->
+                    <!--                    <p th:text="#{error.raw-message}"></p>-->
+                    <!--/*@thymesVar id="exception" type="com"*/-->
+                    <p th:text="${exception}"></p>
+                    <p th:text="#{error.stack-trace}"></p>
+                    <!--/*@thymesVar id="stackTrace" type="com"*/-->
+                    <p th:text="${stackTrace}"></p>
                 </div>
-                </div>
+               <div class="container">
+                   <table id="error-table" class="table table-striped table-bordered">
+                       <thead>
+                       <tr>
+                           <th scope="">Type</th>
+                           <th scope="">Content</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       <tr>
+                           <td>Date</td>
+                           <!--/*@thymesVar id="timestamp" type="com"*/-->
+                           <td th:text="${timestamp}"></td>
+                       </tr>
+<!--                                       <tr>-->
+<!--                                           <td>Path</td>-->
+<!--                                           <td th:text="${path}"></td>-->
+<!--                                       </tr>-->
+                       <tr>
+                           <td>Error</td>
+                           <!--/*@thymesVar id="error" type="com"*/-->
+                           <td th:text="${error}"></td>
+                       </tr>
+                       <tr>
+                           <td>Status</td>
+                           <!--/*@thymesVar id="status" type="com"*/-->
+                           <td th:text="${status}"></td>
+                       </tr>
+                       <tr>
+                           <td>Message</td>
+                           <!--/*@thymesVar id="message" type="com"*/-->
+                           <td th:text="${message}"></td>
+                       </tr>
+                       <!--                <tr>-->
+                       <!--                    <td>Exception</td>-->
+                       <!--                    <td th:text="${exception}"></td>-->
+                       <!--                </tr>-->
+                       <tr>
+                           <td>Trace</td>
+                           <!--/*@thymesVar id="trace" type="com"*/-->
+                           <td th:text="${trace}" id="error-trace"></td>
+                       </tr>
+                       </tbody>
+                       <tfoot>
+                       <tr>
+                           <th scope="">Type</th>
+                           <th scope="">Content</th>
+                       </tr>
+                       </tfoot>
+                   </table>
+               </div>
 
-                <div class="row justify-content-center">
-                    <a class="btn btn-default" href="home.html" th:href="@{/home.html}" role="button">Back to Home Page</a>
-                </div>
+            </div>
+            <div class="row justify-content-center mx-auto">
+                <a class="btn btn-lg btn-flat btn-danger mt-5" href="home.html" th:href="@{/home}" role="button">Back to Home Page</a>
+            </div>
         </div>
-
     </section>
 
-    <th:block th:replace="fragments/footer"/>
 </div>
-</body>
+<th:block th:replace="fragments/footer"/>
 <th:block th:replace="fragments/script-common"/>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+    /*<![CDATA[*/
+    $(function () {
+
+        var errorTable = $('#error-table').DataTable( {
+            // responsive: true,
+            // autoWidth: true
+        } );
+        // errorTable.columns.adjust().draw();
+    });
+
+    /*]]>*/
+</script>
+
+</body>
 </html>
 
-
-<!--<style>-->
-<!--    table td{-->
-<!--        vertical-align:top;-->
-<!--        border:solid 1px #888;-->
-<!--        padding:10px;-->
-<!--    }-->
-
-<!--</style>-->
-<!--    <ul>-->
-<!--        <li th:errors="*{id}" ></li>-->
-<!--        <li th:errors="*{name}" ></li>-->
-<!--    </ul>-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            <td>Date</td>-->
-<!--            <td th:text="${timestamp}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Path</td>-->
-<!--            <td th:text="${path}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Error</td>-->
-<!--            <td th:text="${error}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Status</td>-->
-<!--            <td th:text="${status}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Message</td>-->
-<!--            <td th:text="${message}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Exception</td>-->
-<!--            <td th:text="${exception}"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>Trace</td>-->
-<!--            <td th:text="${trace}"></td>-->
-<!--        </tr>-->
-<!--    </table>-->

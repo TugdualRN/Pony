@@ -1,15 +1,14 @@
 package com.pony.business.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.pony.business.services.RoleService;
+import com.pony.data.repositories.RoleRepository;
+import com.pony.entities.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pony.entities.models.Role;
-import com.pony.business.services.RoleService;
-import com.pony.data.repositories.RoleRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -30,7 +29,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(readOnly = true)
     public Role findById(Long roleId) {
-        return _roleRepository.findOne(roleId);
+        return _roleRepository.findById(roleId).orElse(null);
     }
 
     @Override
@@ -51,7 +50,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public void delete(Long roleId) {
-        _roleRepository.delete(roleId);
+        _roleRepository.deleteById(roleId);
+//                .delete(roleId);
     }
 
     public Role addRole(Role role) {
@@ -85,11 +85,13 @@ public class RoleServiceImpl implements RoleService {
 
         for (String name : names)
         {
-            if (existingRoles.stream().anyMatch(x -> x.getName().equals(name)) == false) {
+            if (existingRoles.stream().noneMatch(x -> x.getName().equals(name))) {
+//            if (existingRoles.stream().anyMatch(x -> x.getName().equals(name)) == false) {
                 roles.add(new Role(name));
             }
         }
 
-        _roleRepository.save(roles);
+        _roleRepository.saveAll(roles);
+//                .save(roles);
     }
 }

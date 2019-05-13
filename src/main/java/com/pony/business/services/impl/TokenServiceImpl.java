@@ -1,18 +1,17 @@
 package com.pony.business.services.impl;
 
-import java.util.List;
-import java.util.Optional;
-import java.time.Duration;
-import java.time.LocalDateTime;
-
+import com.pony.business.services.TokenService;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
+import com.pony.enumerations.TokenType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.pony.enumerations.TokenType;
-import com.pony.entities.models.Token;
-import com.pony.entities.models.User;
-import com.pony.business.services.TokenService;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TokenServiceImpl implements TokenService {

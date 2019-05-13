@@ -1,24 +1,21 @@
 package com.pony.business.social;
 
+import com.pony.entities.models.SocialNetwork;
+import com.pony.entities.models.User;
+import com.pony.enumerations.SocialNetworkType;
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.FacebookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.FacebookFactory;
-
-import com.pony.enumerations.SocialNetworkType;
-import com.pony.entities.models.SocialNetwork;
-import com.pony.entities.models.User;
-import com.pony.business.social.ApiService;
 
 /**
  * Class used to manipulate "low level" API interactions
@@ -81,7 +78,7 @@ public class ApiServiceImpl implements ApiService {
         try {
             AccessToken accessToken = this.getTwitter().getOAuthAccessToken(requestToken, oauthVerifier);
 
-            SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.TWITTER, 
+            SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.TWITTER,
                 accessToken.getToken(),
                 accessToken.getTokenSecret());
 
@@ -123,7 +120,7 @@ public class ApiServiceImpl implements ApiService {
             // We can translate them to long lived tokens (60 days)
             token = facebook.extendTokenExpiration(token.getToken());
 
-            SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.FACEBOOK, 
+            SocialNetwork socialNetwork = new SocialNetwork(SocialNetworkType.FACEBOOK,
                 token.getToken(),
                 "");
 

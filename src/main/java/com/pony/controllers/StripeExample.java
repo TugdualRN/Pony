@@ -1,8 +1,5 @@
 package com.pony.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -10,6 +7,9 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Source;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class StripeExample {
 

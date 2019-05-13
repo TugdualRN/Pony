@@ -5,33 +5,32 @@
 	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
-
-<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<!-- Tell the browser to be responsive to screen width -->
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-		<title>PonyDaFuck</title>
-		<th:block th:replace="fragments/style-common">...</th:block>
-	</head>
-<th:block th:replace="fragments/header"></th:block>
-
-<body class="hold-transition skin-blue sidebar-mini">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-<!-- 					<h1>Welcome to the NewsPage</h1>		 -->
-					<div class="row">
-						<h3 th:text="${news.title}"></h3>
-					</div>
-					<div class="row">
-						<img th:src="${news.img}"/>
-					</div>
-					<div class="row" th:remove="tag" th:utext="${news.content}"></div>
-				</div>
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="mb-1">
+				<h1 class=""><strong th:text="${news.display}"></strong></h1>
 			</div>
-	        <th:block th:replace="fragments/script-common">...</th:block>
-        </div>
-        <th:block th:replace="fragments/footer"></th:block>
-	</body>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+<section class="content-header">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<!-- 					<h1>Welcome to the NewsPage</h1>		 -->
+				<div class="row">
+					<!--/*@thymesVar id="news" type="com"*/-->
+					<!--/*@thymesVar id="title" type="com"*/-->
+<!--					<h3 th:text="${news.title}"></h3>-->
+				</div>
+				<div class="row">
+					<!--/*@thymesVar id="news" type="com"*/-->
+<!--					<img th:utext="${news.img}"/>-->
+				</div>
+<!--				<div class="row" th:remove="tag" th:utext="${news.content}"></div>-->
+			</div>
+		</div>
+	</div>
+</section>
 </html>

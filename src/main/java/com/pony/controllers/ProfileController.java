@@ -1,10 +1,9 @@
 package com.pony.controllers;
 
-import com.pony.entities.dto.ProfileSocialNetworkData;
-import com.pony.entities.models.User;
 import com.pony.business.services.UserService;
 import com.pony.business.social.SocialNetworkService;
-
+import com.pony.entities.dto.ProfileSocialNetworkData;
+import com.pony.entities.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

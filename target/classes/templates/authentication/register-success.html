@@ -13,10 +13,10 @@
         <meta http-equiv="Content-Type" content="text/html"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <th:block th:replace="fragments/style-common">...</th:block>
+        <th:block th:replace="fragments/style-common"/>
     </head>
-    <body>
-        <th:block th:replace="fragments/header"></th:block>
+    <section>
+        <th:block th:replace="fragments/header"/>
 
         <div class="row">
             <div class="col-2">
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <th:block th:replace="fragments/footer"></th:block>
-        <th:block th:replace="fragments/script-common">...</th:block>
-    </body>
+        <th:block th:replace="fragments/footer"/>
+        <th:block th:replace="fragments/script-common"/>
+    </section>
 </html>

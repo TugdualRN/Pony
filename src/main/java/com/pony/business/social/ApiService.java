@@ -1,14 +1,12 @@
 package com.pony.business.social;
 
+import com.pony.entities.models.User;
+import com.pony.enumerations.SocialNetworkType;
+import facebook4j.Facebook;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-
-import facebook4j.Facebook;
-
-import com.pony.enumerations.SocialNetworkType;
-import com.pony.entities.models.User;
 
 /**
  * Interface used to manipulate "low level" API interactions

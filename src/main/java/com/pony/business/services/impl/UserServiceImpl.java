@@ -1,25 +1,23 @@
 package com.pony.business.services.impl;
 
-import java.util.List;
-
+import com.pony.business.services.RoleService;
+import com.pony.business.services.TokenService;
+import com.pony.business.services.UserService;
+import com.pony.business.utils.RegisterResult;
+import com.pony.data.repositories.UserRepository;
+import com.pony.entities.models.Role;
+import com.pony.entities.models.Token;
+import com.pony.entities.models.User;
+import com.pony.enumerations.TokenType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pony.enumerations.TokenType;
-import com.pony.entities.models.Role;
-import com.pony.entities.models.Token;
-import com.pony.entities.models.User;
-import com.pony.data.repositories.UserRepository;
-import com.pony.business.services.RoleService;
-import com.pony.business.services.TokenService;
-import com.pony.business.services.UserService;
-import com.pony.business.utils.RegisterResult;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public UserServiceImpl(
-        UserRepository userRepository, 
+        UserRepository userRepository,
         TokenService tokenService,
         RoleService roleService,
         BCryptPasswordEncoder passwordEncoder) {
@@ -55,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User findById(Long userId) {
 
-        return _userRepository.findOne(userId);
+        return _userRepository.findById(userId).orElse(null);
     }
 
     @Override

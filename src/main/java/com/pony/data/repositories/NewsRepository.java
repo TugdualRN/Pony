@@ -1,11 +1,10 @@
 package com.pony.data.repositories;
 
-import java.util.List;
-
+import com.pony.entities.models.News;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.pony.entities.models.News;
+import java.util.List;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
 	

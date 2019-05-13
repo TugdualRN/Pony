@@ -1,13 +1,12 @@
 package com.pony.business.services;
 
-import java.util.List;
-
-import com.pony.enumerations.TokenType;
+import com.pony.business.utils.RegisterResult;
 import com.pony.entities.models.Role;
 import com.pony.entities.models.User;
-import com.pony.business.utils.RegisterResult;
-
+import com.pony.enumerations.TokenType;
 import org.springframework.mail.MailException;
+
+import java.util.List;
 
 public interface UserService {
 
