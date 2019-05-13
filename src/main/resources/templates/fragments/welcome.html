@@ -49,20 +49,20 @@
     <footer th:replace="fragments/footer"></footer>
     <th:block th:replace="fragments/script-common"/>
 
-    <script th:inline="javascript" layout:fragment="script" type="text/javascript">
-        /*<![CDATA[*/
-        $(function () {
+<!--    <script th:inline="javascript" layout:fragment="script" type="text/javascript">-->
+<!--        /*<![CDATA[*/-->
+<!--        $(function () {-->
 
-            // Lang change
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption !== '') {
-                    window.location.replace('?lang=' + selectedOption);
-                }})
-        });
+<!--            // Lang change-->
+<!--            $("#locales").change(function () {-->
+<!--                var selectedOption = $('#locales').val();-->
+<!--                if (selectedOption !== '') {-->
+<!--                    window.location.replace('?lang=' + selectedOption);-->
+<!--                }})-->
+<!--        });-->
 
-        /*]]>*/
-    </script>
+<!--        /*]]>*/-->
+<!--    </script>-->
 </div>
 </body>
 </html>

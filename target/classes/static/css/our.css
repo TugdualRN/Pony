@@ -12,25 +12,6 @@ body{
 #error-trace {
     word-break: break-word !important;
 }
-/*#error-table td{*/
-/*    table-layout: auto !important;*/
-/*    width: auto !important;*/
-    /*white-space: nowrap;*/
-/*    text-overflow: initial;*/
-/*    overflow: hidden;*/
-/*}*/
-/*#error-table tr{*/
-/*    width: auto !important;*/
-/*    white-space: nowrap;*/
-/*    text-overflow: initial;*/
-/*    overflow: hidden;*/
-/*}*/
-/*#error-table th{*/
-/*    width: auto !important;*/
-/*    white-space: nowrap;*/
-/*    text-overflow: initial;*/
-/*    overflow: hidden;*/
-/*}*/
 div.container {
     width: 80%;
 }
@@ -89,9 +70,6 @@ div.container {
         font-weight: 700;
     }
 }
-/*.card-header:hover {*/
-/*    background-color: #f2f2f2;*/
-/*}*/
 .card-list > .card {
     cursor: pointer;
 }
@@ -120,16 +98,10 @@ textarea {
 input[type=checkbox] #customCheckLogin{
     margin-right: 2rem !important;
 }
-/*.welcome{*/
-/*    position: relative !important;*/
-/*    margin-top: 10rem !important;*/
-/*}*/
-/*.navbar-brand-logo {*/
-/*    margin-top: 0.4rem;*/
-/*}*/
-/*.nav-cut{*/
-/*    margin-left: 15.7rem !important;*/
-/*}*/
+.login-box{
+    margin: 3% auto !important;
+
+}
 .page-content{
     /*width: 100%;*/
 }

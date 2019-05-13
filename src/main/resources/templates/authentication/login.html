@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
 <!--      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
 <!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
@@ -22,7 +22,7 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="login-box">
     <div class="login-logo">
-        <a href="../home.html" class="text-light"><b>P</b>o<b>N</b>y</a>
+        <a href="../home.html" class=""><strong><b>P</b>o<b>N</b>y</strong></a>
     </div>
     <!-- /.login-logo -->
     <div class="card login-card elevation-5">
@@ -101,14 +101,19 @@
 
 <th:block th:replace="fragments/footer"/>
 <th:block th:replace="fragments/script-common"/>
-<script>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+    /*<![CDATA[*/
     $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass   : 'iradio_square-blue',
-            increaseArea : '20%' // optional
-        })
-    })
+
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass   : 'iradio_square-blue',
+                increaseArea : '20%' // optional
+            });
+
+        });
+    /*]]>*/
 </script>
+
 </body>
 </html>

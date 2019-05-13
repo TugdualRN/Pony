@@ -44,30 +44,6 @@
 	<th:block th:replace="fragments/script-common"/>
 
 	<!--<th:block th:insert="script-common"/>-->
-	<script th:inline="javascript" layout:fragment="script" type="text/javascript">
-		/*<![CDATA[*/
-		$(function () {
-
-			// Lang change
-			// $(document).ready(function() {
-			$("#locales").change(function () {
-				var selectedOption = $('#locales').val();
-				if (selectedOption !== ''){
-					window.location.replace('locale?lang=' + selectedOption);
-				}
-			});
-
-			$('.collapse').collapse();
-
-			// Close the loader splash screen
-			setTimeout(function () {
-				$('body').addClass('loaded');
-			}, 10);
-
-		});
-
-		/*]]>*/
-	</script>
 </div>
 </body>
 </html>
