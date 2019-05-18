@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    // <editor-fold defaultstate="collapsed" desc="CRUD">
+//     <editor-fold defaultstate="collapsed" desc="CRUD">
     List<User> findAll();
 
     User findById(Long userId);

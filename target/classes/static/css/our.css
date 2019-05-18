@@ -20,7 +20,10 @@ div.container {
     display: none !important;
 }
 .none {
-    display: none; !important;
+    display: block; !important;
+}
+.block {
+    display: block; !important;
 }
 .login-page{
     background: rgba(254, 253, 255, 0) url('../images/Vecteezy.jpg') no-repeat center fixed;
@@ -33,6 +36,12 @@ div.container {
 .login-card{
     margin: 0 !important;
     background-color: #ccc6c6bf;
+}
+input[type=checkbox] #customCheckLogin{
+    margin-right: 2rem !important;
+}
+.login-box{
+    margin: 3% auto !important;
 }
 .loader {
     border: 4px solid #bdbdbd; /* Light grey */
@@ -95,22 +104,16 @@ textarea {
 
 /*//////*/
 
-input[type=checkbox] #customCheckLogin{
-    margin-right: 2rem !important;
-}
-.login-box{
-    margin: 3% auto !important;
 
-}
 .page-content{
     /*width: 100%;*/
 }
 .left-nav{
 
 }
-.home-content{
-
+#content-wrapper{
+ overflow-y: auto!important;
 }
-.main-content{
+#main-content{
 
 }

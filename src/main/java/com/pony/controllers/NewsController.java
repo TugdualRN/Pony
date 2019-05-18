@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.Clock;
 
 @Controller
 public class NewsController {
@@ -29,7 +31,7 @@ public class NewsController {
 		_userService = userService;
 	}
 
-//	@PreAuthorize("hasAuthority('ADMIN')")
+	//	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/create-news" })
 //	@GetMapping(value = { "/create-news" })
 	public ModelAndView createNews() {
@@ -62,6 +64,9 @@ public class NewsController {
 			return new ModelAndView("redirect:create-news");
 		}
 		//return new ModelAndView("redirect:create-news");
+		//User toto = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getDetails());
+
 		News news = new News();
 		news.setContent(_newsService.formatContent(viewModel.getContent()));
 		String title = viewModel.getTitle();
@@ -70,11 +75,11 @@ public class NewsController {
 		news.setImg(viewModel.getImg());
 		news.setLang(LocaleContextHolder.getLocale().toLanguageTag());
 		// get user in session
-		Object userConnected = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userConnected = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(userConnected.toString());
-		// test if user
-		User user = _userService.findByMail((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		//System.out.println(userConnected.toString());
+		// test if user;
+		User user = _userService.findByUserName(userConnected.getUsername());
 		_newsService.createNews(news, user);
 		return new ModelAndView("redirect:home");
 	}

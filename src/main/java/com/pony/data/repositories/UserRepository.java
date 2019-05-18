@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public User findByMail(String mail);
 
     public User findByNormalizedMail(String normalizedMail);
+
+
+//    public User findUserFomrByUserId(Long userId);
 }

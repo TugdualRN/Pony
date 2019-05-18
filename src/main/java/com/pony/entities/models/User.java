@@ -63,7 +63,7 @@ public class User {
    	@Convert(converter = LocalDateTimeConverter.class)
    	private LocalDateTime vipEndDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL, CascadeType.REMOVE})
     @JoinTable( 
         name = "T_user_roles",
         joinColumns =           { @JoinColumn(name = "user_id")}, 
@@ -88,6 +88,26 @@ public class User {
         this.userName = userName;
         this.mail = mail;
     }
+
+    public User(String userName, String normalizedUserName, @NotBlank String passwordHash, @NotBlank String mail, String normalizedMail, String firstName, String lastName, String phone, boolean isActive, boolean isBanned, boolean isSuspended, LocalDateTime vipEndDate, Set<Role> roles, List<Token> tokens, Map<SocialNetworkType, SocialNetwork> socialNetworks, List<News> newsList) {
+        this.userName = userName;
+        this.normalizedUserName = normalizedUserName;
+        this.passwordHash = passwordHash;
+        this.mail = mail;
+        this.normalizedMail = normalizedMail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.isActive = isActive;
+        this.isBanned = isBanned;
+        this.isSuspended = isSuspended;
+        this.vipEndDate = vipEndDate;
+        this.roles = roles;
+        this.tokens = tokens;
+        this.socialNetworks = socialNetworks;
+        this.newsList = newsList;
+    }
+
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Getter/Setters">
@@ -124,4 +144,28 @@ public class User {
     public List<News> getNewsList() { return newsList; }
 	public void setNewsList(List<News> newsList) { this.newsList = newsList; }
     // </editor-fold>
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", normalizedUserName='" + normalizedUserName + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", mail='" + mail + '\'' +
+                ", normalizedMail='" + normalizedMail + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", isActive=" + isActive +
+                ", isBanned=" + isBanned +
+                ", isSuspended=" + isSuspended +
+                ", vipEndDate=" + vipEndDate +
+                ", roles=" + roles +
+                ", tokens=" + tokens +
+                ", socialNetworks=" + socialNetworks +
+                ", newsList=" + newsList +
+                '}';
+    }
 }

@@ -41,7 +41,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     private final DispatcherServlet _dispatcherServlet;
 
-
     @Autowired
     public MvcConfig(ApplicationContext applicationContext, DispatcherServlet dispatcherServlet) {
         super();
@@ -65,7 +64,7 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-//    @Description("Thymeleaf template engine with Spring integration")
+    @Description("Thymeleaf template engine with Spring integration")
     public  ISpringTemplateEngine templateEngine() {
 
         var templateEngine = new SpringTemplateEngine();
@@ -76,15 +75,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
         return templateEngine;
     }
-//    private ISpringTemplateEngine templateEngine() {
-//        final SpringTemplateEngine engine = new SpringTemplateEngine();
-//        engine.setTemplateResolver(templateResolver());
-//        engine.addDialect(new Java8TimeDialect());
-//        engine.addDialect(new SpringSecurityDialect());
-//        engine.addDialect(new LayoutDialect());
-//        engine.setEnableSpringELCompiler(true);
-//        return engine;
-//    }
 
     @Bean
     @Description("Thymeleaf view resolver")
@@ -108,7 +98,6 @@ public class MvcConfig implements WebMvcConfigurer {
         configurer.favorPathExtension(true);
     }
 
-
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
@@ -128,18 +117,13 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**");
-    }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(
 
                 "/css/**",
                 "/fonts/**",
+                "/favicon.ico",
                 "/images/**",
                 "/img/**",
                 "/js/**",
@@ -159,16 +143,16 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public CommandLineRunner getCommandLineRunner() {
         _dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
-
         return args -> {
         };
     }
+
     @Bean
     public MappedInterceptor myInterceptor() {
         HandlerInterceptorAdapter loggerMiddleware = new LoggerMiddleware();
-
         return new MappedInterceptor(new String[0], loggerMiddleware);
     }
+
 }
 
 

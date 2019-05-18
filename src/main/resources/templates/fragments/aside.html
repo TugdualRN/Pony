@@ -6,7 +6,7 @@
 <!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
 <!--      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">-->
 
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark bg-dark-gradient elevation-4">
 
     <!-- Brand -->
     <a class="brand-link" href="../home.html" th:href="@{/home}" >
@@ -76,7 +76,7 @@
 <!--                <li class="nav-item ">-->
 <!--                <a class="nav-link" th:href="@{/create-news}" th:text="#{news.create}"></a>-->
 
-<!--                <li class="nav-item " sec:authorize="hasAnyAuthority('ADMIN')">-->
+                <li class="nav-item " >
                     <a class="nav-link custom-link main" sec:authorize="hasAnyAuthority('ADMIN, MASTER')"  data-href="create-news" href="#">
                         <i class="fa fa-newspaper-o"></i>
                         <p  th:text="#{news.create}"></p>
@@ -90,23 +90,30 @@
                     </a>
                 </li>
 
+<!--                <li class="nav-item " sec:authorize="isFullyAuthenticated()">-->
+<!--                    <a class="nav-link custom-link main" data-href="news/{slug}" href="#">-->
+<!--                        <i class="fa fa-shopping-cart"></i>-->
+<!--                        <p th:text="#{news.display}"></p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
                 <li class="nav-item has-treeview">
-                    <a class="nav-link custom-link main" href="#">
+                    <a class="nav-link " href="#">
                         <i class="nav-icon fa fa-th-large"></i>
                         <p>
-                            <span>Modules</span>
+                            <span>AdminLTE Help</span>
                             <i class="right fa fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a class="nav-link custom-link main" data-href="https://adminlte.io/themes/dev/AdminLTE/index3.html">
+                            <a class="nav-link " href="https://adminlte.io/themes/dev/AdminLTE/index3.html">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>AdminLTE3</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-link main" data-href="https://adminlte.io/docs/2.4/installation">
+                            <a class="nav-link " href="https://adminlte.io/docs/2.4/installation">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>AdminLTE Doc</p>
                             </a>

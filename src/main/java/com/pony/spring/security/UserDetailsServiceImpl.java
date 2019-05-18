@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.lang.String.format;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

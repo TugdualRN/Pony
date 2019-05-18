@@ -22,7 +22,7 @@
     <!-- Create the toolbar container -->
     <div class="row mx-auto">
         <div class="col col-sm-8 offset-2 mx-auto">
-<!--            <h1 th:text="#{news.title}"></h1>-->
+            <!--            <h1 th:text="#{news.title}"></h1>-->
             <form th:action="@{/create-news}" th:object="${newsViewModel}" enctype="multipart/form-data"
                   th:method="POST" id="createNewsForm">
                 <div class="form-group">
@@ -79,19 +79,16 @@
                 console.log('click');
             });
             $("form").submit(function (e) {
-                console.log("ok");
-                console.log(JSON.stringify(quill.container.firstChild.innerHTML));
+
                 $('#content').val(
-                    JSON.stringify(quill.container.firstChild.innerHTML));
+                    JSON.stringify(quill.getContents()));
 
                 return true;
             });
             form.onsubmit = function(e) {
                 e.preventDefault();
-                console.log("ok");
-                console.log(JSON.stringify(quill.container.firstChild.innerHTML));
                 $('#content').val(
-                    JSON.stringify(quill.container.firstChild.innerHTML));
+                    JSON.stringify(quill.getContents()));
 
                 return false;
             };

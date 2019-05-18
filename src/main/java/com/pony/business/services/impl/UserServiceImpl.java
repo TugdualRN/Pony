@@ -9,6 +9,7 @@ import com.pony.entities.models.Role;
 import com.pony.entities.models.Token;
 import com.pony.entities.models.User;
 import com.pony.enumerations.TokenType;
+import com.pony.form.UserForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,9 @@ public class UserServiceImpl implements UserService {
 
     private final Logger _logger = LoggerFactory.getLogger(UserServiceImpl.class);
     
-    private final UserRepository _userRepository;
-
-    private final TokenService _tokenService;
-    private final RoleService _roleService;
+    private UserRepository _userRepository;
+    private TokenService _tokenService;
+    private RoleService _roleService;
 
     private final BCryptPasswordEncoder _passwordEncoder;
 
@@ -55,6 +55,14 @@ public class UserServiceImpl implements UserService {
 
         return _userRepository.findById(userId).orElse(null);
     }
+
+//
+//    @Override
+//    public UserForm findUserForm(Long userId) {
+//        System.out.println("findUserForm : " + userId);
+//        return _userRepository.findUserFomrByUserId(userId);
+//    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -150,7 +158,6 @@ public class UserServiceImpl implements UserService {
         if (user.getRoles().stream().anyMatch(x -> x.getName().equals(role.getName()))) {
             return true;
         }
-
         return false;
     }
 
@@ -217,7 +224,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User activateUser(User user) {
-        if (user.getIsActive() != false) {
+        if (user.getIsActive()) {
             user.setIsActive(true);
             User savedUser = _userRepository.save(user);
 
